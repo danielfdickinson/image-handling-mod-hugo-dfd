@@ -1,0 +1,42 @@
+{{- $curPage := . -}}
+{{- $images := (slice) -}}
+{{- with .Params.images -}}
+    {{- range first 6 . -}}
+        {{- $imgMap := partial "helpers/lib/responsive-images/generate-images" (dict
+            "src" (index . 0)
+            "page" $curPage
+            "singlesize" true
+        ) -}}
+        {{- if ne $imgMap.finalSrc "" -}}
+            {{- $images = $images | append ($imgMap.finalSrc | absURL) -}}
+        {{- end -}}
+    {{- end -}}
+{{- else -}}
+    {{- $imageResources := .Resources.ByType "image" -}}
+    {{- $featured := $imageResources.GetMatch "*feature*" -}}
+    {{- if not $featured -}}
+        {{- $featured = $imageResources.GetMatch "{*cover*,*thumbnail*}" -}}
+    {{- end -}}
+    {{- with $featured -}}
+        {{- $imgMap := partial "helpers/lib/responsive-images/generate-images" (dict
+            "src" $featured.Name
+            "page" $curPage
+            "singlesize" true
+        ) -}}
+        {{- if ne $imgMap.finalSrc "" -}}
+            {{- $images = $images | append ($imgMap.finalSrc | absURL) -}}
+        {{- end -}}
+    {{- else -}}
+        {{- with .Site.Params.images -}}
+            {{- $imgMap := partial "helpers/lib/responsive-images/generate-images" (dict
+                "src" (index . 0)
+                "page" $curPage
+                "singlesize" true
+            ) -}}
+            {{- if ne $imgMap.finalSrc "" -}}
+                {{- $images = $images | append ($imgMap.finalSrc | absURL) -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- return $images -}}

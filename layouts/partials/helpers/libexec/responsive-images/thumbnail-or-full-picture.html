@@ -1,0 +1,166 @@
+{{- $ctx := . -}}
+{{- $inWidth := .width -}}
+{{- $inHeight := .height -}}
+{{- $inThumbnailWidth := .thumbnailwidth -}}
+{{- $inThumbnailHeight := .thumbnailheight -}}
+{{- $inAlt := .alt -}}
+{{- $inTitle := .title -}}
+{{- $inSrc := .src -}}{{- /* Image source (src="…") attribute */ -}}
+{{- $inPage := .page -}}
+{{- $inCaption := .caption -}}
+{{- $inClass := .class -}}
+{{- $inImageSizes := .imagesizes -}}
+{{- $inThumbnailSizes := .thumbnailsizes -}}
+{{- $inSingleSize := .singlesize -}}
+{{- $inConvertTo := .convertto -}}
+{{- $inDoThumbnails := .thumbnails -}}
+{{- $inDoFullSize := .fullsize -}}
+{{- $inSizesAttr := .sizesattr -}}
+{{- $inThumbnailSizesAttr := .thumbnailsizesattr -}}
+{{- $inMinThumbnailViewport := .minthumbnailviewport -}}
+{{- $inLoading := .loading -}}
+{{- $inLink := .link -}}
+{{- $inTarget := .target -}}
+{{- $inRel := .rel -}}
+{{- $inAddLink := .addlink -}}
+{{- $inAddClass := .addclass -}}
+
+{{- $fullImgMap := (
+    dict "finalSrc" ""
+) -}}
+
+{{- $thumbnailImgMap := (
+    dict "finalSrc" ""
+) -}}
+
+{{- $thumbnailSizes := $inThumbnailSizes | default $inPage.Params.imageThumbnailSizes | default $inPage.Site.Params.imageThumbnailSizes | default (slice "90" "180" "360") -}}
+{{- $thumbnailWidth := $inThumbnailWidth | default $inPage.Params.imageThumbnailWidth | default $inPage.Site.Params.imageThumbnailWidth | default $inWidth | default "90" -}}
+{{- $thumbnailHeight := $inThumbnailHeight | default $inPage.Params.imageThumbnailHeight | default $inPage.Site.Params.imageThumbnailHeight | default "auto" -}}
+
+{{- $thumbnails := $inDoThumbnails | default $inPage.Params.imageThumbnails | default $inPage.Site.Params.imageThumbnails | default false -}}
+{{- $fullSize := $inDoFullSize | default $inPage.Params.imageFullSize | default $inPage.Site.Params.imageFullSize | default true -}}
+{{- $minThumbnailViewport := $inMinThumbnailViewport | default $inPage.Params.imageThumbnailViewport | default $inPage.Site.Params.imageThumbnailViewport | default "768px" -}}
+{{- $thumbnailMedia := printf "(min-width: %s)" $minThumbnailViewport -}}
+
+{{- with $inPage -}}
+    {{- if $fullSize -}}
+        {{- $fullImgMap = partial "helpers/lib/responsive-images/generate-images" (
+            dict "width" $inWidth
+            "height" $inHeight
+            "src" $inSrc
+            "page" .
+            "imagesizes" $inImageSizes
+            "singlesize" $inSingleSize
+            "convertto" $inConvertTo
+        ) -}}
+    {{- else -}}
+        {{- $thumbnailWidth = $inThumbnailWidth | default $inWidth | default .Params.imageThumbnailWidth | default .Site.Params.imageThumbnailWidth | default "90" -}}
+        {{- $thumbnailHeight = $inThumbnailHeight | default $inHeight | default .Params.imageThumbnailHeight | default .Site.Params.imageThumbnailHeight | default "auto" -}}
+    {{- end -}}
+
+    {{- if $thumbnails -}}
+        {{- $thumbnailImgMap = partial "helpers/lib/responsive-images/generate-images" (
+            dict "width" $thumbnailWidth
+            "height" $thumbnailHeight
+            "src" $inSrc
+            "page" .
+            "imagesizes" $thumbnailSizes
+            "singlesize" $inSingleSize
+            "convertto" $inConvertTo
+        ) -}}
+    {{- end -}}
+
+    {{- $alt := "" -}}
+    {{- if or $inAlt $inCaption }}
+        {{- with $inAlt -}}
+            {{- $alt = . -}}
+        {{- else -}}
+            {{- $alt = $inCaption | .RenderString | plainify -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- $class := $inClass -}}
+    {{- $addClass := default .Params.imageAddClass | default .Site.Params.imageAddClass -}}
+    {{- if and $inAddClass (not $class) -}}
+        {{- $class = $addClass -}}
+    {{- end -}}
+
+    {{- $sizesAttr := $inSizesAttr | default $inPage.Params.imageSizesAttr | default $inPage.Site.Params.imageSizesAttr | default "90vw" -}}
+    {{- $thumbnailSizesAttr := $inSizesAttr | default $inPage.Params.imageThumbnailSizesAttr | default $inPage.Site.Params.imageThumbnailSizesAttr | default "10vw" -}}
+    {{- if not (and (eq $fullImgMap.finalSrc "") (eq $thumbnailImgMap.finalSrc "")) -}}
+        {{- $imgfinalSrc := "" -}}
+        {{- if and $fullSize (ne $fullImgMap.finalSrc "") -}}
+            {{- $imgfinalSrc = $fullImgMap.finalSrc -}}
+        {{- else -}}
+            {{- $imgfinalSrc = $thumbnailImgMap.finalSrc -}}
+        {{- end -}}
+        {{- if $inAddLink }}
+            {{- $linkHref := $imgfinalSrc -}}
+            {{- if $inLink -}}
+                {{- $linkHref = $inLink -}}
+            {{- end -}}
+            {{- $rel := $inRel | default "noopener noreferrer" -}}
+            {{- partial "helpers/link-open" (dict
+                "page" $inPage
+                "destination" $linkHref
+                "close" false
+                "target" $inTarget
+                "rel" $rel
+            ) -}}
+        {{- end -}}
+        {{- $usePicture := false -}}
+        {{- if (and (ne $fullImgMap.finalSrc "") (ne $thumbnailImgMap.finalSrc "")) -}}
+            {{- $usePicture = true -}}
+        {{- end -}}
+        {{- if $usePicture -}}
+            <picture{{ with $class }} class="{{ . }}"{{ end }}>
+            {{- if and $thumbnails (ne $thumbnailImgMap.finalSrc "") -}}
+                {{ $sourceOptions := (
+                    dict "imgmap" $thumbnailImgMap
+                    "page" $inPage
+                    "usesrcset" (cond (ge (len $thumbnailImgMap.srcSet) 1) true false)
+                    "sizesattr" $thumbnailSizesAttr
+                    "media" $thumbnailMedia
+                ) -}}
+                {{ partial "helpers/libexec/responsive-images/source-element" $sourceOptions }}
+            {{- end -}}
+            {{- if and $fullSize (ne $fullImgMap.finalSrc "") -}}
+                {{ $sourceOptions := (
+                    dict "imgmap" $fullImgMap
+                    "page" $inPage
+                    "usesrcset" (cond (ge (len $fullImgMap.srcSet) 1) true false)
+                    "sizesattr" $sizesAttr
+                ) -}}
+                {{ partial "helpers/libexec/responsive-images/source-element" $sourceOptions }}
+            {{- end -}}
+            {{- $class := "" -}}
+        {{- end -}}
+        {{- if and $fullSize (ne $fullImgMap.finalSrc "") -}}
+            {{- $imgOptions := (
+                dict "imgmap" $fullImgMap
+                "page" $inPage
+                "alt" $alt
+                "title" $inTitle
+                "loading" $inLoading
+                "usesrcset" (cond (and (not $usePicture) (ge (len $fullImgMap.srcSet) 1)) true false)
+                "class" $class
+            ) -}}
+            {{ partial "helpers/libexec/responsive-images/img-element" $imgOptions }}
+        {{- else -}}
+            {{- $imgOptions := (
+                dict "imgmap" $thumbnailImgMap
+                "page" $inPage
+                "alt" $alt
+                "title" $inTitle
+                "loading" $inLoading
+                "usesrcset" (cond (and (not $usePicture) (ge (len $thumbnailImgMap.srcSet) 1)) true false)
+                "class" $class
+            ) -}}
+            {{ partial "helpers/libexec/responsive-images/img-element" $imgOptions }}
+        {{- end -}}
+        {{- if $usePicture -}}
+            </picture>
+        {{- end -}}
+        {{- if $inAddLink }}</a>{{- end }}
+    {{- end -}}
+{{- end -}}

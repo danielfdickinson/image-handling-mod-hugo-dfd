@@ -1,0 +1,7 @@
+/exampleSite/public/
+/exampleSite/resources/
+/resources/
+.netlify
+/netlify.log
+node_modules
+_vendor
