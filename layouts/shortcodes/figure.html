@@ -1,0 +1,19 @@
+{{ partial "helpers/wrapped-responsive-image" (
+    dict "width" (.Get "width")
+    "height" (.Get "height")
+    "alt" (.Get "alt")
+    "title" (.Get "title")
+    "src" (.Get "src")
+    "page" .Page
+    "link" (.Get "link")
+    "target" (.Get "target")
+    "rel" (.Get "rel")
+    "imagewrapper" (default "figure" (.Get "imagewrapper"))
+    "caption" (.Get "caption")
+    "attr" (.Get "attr")
+    "attrlink" (.Get "attrlink")
+    "class" (.Get "class")
+    "singlesize" (.Get "singlesize")
+    "thumbnails" (.Get "thumbnails")
+    ) 
+-}}

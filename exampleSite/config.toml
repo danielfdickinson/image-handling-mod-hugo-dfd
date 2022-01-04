@@ -1,0 +1,160 @@
+baseURL = "https://example.com/"
+copyright = "© 2021 Daniel F. Dickinson"
+defaultContentLanguage = "en"
+homepage = "https://hugo-dfd-responsive-images.wildtechgarden.ca/"
+enableGitInfo = true
+enableRobotsTXT = true
+summaryLength = 25
+
+[params]
+  mainSections = ["post","docs"]
+  # Footnotes and TableOfContents don't work properly with a base href set in <head>
+  useBaseURL = false
+  imageConvertTo = "webp"
+
+# See https://gohugo.io/content-management/multilingual/
+# and https://www.regisphilibert.com/blog/2018/08/hugo-multilingual-part-1-managing-content-translation/
+[languages]
+  [languages.en]
+    languageName = ":en:"
+    languageAltTitle = "English"
+    title = "DFD Responsive Images Module Demo"
+    description = "Demo site for Daniel F. Dickinson's (DFD) responsive images Hugo module"
+    weight = 1
+    
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/about/"
+        weight = 10
+
+      [[languages.en.menu.main]]
+        identifier = "accessibility"
+        name = "Accessibility"
+        url = "/accessibility/"
+        weight = 20
+
+
+[author]
+  name = "Daniel F. Dickinson"
+  homepage = "https://www.danielfdickinson.ca/"
+
+  [[ author.authors ]]
+    name = "Daniel F. Dickinson"
+    homepage = "https://www.danielfdickinson.ca/"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[frontmatter]
+  lastmod = ["lastmod",":git",":fileModTime","date","publishDate"]
+  date = ["date","publishDate","lastmod",":git",":fileModTime"]
+  publishDate = ["publishDate","date","lastmod",":git",":fileModTime"]
+
+[markup]
+  [markup.highlight]
+    guessSyntax = true
+    noClasses = false
+
+[privacy]
+
+  [privacy.vimeo]
+    disabled = true
+
+  [privacy.twitter]
+    disabled = true
+
+  [privacy.instagram]
+    disabled = true
+
+  [privacy.youtube]
+    disabled = true
+
+[module]
+  [[module.imports]]
+    path = "github.com/danielfdickinson/hugo-dfd-responsive-images"
+
+    [[module.imports.mounts]]
+      source = "static"
+      target = "static"
+
+    [[module.imports.mounts]]
+      source = "layouts"
+      target = "layouts"
+
+    [[module.imports.mounts]]
+      source = "data"
+      target = "data"
+
+    [[module.imports.mounts]]
+      source = "assets"
+      target = "assets"
+
+    [[module.imports.mounts]]
+      source = "README.md"
+      target = "assets/README-dfd-responsive-images.md"
+
+    [[module.imports.mounts]]
+      source = "i18n"
+      target = "i18n"
+
+    [[module.imports.mounts]]
+      source = "archetypes"
+      target = "archetypes"
+
+  [[module.imports]]
+    path = "github.com/danielfdickinson/hugo-dfd-demo-site-theme"
+
+    [[module.imports.mounts]]
+      source = "static"
+      target = "static"
+
+    [[module.imports.mounts]]
+      source = "layouts"
+      target = "layouts"
+
+    [[module.imports.mounts]]
+      source = "data"
+      target = "data"
+
+    [[module.imports.mounts]]
+      source = "assets"
+      target = "assets"
+
+    [[module.imports.mounts]]
+      source = "i18n"
+      target = "i18n"
+
+    [[module.imports.mounts]]
+      source = "archetypes"
+      target = "archetypes"
+
+  [[module.mounts]]
+    source = "content"
+    target = "content"
+
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+
+  [[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+
+  [[module.mounts]]
+    source = "data"
+    target = "data"
+
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+
+  [[module.mounts]]
+    source = "i18n"
+    target = "i18n"
+
+  [[module.mounts]]
+    source = "archetypes"
+    target = "archetypes"

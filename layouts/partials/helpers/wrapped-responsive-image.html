@@ -1,0 +1,132 @@
+{{- $ctx := . -}}
+{{- $inWidth := .width -}}
+{{- $inHeight := .height -}}
+{{- $inThumbnailWidth := .thumbnailwidth -}}
+{{- $inThumbnailHeight := .thumbnailheight -}}
+{{- $inAlt := .alt -}}
+{{- $inTitle := .title -}}
+{{- $inSrc := .src -}}{{- /* Image source (src="…") attribute */ -}}
+{{- $inPage := .page -}}
+{{- $inLink := .link -}}
+{{- $inTarget := .target -}}
+{{- $inRel := .rel -}}
+{{- $inImageWrapper := .imagewrapper -}}
+{{- $inCaption := .caption -}}
+{{- $inAttr := .attr -}}
+{{- $inAttrLink := .attrlink -}}
+{{- $inClass := .class -}}
+{{- $inNoImageWrapper := .noImageWrapper -}}
+{{- $inImageSizes := .imagesizes -}}
+{{- $inThumbnailSizes := .thumbnailsizes -}}
+{{- $inSingleSize := .singlesize -}}
+{{- $inConvertTo := .convertto -}}
+{{- $inDoThumbnails := .thumbnails -}}
+{{- $inDoFullSize := .fullsize -}}
+{{- $inSizesAttr := .sizesattr -}}
+{{- $inThumbnailSizesAttr := .thumbnailsizesattr -}}
+{{- $inMinThumbnailViewport := .minthumbnailviewport -}}
+{{- $inLoading := .loading -}}
+
+{{- with $inPage -}}
+    {{- $addLink := or (.Params.imageLinkFull | default .Site.Params.imageLinkFull | default false) $inLink -}}
+
+    {{- $alt := "" -}}
+    {{- if or $inAlt $inCaption }}
+        {{- with $inAlt -}}
+            {{- $alt = . -}}
+        {{- else -}}
+            {{- $alt = $inCaption | .RenderString | plainify -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- $imageWrapper := $inImageWrapper -}}
+    {{- $class := $inClass -}}
+    {{- $caption := $inCaption -}}
+
+    {{- $addWrapper := .Params.imageAddWrapper | default .Site.Params.imageAddWrapper -}}
+    {{- if and $addWrapper (not $imageWrapper) -}}
+        {{- $imageWrapper = $addWrapper -}}
+    {{- end -}}
+
+    {{- $addClass := .Params.imageAddClass | default .Site.Params.imageAddClass -}}
+    {{- if and $addClass (not $class) -}}
+        {{- $class = $addClass -}}
+    {{- end -}}
+
+    {{- $altAsCaption := .Params.imageAltAsCaption | default .Site.Params.imageAltAsCaption -}}
+    {{- if and $altAsCaption (not $caption) -}}
+        {{- $caption = $inAlt -}}
+    {{- end -}}
+
+    {{- if $inNoImageWrapper -}}
+        {{- $imageWrapper = "" -}}
+    {{- end -}}
+
+    {{- if $imageWrapper -}}
+        {{- if $class -}}
+            {{- printf "<%s class=\"%s\">" $imageWrapper $class | safeHTML -}}
+        {{- else -}}
+            {{- printf "<%s>" $imageWrapper | safeHTML -}}
+        {{- end -}}
+    {{ end -}}
+
+    {{- $pictureOptions := (
+        dict "width" $inWidth
+        "height" $inHeight
+        "thumbnailwidth" $inThumbnailWidth
+        "thumbnailheight" $inThumbnailHeight
+        "alt" $alt
+        "title" $inTitle
+        "src" $inSrc
+        "page" $inPage
+        "caption" $caption
+        "class" (cond (eq $imageWrapper "") $class "")
+        "imagesizes" $inImageSizes
+        "thumbnailsizes" $inThumbnailSizes
+        "singlesize" $inSingleSize
+        "convertto" $inConvertTo
+        "thumbnails" $inDoThumbnails
+        "fullsize" $inDoFullSize
+        "sizesattr" $inSizesAttr
+        "thumbnailsizesattr" $inThumbnailSizesAttr
+        "loading" $inLoading
+        "addlink" $addLink
+        "link" $inLink
+        "target" $inTarget
+        "rel" $inRel
+        "minthumbnailviewport" $inMinThumbnailViewport
+        "addclass" (eq $imageWrapper "")
+    ) -}}
+    {{ partial "helpers/libexec/responsive-images/thumbnail-or-full-picture" $pictureOptions }}
+    {{- if $imageWrapper -}}
+        {{- if or $inTitle $caption $inAttr -}}
+            {{ if (eq $imageWrapper "figure") }}<figcaption>{{ else if not $inTitle }}<span>{{ else }}<div>{{ end }}
+                {{- with $inTitle -}}
+                    <h2>{{ . }}</h2>
+                {{- end -}}
+                {{- if or $caption $inAttr -}}<span>
+                    {{- /* Can't have 'p' inside 'span' and rendering markdown sometimes results in a 'p' wrapper.
+                        * We ensure we get a 'p' (display block) so that we after we convert them we have the
+                        * expected spans (for CSS)
+                        */ -}}
+                    {{- replaceRE "<(/?)p>" "<${1}span>" ($caption | $inPage.RenderString (dict "display" "block")) | safeHTML -}}
+                    {{- with $inAttrLink -}}
+                        <a href="{{ . }}">
+                    {{- end -}}
+                    {{- replaceRE "<(/?)p>" "<${1}span>" ($inAttr | $inPage.RenderString (dict "display" "block")) | safeHTML -}}
+                    {{- if $inAttrLink }}</a>{{ end }}</span>
+                {{- end -}}
+            {{ if (eq $imageWrapper "figure") }}</figcaption>{{ else if not $inTitle }}</span>{{ else }}</div>{{ end }}
+        {{- end -}}
+        {{- printf "</%s>" $imageWrapper | safeHTML -}}
+    {{- else -}}
+        {{- if or $caption $inAttr -}}<span>
+            {{- replaceRE "<(/?)p>" "<${1}span>" ($caption | $inPage.RenderString (dict "display" "block")) | safeHTML -}}
+            {{- with $inAttrLink -}}
+                <a href="{{ . }}">
+            {{- end -}}
+            {{- replaceRE "<(/?)p>" "<$1{s}pan>" ($inAttr | $inPage.RenderString (dict "display" "block")) | safeHTML -}}
+            {{- if $inAttrLink }}</a>{{ end }}</span>
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

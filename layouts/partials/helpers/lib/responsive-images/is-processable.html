@@ -1,0 +1,12 @@
+{{- /* Context is the original image resource */ -}}
+{{- /* Returns true if the image is processable by Hugo image processing, false if not */ -}}
+{{- $image := . -}}
+{{- $isProcessable := false -}}
+{{- $processableFormats := (slice "jpg" "jpeg" "png" "tif" "tiff" "bmp" "gif") -}}
+{{- if hugo.IsExtended -}}
+    {{ $processableFormats = $processableFormats | append "webp" -}}
+{{- end -}}
+{{- if in $processableFormats $image.MediaType.SubType -}}
+    {{- $isProcessable = true -}}
+{{- end -}}
+{{- return $isProcessable -}}

@@ -1,0 +1,1 @@
+{{- partial "helpers/wrapped-responsive-image" (dict "alt" .Text "title" .Title "src" .Destination "page" .Page "noImageWrapper" (eq (.Page.Params.imageAddWrapper | default .Page.Site.Params.imageAddWrapper | default "") "")) -}}
