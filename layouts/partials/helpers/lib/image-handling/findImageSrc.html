@@ -1,0 +1,51 @@
+{{- $destination := .imageName -}}
+{{- $images := .images -}}
+{{- $curPage := .page -}}
+{{- $relativeURL := .getRelative -}}
+{{- $ignoreBundleAssets := .ignoreBundleAssets -}}
+{{- $external := false -}}
+{{- $finalDestination := "" -}}
+{{- $external := false -}}
+{{- if urls.Parse $destination -}}
+    {{- if index (urls.Parse $destination).Scheme -}}
+        {{- $external = true -}}
+    {{- end -}}
+{{- end -}}
+{{- if not $external -}}
+    {{- /* We need to know the internal URL without any fragments (e.g. without #an-anchor) */ -}}
+    {{- $path := (index (split $destination "#") 0) -}}
+    {{- /* In a URL only a single unescaped '#' is valid, so this should work */ -}}
+    {{- $fragment := (index (split $destination "#") 1) -}}
+    {{- /* If we have a URL (not including fragment) */ -}}
+    {{- $finalDestination = partial "helpers/lib/image-handling/findStaticImage" (dict "destination" $path "getRelative" false) -}}
+    {{- if not $finalDestination -}}
+        {{- $imageResource := false -}}
+        {{- if ne $ignoreBundleAssets true -}}
+            {{- $imageResources := $curPage.Resources.ByType "image" -}}
+            {{- $imageResource = $imageResources.GetMatch (printf "*%s*" $path) -}}
+        {{- end -}}
+        {{- if not $imageResource -}}
+            {{- $imageResource = resources.Get $path -}}
+        {{- end -}}
+        {{- if $imageResource -}}
+            {{- $finalDestination = partial "helpers/lib/image-handling/getResourceLink" (dict "imageResource" $imageResource "getRelative" false ) -}}
+            {{- if $fragment -}}
+                {{- if ne (path.Ext $path) "" -}}
+                    {{- $finalDestination = printf "%s#%s" $finalDestination $fragment -}}
+                {{- else -}}
+                    {{- $finalDestination = printf "%s/#%s" $finalDestination $fragment -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+    {{- if $finalDestination -}}
+        {{- $images = $images | append $finalDestination -}}
+    {{- else if $curPage.File -}}
+        {{- errorf (printf "Image %s is missing and not external for page %s" $destination $curPage.File.Path) -}}
+    {{- else -}}
+        {{- errorf (printf "Image %s is missing and not external for page %s" $destination $curPage.Title) -}}
+    {{- end -}}
+{{- else -}}{{- /* Accept external URLs verbatim */ -}}
+    {{- $images = $images | append $destination -}}
+{{- end -}}
+{{- return $images -}}

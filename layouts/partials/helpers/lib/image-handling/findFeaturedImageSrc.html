@@ -1,0 +1,21 @@
+{{- $curPage := .page -}}
+{{- $relativeURL := .getRelative -}}
+{{- $ignoreBundleAssets := .ignoreBundleAssets -}}
+{{- $featured := false -}}
+{{- $featuredLink := "" -}}
+
+{{- /* Try page-level images first */ -}}
+{{- $featuredParam := $curPage.Params.imageFeatured | default $curPage.Params.imageCover | default $curPage.Params.imageThumbnail -}}
+{{- $imageResources := $curPage.Resources.ByType "image" -}}
+{{- if and $featuredParam $imageResources -}}
+    {{- $featured = $imageResources.GetMatch (printf "*%s*" $featuredParam) -}}
+{{- else if $imageResources -}}
+    {{- $featured = $imageResources.GetMatch "*feature*" -}}
+{{- end -}}
+{{- if not $featured -}}
+    {{- $featured = $imageResources.GetMatch "{*cover*,*thumbnail*}" -}}
+{{- end -}}
+{{- with $featured -}}
+    {{- $featuredLink = partial "helpers/lib/image-handling/getResourceLink" (dict "imageResource" $featured "getRelative" $relativeURL) -}}
+{{- end -}}
+{{- return $featuredLink -}}

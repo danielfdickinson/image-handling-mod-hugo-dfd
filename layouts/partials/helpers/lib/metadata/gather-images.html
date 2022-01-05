@@ -1,41 +1,17 @@
+{{- /* NOTE: This is overridden when using the responsive images module from DFDs collection */ -}}
 {{- $curPage := . -}}
 {{- $images := (slice) -}}
 {{- with .Params.images -}}
     {{- range first 6 . -}}
-        {{- $imgMap := partial "helpers/lib/responsive-images/generate-images" (dict
-            "src" (index . 0)
-            "page" $curPage
-            "singlesize" true
-        ) -}}
-        {{- if ne $imgMap.finalSrc "" -}}
-            {{- $images = $images | append ($imgMap.finalSrc | absURL) -}}
-        {{- end -}}
+        {{- $images = partial "helpers/lib/image-handling/findImageSrc" (dict "imageName" . "images" $images "page" $curPage "getRelative" false "ignoreBundleAssets" false) -}}
     {{- end -}}
 {{- else -}}
-    {{- $imageResources := .Resources.ByType "image" -}}
-    {{- $featured := $imageResources.GetMatch "*feature*" -}}
-    {{- if not $featured -}}
-        {{- $featured = $imageResources.GetMatch "{*cover*,*thumbnail*}" -}}
-    {{- end -}}
-    {{- with $featured -}}
-        {{- $imgMap := partial "helpers/lib/responsive-images/generate-images" (dict
-            "src" $featured.Name
-            "page" $curPage
-            "singlesize" true
-        ) -}}
-        {{- if ne $imgMap.finalSrc "" -}}
-            {{- $images = $images | append ($imgMap.finalSrc | absURL) -}}
-        {{- end -}}
+    {{- with $curPage.Site.Params.images -}}
+        {{- $images = partial "helpers/lib/image-handling/findImageSrc" (dict "imageName" (index . 0) "images" $images "page" $curPage "getRelative" false "ignoreBundleAssets" true) -}}
     {{- else -}}
-        {{- with .Site.Params.images -}}
-            {{- $imgMap := partial "helpers/lib/responsive-images/generate-images" (dict
-                "src" (index . 0)
-                "page" $curPage
-                "singlesize" true
-            ) -}}
-            {{- if ne $imgMap.finalSrc "" -}}
-                {{- $images = $images | append ($imgMap.finalSrc | absURL) -}}
-            {{- end -}}
+        {{- $featuredLink := partial "helpers/lib/image-handling/findFeaturedImageSrc" (dict "page" $curPage "getRelative" false "ignoreBundleAssets" false) -}}
+        {{- if $featuredLink -}}
+            {{- $images = $images | append $featuredLink -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
