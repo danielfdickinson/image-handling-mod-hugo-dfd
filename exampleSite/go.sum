@@ -1,4 +1,4 @@
-github.com/danielfdickinson/hugo-dfd-demo-site-theme v0.4.1 h1:juS66k94OohB+xHu9F0lWzTc/d+LQs7m0FXQcJUuvYs=
-github.com/danielfdickinson/hugo-dfd-demo-site-theme v0.4.1/go.mod h1:KJJxP+choxWGNFHbwj0AQDNQ/6qtBYUMDuO0CEXlV2c=
-github.com/danielfdickinson/hugo-dfd-metadata-central v0.0.0-20211022192728-d6b4ec370120 h1:vEeFUp0eivZIDOWhVz7Tms0XZxdlHM7Si7BXWUjTlEU=
-github.com/danielfdickinson/hugo-dfd-metadata-central v0.0.0-20211022192728-d6b4ec370120/go.mod h1:uygtPWTIMU1oCMsQnJ/FR/WKU1XblxqKa4mscGUX4fw=
+github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.1.1 h1:iQXC2HfGv0rkf6fgdhfm2j2Gd6z6MkYrIvcwH0n+J8o=
+github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.1.1/go.mod h1:inb1U/NMQWMjoDBEhpabB/cI06SkgWnbM4dHKFHCG60=
+github.com/danielfdickinson/minimal-test-theme-hugo-dfd v0.1.2 h1:oXyZwZotZx5RyQV8KXm120HVniXQzsBnSK7GhvkkBrU=
+github.com/danielfdickinson/minimal-test-theme-hugo-dfd v0.1.2/go.mod h1:yu/RUtbx29O/vvbthJjLqXXu7cdE/e8XZ3rVvh+01BM=

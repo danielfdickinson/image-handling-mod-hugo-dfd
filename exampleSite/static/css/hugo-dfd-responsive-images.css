@@ -112,6 +112,22 @@ figcaption {
     margin-right: 1em;
 }
 
+.main-test-min #dfd-hugo-image-handling-module ~ #examples ~ [id|="result"] + p {
+    background-color: black;
+    display: block;
+    line-height: 1;
+    width: 100%;
+}
+
+.main-test-min #dfd-hugo-image-handling-module ~ #examples ~ [id|="result"] + p img {
+    background-color: whitesmoke;
+    border: 2px solid black;
+    height: auto;
+    opacity: .75;
+    padding: .4em;
+    width: 100%;
+}
+
 @media screen and (max-width: 768px) {
     #markdown-thumbnail-test ~ p {
         display: block;

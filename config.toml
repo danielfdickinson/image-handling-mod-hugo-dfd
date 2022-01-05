@@ -16,7 +16,7 @@ defaultContentLanguage = "en"
 [author]
   name = "Daniel F. Dickinson"
   homepage = "https://www.danielfdickinson.ca/about/"
-  email = "dfdpublic@wildtechgarden.a'
+  email = "dfdpublic@wildtechgarden.ca"
 
   [[author.authors]]
     name = "Daniel F. Dickinson"
