@@ -1,10 +1,10 @@
 # DFD Hugo Image Handling Module
 
-A Hugo module for handling image and image-related functionality for themes
+A Hugo module for handling images and image-related functionality for themes
 
 ## Status
 
-TBD
+![build-and-verify](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/actions/workflows/build-and-verify.yml/badge.svg)
 
 ## GitHub Repository
 
@@ -16,7 +16,7 @@ TBD
   * via a render-image hook
   * via a shortcode
 * TODO: #6 Cover images
-* Microformat (e.g. OpenGraph/Twitter) support (in combination with [DFD Hugo Microformats Module](https://github.com/danielfdickinson/hugo-dfd-microformats) via [DFD Hugo Metadata Module](https://github.com/danielfdickinson/hugo-dfd-metadata-central),
+* Microformat (e.g. Open Graph/Twitter) support (in combination with [DFD Hugo Microformats Module](https://github.com/danielfdickinson/hugo-dfd-microformats) via [DFD Hugo Metadata Module](https://github.com/danielfdickinson/hugo-dfd-metadata-central),
 * Thumbnails (e.g. for blog/taxonomy/HTML sitemap/etc listings)
   * Configurable between thumbnail and full width or height image
   * Sitewide defaults
@@ -211,8 +211,6 @@ E.g.
 ![Screenshot of a web page with an aqua theme](screenshot.png)
 ```
 
-Which you can [view on this module's demo site](https://hugo-dfd-responsive-images.wildtechgarden.ca/post/testimage1/#via-markdown).
-
 ### Use Figure Shortcode
 
 E.g.
@@ -223,15 +221,11 @@ E.g.
 {{< figure class="responsive-figure" title="Figure 1: Differences between markdown figures and figure shortcode" src="screenshot.png" alt="Screenshot of a web page with an aqua theme" caption="For a figure caption can be different than alt text">}}
 ```
 
-Which you can [view on this module's demo site](https://hugo-dfd-responsive-images.wildtechgarden.ca/post/testimage1/#via-figure-shortcode).
-
 ### Example #2
 
 ```markdown
 {{< figure class="responsive-figure fullwidth" title="Figure 1: Differences between markdown figures and figure shortcode (full width)" src="screenshot.png" alt="Screenshot of a web page with an aqua theme" caption="For a figure caption can be different than alt text">}}
 ```
-
-Which you can [view on this module's demo site](https://hugo-dfd-responsive-images.wildtechgarden.ca/post/testimage1/#via-figure-shortcode-fullwidth).
 
 See [partial below](#wrapped-image) for the full set of parameters you can use with the shortcode.
 ## Advanced Usage
@@ -290,7 +284,7 @@ Not all combinations of parameters make sense.
 
 ## Examples
 
-### Test Image #1 on the [DFD Responsive Images Demo Site](https://hugo-dfd-responsive-images.wildtechgarden.ca/)
+### Test Image #1
 
 #### Source
 <https://github.com/danielfdickinson/hugo-dfd-responsive-images/blob/main/exampleSite/content/post/testimage1/index.md>
@@ -299,9 +293,9 @@ Not all combinations of parameters make sense.
 
 Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
 
-#### The Result
+#### Result
 
-<https://hugo-dfd-responsive-images.wildtechgarden.ca/post/testimage1/>
+![Image shows three different styling variations on a screenshot of a website](README-images/testimage1-result-screenshot.png)
 
 ### Test Image #2
 
@@ -312,9 +306,9 @@ Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = 
 
 Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
 
-#### The Result
+#### Result
 
-<https://hugo-dfd-responsive-images.wildtechgarden.ca/post/testimage2/>
+![Image shows four different styling variations on a screenshot of a website](README-images/testimage2-result-screenshot.png)
 
 ### Test Image #3
 
@@ -325,9 +319,9 @@ Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = 
 
 Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
 
-#### The Result
+#### Result
 
-<https://hugo-dfd-responsive-images.wildtechgarden.ca/post/testimage3/>
+![Image shows four different styling variations on a screenshot of a website](README-images/testimage3-result-screenshot.png)
 
 ### Test Thumbnails #1
 
@@ -338,9 +332,9 @@ Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = 
 
 Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
 
-#### The Result
+#### Result
 
-<https://hugo-dfd-responsive-images.wildtechgarden.ca/post/test-thumbnails-1/>
+![Image shows three image thumbnails in a row (with large amounts space between them)](README-images/testthumbnails1-result-screenshot.png)
 
 ### Test Thumbnails #2
 
@@ -351,6 +345,6 @@ Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = 
 
 Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
 
-#### The Result
+#### Result
 
-<https://hugo-dfd-responsive-images.wildtechgarden.ca/post/test-thumbnails-2/>
+![Image shows three image thumbnails in a row (with some space between them)](README-images/testthumbnails2-result-screenshot.png)

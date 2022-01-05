@@ -1,9 +1,9 @@
 ---
-title: "Hugo DFD Responsive Images README"
+title: "DFD Hugo Image Handling Module README"
 author: Daniel F. Dickinson
 categories:
     - Documentation
 tags:
     - HOWTO
 ---
-{{< page-assets "README-dfd-responsive-images.md" >}}
+{{< page-assets "README-dfd-image-handling.md" >}}
