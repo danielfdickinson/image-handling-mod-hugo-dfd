@@ -1,0 +1,49 @@
+---
+name: build-and-verify
+on:
+  pull_request:
+    types:
+      - assigned
+      - opened
+      - synchronize
+      - reopened
+  push:
+    branches:
+      - 'feature**'
+      - main
+      - 'staging**'
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.vscode'
+      - 'scripts'
+jobs:
+  build-unminified-site:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Build Site with Hugo and Audit"
+        uses: danielfdickinson/build-audit-action-hugo-dfd@v0.1.0
+        with:
+          upload-site-as: unminified-site
+          use-lfs: true
+          source-directory: exampleSite
+  validate-unminified-html:
+    needs: build-unminified-site
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Validate exampleSite HTML"
+        uses: danielfdickinson/validate-html-action-hugo-dfd@v0.1.0
+  check-links:
+    needs: build-unminified-site
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Check internal links"
+        uses: danielfdickinson/link-check-action-hugo-dfd@v0.1.1
+        with:
+          canonical-root: https://example.com/
+          entry-point: index.html
+          upload-logs-as: check-links-failure
+          upload-logs-retention: 3
