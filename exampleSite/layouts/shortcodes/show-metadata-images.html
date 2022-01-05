@@ -1,0 +1,6 @@
+{{- $images := partial "helpers/lib/metadata/gather-images" .Page -}}
+{{- range $images -}}
+<div class="metadata-image">
+    <img src="{{ . }}">
+</div>
+{{- end -}}
