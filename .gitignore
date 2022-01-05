@@ -1,7 +1,6 @@
-/exampleSite/public/
-/exampleSite/resources/
-/resources/
-.netlify
-/netlify.log
+public
+resources
 node_modules
-_vendor
+.hugo_build.lock
+html-validate.log
+check-links.log
