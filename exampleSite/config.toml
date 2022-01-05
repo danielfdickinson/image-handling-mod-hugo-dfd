@@ -39,7 +39,6 @@ disableKinds = ["sitemap","RSS"]
                 pageref = "/accessibility"
                 weight = 20
 
-
 [author]
     name = "Daniel F. Dickinson"
     homepage = "https://www.wildtechgarden.ca/about/"
