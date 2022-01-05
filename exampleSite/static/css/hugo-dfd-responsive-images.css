@@ -112,14 +112,14 @@ figcaption {
     margin-right: 1em;
 }
 
-.main-test-min #dfd-hugo-image-handling-module ~ #examples ~ [id|="result"] + p {
+.main-test-min [id|="dfd-hugo-image-handling-module"] ~ #examples ~ [id|="result"] + p {
     background-color: black;
     display: block;
     line-height: 1;
     width: 100%;
 }
 
-.main-test-min #dfd-hugo-image-handling-module ~ #examples ~ [id|="result"] + p img {
+.main-test-min [id|="dfd-hugo-image-handling-module"] ~ #examples ~ [id|="result"] + p img {
     background-color: whitesmoke;
     border: 2px solid black;
     height: auto;
