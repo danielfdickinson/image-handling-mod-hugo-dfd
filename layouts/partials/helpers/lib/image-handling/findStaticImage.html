@@ -1,0 +1,16 @@
+{{- $destination := .destination -}}
+{{- $getRelative := .getRelative -}}
+{{- $finalDestination := "" -}}
+{{- $isFile := false -}}
+{{- if $destination -}}
+    {{- /* fileExists operates relative to site root not relative to applicable directory */ -}}
+    {{- $filePath := path.Join "/static" $destination -}}{{- /* Non-resource images must be in 'static' */ -}}
+    {{- if fileExists $filePath -}}
+        {{- if not $getRelative -}}
+            {{- $finalDestination = $destination | absURL -}}
+        {{- else -}}
+            {{- $finalDestination = $destination | absURL | relURL -}}{{- /* Canonicalize the URL */ -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- return $finalDestination -}}
