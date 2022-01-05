@@ -16,7 +16,7 @@ weight: 30
 
 no wrapper, alt as caption:
 
-![Yorkshire Terrier Poodle cross (dog) curled up on a duvet and looking towards camera](cappy-on-bed.jpeg))
+![Yorkshire Terrier Poodle cross (dog) curled up on a duvet and looking towards camera](cappy-on-bed.jpeg)
 
 ## Via figure shortcode (but \<div> as wrapper):
 
