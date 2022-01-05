@@ -100,13 +100,7 @@
                 {{- $linkHref = $inLink -}}
             {{- end -}}
             {{- $rel := $inRel | default "noopener noreferrer" -}}
-            {{- partial "helpers/link-open" (dict
-                "page" $inPage
-                "destination" $linkHref
-                "close" false
-                "target" $inTarget
-                "rel" $rel
-            ) -}}
+            {{- partial "helpers/link-open" (dict "page" $inPage "destination" $linkHref "close" false "target" $inTarget "rel" $rel "destinationNoFind" true) -}}
         {{- end -}}
         {{- $usePicture := false -}}
         {{- if (and (ne $fullImgMap.finalSrc "") (ne $thumbnailImgMap.finalSrc "")) -}}
