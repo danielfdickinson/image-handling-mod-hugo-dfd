@@ -93,7 +93,7 @@ figcaption {
 #markdown-thumbnail-test ~ p {
     display: inline-block;
     margin-right: 1em;
-}   
+}
 
 .thumbnail-markdown {
     display: inline-block;
@@ -132,7 +132,7 @@ figcaption {
     #markdown-thumbnail-test ~ p {
         display: block;
         margin-right: revert;
-    }   
+    }
 
     .thumbnail-markdown {
         display: revert;

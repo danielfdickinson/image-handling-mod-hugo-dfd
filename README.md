@@ -159,7 +159,7 @@ figcaption {
 #markdown-thumbnail-test ~ p {
     display: inline-block;
     margin-right: 1em;
-}   
+}
 
 .thumbnail-markdown {
     display: inline-block;
@@ -182,7 +182,7 @@ figcaption {
     #markdown-thumbnail-test ~ p {
         display: block;
         margin-right: revert;
-    }   
+    }
 
     .thumbnail-markdown {
         display: revert;
@@ -266,7 +266,7 @@ Not all combinations of parameters make sense.
     "thumbnailsizesattr" "As with sizesattr but for thumbnails"
     "minthumbnailviewport" "Minimum size of the viewport that is require to display thumbnails instead of full images"
     "loading" "If set, is the 'loading=' attribute for the 'img'"
-    ) 
+    )
 -}}
 
 ```
