@@ -21,20 +21,28 @@ on:
 jobs:
   build-unminified-site:
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        hugo: ["0.80.0", "0.88.1", "latest"]
     steps:
       - name: "Build Site with Hugo and Audit"
-        uses: danielfdickinson/build-audit-action-hugo-dfd@v0.1.0
+        uses: danielfdickinson/build-audit-action-hugo-dfd@v0.1.1
         with:
-          upload-site-as: unminified-site
+          upload-site-as: unminified-site-${{ matrix.hugo }}
           use-lfs: true
           source-directory: exampleSite
   validate-unminified-html:
     needs: build-unminified-site
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        hugo: ["0.80.0", "0.88.1", "latest"]
     steps:
       - uses: actions/checkout@v2
       - name: "Validate exampleSite HTML"
         uses: danielfdickinson/validate-html-action-hugo-dfd@v0.1.0
+        with:
+          download-site-as: unminified-site-${{ matrix.hugo }}
   check-links:
     needs: build-unminified-site
     runs-on: ubuntu-20.04
@@ -44,6 +52,7 @@ jobs:
         uses: danielfdickinson/link-check-action-hugo-dfd@v0.1.1
         with:
           canonical-root: https://example.com/
+          download-site-as: unminified-site-latest
           entry-point: index.html
           upload-logs-as: check-links-failure
           upload-logs-retention: 3
