@@ -1,0 +1,45 @@
+{{- $destination := .src -}}
+{{- $curPage := .page -}}
+{{- $relativeURL := .getRelative -}}
+{{- $ignoreBundleAssets := .ignoreBundleAssets -}}
+{{- $external := false -}}
+{{- $finalDestination := "" -}}
+{{- $external := false -}}
+{{- $path := "" -}}
+{{- $imageResource := false -}}
+{{- with urls.Parse $destination -}}
+    {{- if or .Host .Scheme -}}
+        {{- $external = true -}}
+    {{- end -}}
+    {{- $path = .Path -}}
+{{- else -}}
+    {{- errorf printf "Unable to parse image src '%s'" $destination -}}
+{{- end -}}
+{{- if and $path (not $external) -}}
+    {{- /* Prefer page bundle assets unless we are ignore page bundle */ -}}
+    {{- if ne $ignoreBundleAssets true -}}
+        {{- $imageResources := $curPage.Resources.ByType "image" -}}
+        {{- $imageResource = $imageResources.GetMatch (printf "*%s*" $path) -}}
+    {{- end -}}
+    {{- /* Next prefer assets from 'assets' directory */ -}}
+    {{- if not $imageResource -}}
+        {{- $imageResource = resources.Get $path -}}
+    {{- end -}}
+    {{- /* Finally (for local images), try the 'static' directory (not a resource so no Hugo Pipes) */ -}}
+    {{- /* In both cases, get the link to the image */ -}}
+    {{- if not $imageResource -}}
+        {{- $finalDestination = partial "helpers/lib/image-handling/get-static-image" (dict "destination" $path "getRelative" false) -}}
+    {{- else -}}
+        {{- $finalDestination = partial "helpers/lib/image-handling/get-resource-link" (dict "imageResource" $imageResource "getRelative" false ) -}}
+    {{- end -}}
+    {{- if not $finalDestination -}}
+        {{- if $curPage.File -}}
+            {{- errorf (printf "Image %s is missing and not external for page %s" $destination $curPage.File.Path) -}}
+        {{- else -}}
+            {{- errorf (printf "Image %s is missing and not external for page %s" $destination $curPage.Title) -}}
+        {{- end -}}
+    {{- end -}}
+{{- else if $external -}}{{- /* Use external URLs verbatim (not as a resource so no Hugo Pipes; we don't use 0.92.x only functionality, yet) */ -}}
+    {{- $finalDestination =  $destination -}}
+{{- end -}}
+{{- return (dict "imageResource" $imageResource "link" $finalDestination) -}}
