@@ -1,0 +1,19 @@
+{{- $finalImages := (slice) -}}
+{{- $inPage := .page -}}
+{{- $inImages := .images -}}
+{{- $microformatWidth := .Page.Params.microformatWidth | default .Page.Site.Params.microformatWidth | default 1200 | int -}}
+{{- $microformatHeight := .Page.Params.microformatHeight | default .Page.Site.Params.microformatHeight | default 630 | int -}}
+{{- $microformatConvertMethod := .Page.Params.microformatConvertMethod | default .Page.Site.Params.microformatConvertMethod | default "GrowFit" -}}
+{{- with $inImages -}}
+    {{- range . -}}
+        {{- $image := .imageResource -}}
+        {{- $link := .link -}}
+        {{- if $image -}}{{- /* If we have an image resource, process the image */ -}}
+            {{ $imageMap := partial "helpers/lib/image-handling/generate-images" (dict "page" $inPage "singleSize" true "image" . "width" $microformatWidth "height" $microformatHeight "convertMethod" "GrowFit") -}}
+            {{ $finalImages = $finalImages | append (dict "image" $imageMap.fullImage "link" $imageMap.finalSrc "width" $imageMap.width "height" $imageMap.height) -}}
+        {{- else -}}{{- /* If we don't have an image resource, just keep the map (which has the .link for the image) */ -}}
+            {{- $finalImages = $finalImages | append . -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- return $finalImages -}}
