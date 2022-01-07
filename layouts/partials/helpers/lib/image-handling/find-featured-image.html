@@ -16,6 +16,6 @@
     {{- $featured = $imageResources.GetMatch "{*cover*,*thumbnail*}" -}}
 {{- end -}}
 {{- with $featured -}}
-    {{- $featuredLink = partial "helpers/lib/image-handling/getResourceLink" (dict "imageResource" $featured "getRelative" $relativeURL) -}}
+    {{- $featuredLink = partial "helpers/lib/image-handling/get-resource-link" (dict "imageResource" $featured "getRelative" $relativeURL) -}}
 {{- end -}}
-{{- return $featuredLink -}}
+{{- return (dict "imageResource" $featured "link" $featuredLink) -}}
