@@ -1,10 +1,10 @@
 {{- $ctx := . -}}
-{{- $inImgMap := .imgmap -}}
+{{- $inImgMap := .imgMap -}}
 {{- $inPage := .page -}}
 {{- $inAlt := .alt -}}
 {{- $inTitle := .title -}}
-{{- $inUseSrcSet := .usesrcset -}}
-{{- $inSizesAttr := .sizesattr -}}
+{{- $inUseSrcSet := .useSrcSet -}}
+{{- $inSizesAttr := .sizesAttr -}}
 {{- $inLoading := .loading -}}
 {{- $inClass := .class -}}
 {{- $loading := $inLoading | default $inPage.Params.imageLoading | default $inPage.Site.Params.imageLoading }}

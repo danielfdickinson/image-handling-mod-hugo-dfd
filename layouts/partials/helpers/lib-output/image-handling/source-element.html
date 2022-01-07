@@ -1,8 +1,8 @@
 {{- $ctx := . -}}
-{{- $inImgMap := .imgmap -}}
+{{- $inImgMap := .imgMap -}}
 {{- $inPage := .page -}}
-{{- $inUseSrcSet := .usesrcset -}}
-{{- $inSizesAttr := .sizesattr -}}
+{{- $inUseSrcSet := .useSrcSet -}}
+{{- $inSizesAttr := .sizesAttr -}}
 {{- $inMedia := .media -}}
 <source src="{{ $inImgMap.finalSrc }}" media="{{ $inMedia }}"
 {{ if and (ge (len $inImgMap.srcSet) 1) $inUseSrcSet -}}
