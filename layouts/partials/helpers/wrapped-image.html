@@ -1,30 +1,30 @@
 {{- $ctx := . -}}
 {{- $inWidth := .width -}}
 {{- $inHeight := .height -}}
-{{- $inThumbnailWidth := .thumbnailwidth -}}
-{{- $inThumbnailHeight := .thumbnailheight -}}
+{{- $inThumbnailWidth := .thumbnailWidth -}}
+{{- $inThumbnailHeight := .thumbnailHeight -}}
 {{- $inAlt := .alt -}}
 {{- $inTitle := .title -}}
-{{- $inSrc := .src -}}{{- /* Image source (src="…") attribute */ -}}
+{{- $inImage := .image -}}{{- /* Image dict has .imageResource if available and has .link */ -}}
 {{- $inPage := .page -}}
 {{- $inLink := .link -}}
 {{- $inTarget := .target -}}
 {{- $inRel := .rel -}}
-{{- $inImageWrapper := .imagewrapper -}}
+{{- $inImageWrapper := .imageWrapper -}}
 {{- $inCaption := .caption -}}
 {{- $inAttr := .attr -}}
-{{- $inAttrLink := .attrlink -}}
+{{- $inAttrLink := .attrLink -}}
 {{- $inClass := .class -}}
 {{- $inNoImageWrapper := .noImageWrapper -}}
-{{- $inImageSizes := .imagesizes -}}
-{{- $inThumbnailSizes := .thumbnailsizes -}}
-{{- $inSingleSize := .singlesize -}}
-{{- $inConvertTo := .convertto -}}
+{{- $inImageSizes := .imageSizes -}}
+{{- $inThumbnailSizes := .thumbnailSizes -}}
+{{- $inSingleSize := .singleSize -}}
+{{- $inConvertTo := .convertTo -}}
 {{- $inDoThumbnails := .thumbnails -}}
-{{- $inDoFullSize := .fullsize -}}
-{{- $inSizesAttr := .sizesattr -}}
-{{- $inThumbnailSizesAttr := .thumbnailsizesattr -}}
-{{- $inMinThumbnailViewport := .minthumbnailviewport -}}
+{{- $inDoFullSize := .fullSize -}}
+{{- $inSizesAttr := .sizesAttr -}}
+{{- $inThumbnailSizesAttr := .thumbnailSizesAttr -}}
+{{- $inMinThumbnailViewport := .minThumbnailViewport -}}
 {{- $inLoading := .loading -}}
 
 {{- with $inPage -}}
@@ -70,34 +70,8 @@
         {{- end -}}
     {{ end -}}
 
-    {{- $pictureOptions := (
-        dict "width" $inWidth
-        "height" $inHeight
-        "thumbnailwidth" $inThumbnailWidth
-        "thumbnailheight" $inThumbnailHeight
-        "alt" $alt
-        "title" $inTitle
-        "src" $inSrc
-        "page" $inPage
-        "caption" $caption
-        "class" (cond (eq $imageWrapper "") $class "")
-        "imagesizes" $inImageSizes
-        "thumbnailsizes" $inThumbnailSizes
-        "singlesize" $inSingleSize
-        "convertto" $inConvertTo
-        "thumbnails" $inDoThumbnails
-        "fullsize" $inDoFullSize
-        "sizesattr" $inSizesAttr
-        "thumbnailsizesattr" $inThumbnailSizesAttr
-        "loading" $inLoading
-        "addlink" $addLink
-        "link" $inLink
-        "target" $inTarget
-        "rel" $inRel
-        "minthumbnailviewport" $inMinThumbnailViewport
-        "addclass" (eq $imageWrapper "")
-    ) -}}
-    {{ partial "helpers/libexec/responsive-images/thumbnail-or-full-picture" $pictureOptions }}
+    {{- $pictureOptions := (dict "width" $inWidth "height" $inHeight "thumbnailWidth" $inThumbnailWidth "thumbnailHeight" $inThumbnailHeight "alt" $alt "title" $inTitle "image" $inImage "page" $inPage "caption" $caption "class" (cond (eq $imageWrapper "") $class "") "imageSizes" $inImageSizes "thumbnailSizes" $inThumbnailSizes "singleSize" $inSingleSize "convertTo" $inConvertTo "thumbnails" $inDoThumbnails "fullSize" $inDoFullSize "sizesAttr" $inSizesAttr "thumbnailSizeAttr" $inThumbnailSizesAttr "loading" $inLoading "addLink" $addLink "link" $inLink "target" $inTarget "rel" $inRel "minThumbnailViewport" $inMinThumbnailViewport "addClass" (eq $imageWrapper "")) -}}
+    {{ partial "helpers/lib-output/image-handling/thumbnail-or-full-picture" $pictureOptions }}
     {{- if $imageWrapper -}}
         {{- if or $inTitle $caption $inAttr -}}
             {{ if (eq $imageWrapper "figure") }}<figcaption>{{ else if not $inTitle }}<span>{{ else }}<div>{{ end }}
