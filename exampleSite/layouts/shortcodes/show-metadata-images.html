@@ -1,6 +1,7 @@
 {{- $images := partial "helpers/lib/metadata/gather-images" .Page -}}
+{{- $images = partial "helpers/lib/image-handling/generate-microformat-images" (dict "page" .Page "images" $images) -}}
 {{- range $images -}}
-<div class="metadata-image">
-    <img src="{{ . }}">
+<div class="metadata-image-wrapper">
+    <img class="metadata-image" src="{{ .link }}"{{ with .width }} width="{{ . }}"{{ end }}{{ with .height }} height="{{ . }}"{{ end }}>
 </div>
 {{- end -}}

@@ -11,9 +11,9 @@ disableKinds = ["sitemap","RSS"]
     tag = "tags"
 
 [params]
-    mainSections = ["post","docs"]
-    # Footnotes and TableOfContents don't work properly with a base href set in <head>
-    useBaseURL = false
+    mainSections = ["post"]
+    # Footnotes and TableOfContents don't work properly with a base href set in <head>, but won don't use either for this 'site'.
+    useBaseURL = true
     imageConvertTo = "webp"
 
 # See https://gohugo.io/content-management/multilingual/
@@ -22,7 +22,7 @@ disableKinds = ["sitemap","RSS"]
     [languages.en]
         languageName = ":en:"
         languageAltTitle = "English"
-        title = "Demo site for DFD Image Handling Hugo Module"
+        title = "Demo Site for DFD Image Handling Hugo Module"
         description = "Demo site for Hugo module for handling images and image-related functionality for themes"
         weight = 1
     
@@ -30,13 +30,13 @@ disableKinds = ["sitemap","RSS"]
             [[languages.en.menu.main]]
                 identifier = "about"
                 name = "About"
-                pageref = "about"
+                url = "/about" # Replacing url with pageref requires Hugo 0.86.0
                 weight = 10
 
             [[languages.en.menu.main]]
                 identifier = "accessibility"
                 name = "Accessibility"
-                pageref = "/accessibility"
+                url = "/accessibility" # Replacing url with pageref requires Hugo 0.86.0
                 weight = 20
 
 [author]

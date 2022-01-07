@@ -4,8 +4,7 @@
     <title>{{ .Title | default site.Title }}</title>
     {{- if ne (.Param "testStylesInclude") false }}
     <link rel="stylesheet" href="/css/test-minimal-dfd.css">
-    <link rel="stylesheet" href="/css/test-minimal-dfd-old.css">
-    <link rel="stylesheet" href="/css/hugo-dfd-responsive-images.css">
+    <link rel="stylesheet" href="/css/image-handling-hugo-dfd.css">
     {{- end }}
     {{ replace (hugo.Generator) " /" "" | safeHTML }}
     {{ if eq (.Param "useBaseUrl") true -}}{{ if $.Site.BaseURL -}}<base href="{{ $.Site.BaseURL }}" />{{- end }}{{- end }}
