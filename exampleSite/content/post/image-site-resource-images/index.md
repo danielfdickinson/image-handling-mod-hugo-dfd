@@ -8,9 +8,9 @@ tags:
     - metadata
     - opengraph
 images:
-     - site-resource/favicon-ascface-512x512.png
-     - site-resource/cappy-on-bed.jpeg
-     - site-resource/backgarden-tulips+rocks.png
+     - [site-resource/favicon-ascface-512x512.png, "squarish ASCI art smiley"]
+     - [site-resource/cappy-on-bed.jpeg, "Yorshire Terrier - Poodle cross (dog) on duvet on bed"]
+     - [site-resource/backgarden-tulips+rocks.png, "a rock garden with tulips and rust coloured plants in bloom"]
 ---
 
 ## Image(s) found for this page via ``gather-images``

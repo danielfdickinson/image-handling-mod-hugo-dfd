@@ -2,6 +2,7 @@
 {{- $curPage := .page -}}
 {{- $relativeURL := .getRelative -}}
 {{- $ignoreBundleAssets := .ignoreBundleAssets -}}
+{{- $alt := .alt -}}
 {{- $external := false -}}
 {{- $finalDestination := "" -}}
 {{- $external := false -}}
@@ -42,4 +43,4 @@
 {{- else if $external -}}{{- /* Use external URLs verbatim (not as a resource so no Hugo Pipes; we don't use 0.92.x only functionality, yet) */ -}}
     {{- $finalDestination =  $destination -}}
 {{- end -}}
-{{- return (dict "imageResource" $imageResource "link" $finalDestination) -}}
+{{- return (dict "imageResource" $imageResource "link" $finalDestination "alt" $alt) -}}

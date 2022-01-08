@@ -7,6 +7,7 @@ tags:
     - images
     - metadata
     - opengraph
+imageFeaturedAlt: "A black backwards pointing arrow with a red 'stop' circle over the top"
 ---
 
 ## Image(s) found for this page via ``gather-images``
