@@ -6,6 +6,7 @@
 
 {{- /* Try page-level images first */ -}}
 {{- $featuredParam := $curPage.Params.imageFeatured | default $curPage.Params.imageCover | default $curPage.Params.imageThumbnail -}}
+{{- $featuredAlt := $curPage.Params.imageFeaturedAlt | default $curPage.Params.imageCoverAlt | default $curPage.Params.imageThumbnailAlt -}}
 {{- $imageResources := $curPage.Resources.ByType "image" -}}
 {{- if and $featuredParam $imageResources -}}
     {{- $featured = $imageResources.GetMatch (printf "*%s*" $featuredParam) -}}
@@ -18,4 +19,4 @@
 {{- with $featured -}}
     {{- $featuredLink = partial "helpers/lib/image-handling/get-resource-link" (dict "imageResource" $featured "getRelative" $relativeURL) -}}
 {{- end -}}
-{{- return (dict "imageResource" $featured "link" $featuredLink) -}}
+{{- return (dict "imageResource" $featured "link" $featuredLink "alt" $featuredAlt) -}}
