@@ -1,0 +1,47 @@
+{{- $curPage := .page -}}
+{{- $relativeUrl := .getRelative -}}
+{{- $featuredImages := $curPage.Scratch.Get "non-existent-scratch" -}}
+{{- $featuredImagesByName := $curPage.Scratch.Get "non-existent-scratch" -}}
+{{- $image := $curPage.Scratch.Get "non-existent-scratch" -}}
+{{- /* Try page-level images first */ -}}
+{{- $featuredParam := $curPage.Params.imageFeatured | default $curPage.Params.imageCover | default $curPage.Params.imageThumbnail -}}
+{{- if $featuredParam -}}
+    {{- $featuredImages = partial "helpers/lib/image-handling/find-image-maps" (dict "page" $curPage "images" $featuredParam "ignoreBundleAssets" false "ignoreSiteAssets" true "getRelative" $relativeUrl) -}}
+{{- end -}}
+{{- $imageResources := $curPage.Resources.ByType "image" -}}
+{{ if and (not $featuredImages) $imageResources -}}
+    {{- $featuredImagesByName = $imageResources.Match "*feature*" -}}
+{{- end -}}
+{{ if and (not $featuredImages) (not $featuredImagesByName) $imageResources -}}
+    {{- $featuredImagesByName = $imageResources.Match "{*cover*,*thumbnail*}" -}}
+{{- end -}}
+{{ if and (not $featuredImages) (not $featuredImagesByName) $imageResources -}}
+    {{- $featuredImages = partial "helpers/lib/image-handling/find-image-maps" (dict "page" $curPage "images" $imageResources "ignoreBundleAssets" true "ignoreSiteAssets" false "getRelative" $relativeUrl) -}}
+{{- end -}}
+{{- with $featuredImagesByName -}}
+    {{- $featuredImages = (slice) -}}
+    {{- if reflect.IsSlice . -}}
+        {{- range . -}}
+            {{- $image = partial "helpers/lib/image-handling/generate-featured-image" (dict "page" $curPage "imageResource" . "getRelative" $relativeUrl) -}}
+            {{- $featuredImages = $featuredImages | append $image -}}
+        {{- end -}}
+    {{- else -}}
+        {{- $image = partial "helpers/lib/image-handling/generate-featured-image" (dict "page" $curPage "imageResource" . "getRelative" $relativeUrl) -}}
+        {{- $featuredImages = $image -}}
+    {{- end -}}
+{{- else -}}
+    {{- with $featuredImages -}}
+        {{- if reflect.IsMap . -}}
+            {{- $image = partial "helpers/lib/image-handling/generate-featured-image" (dict "page" $curPage "imageResource" .imageResource "getRelative" $relativeUrl) -}}
+            {{- $featuredImages = $image -}}
+        {{- else if reflect.IsSlice . -}}
+            {{- range . -}}
+                {{- if reflect.IsMap . -}}
+                    {{- $image = partial "helpers/lib/image-handling/generate-featured-image" (dict "page" $curPage "imageResource" .imageResource "getRelative" $relativeUrl) -}}
+                    {{- $featuredImages = $featuredImages | append $image -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- return $featuredImages -}}

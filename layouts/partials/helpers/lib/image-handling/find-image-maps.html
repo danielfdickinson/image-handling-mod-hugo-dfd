@@ -1,0 +1,54 @@
+{{- $ctx := . -}}
+{{- $curPage := .page -}}
+{{- $inImages := .images -}}
+{{- $getRelative := .getRelative -}}
+{{- $ignoreBundleAssets := .ignoreBundleAssets -}}
+{{- $ignoreSiteAssets := .ignoreSiteAssets -}}
+{{- $images := (slice) -}}
+{{- $allFlat := true -}}
+{{- if reflect.IsMap $inImages -}}
+    {{- with (partial "helpers/lib/image-handling/find-image-src" (dict "src" $inImages.src "alt" (cond (isset $inImages "alt") $inImages.alt "") "title" (cond (isset $inImages "title") $inImages.title "") "page" $curPage "getRelative" $getRelative "ignoreBundleAssets" $ignoreBundleAssets "ignoreSiteAssets" $ignoreSiteAssets)) -}}            
+        {{- $images = $images | append . -}}
+        {{- $allFlat = false -}}
+    {{- end -}}
+{{- else if reflect.IsSlice $inImages -}}
+    {{- range $inImages -}}
+        {{- if reflect.IsMap . -}}
+            {{- with (partial "helpers/lib/image-handling/find-image-src" (dict "src" .src "alt" (cond (isset . "alt") .alt "") "title" (cond (isset . "title") .title "") "page" $curPage "getRelative" $getRelative "ignoreBundleAssets" $ignoreBundleAssets "ignoreSiteAssets" $ignoreSiteAssets)) -}}            
+                {{- $images = $images | append . -}}
+                {{- $allFlat = false -}}
+            {{- end -}}
+        {{- else if reflect.IsSlice . -}}            
+            {{- with (partial "helpers/lib/image-handling/find-image-src" (dict "src" (index . 0) "alt" (cond (isset . 1) (index . 1) "") "title" (cond (isset . 2) (index . 2) "") "page" $curPage "getRelative" $getRelative "ignoreBundleAssets" $ignoreBundleAssets "ignoreSiteAssets" $ignoreSiteAssets)) -}}            
+                {{- $images = $images | append . -}}
+                {{- $allFlat = false -}}
+            {{- end -}}
+        {{- else -}}
+            {{- with (partial "helpers/lib/image-handling/find-image-src" (dict "src" . "page" $curPage "getRelative" $getRelative "ignoreBundleAssets" $ignoreBundleAssets "ignoreSiteAssets" $ignoreSiteAssets)) -}}
+                {{- $images = $images | append . -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- else -}}
+    {{- with (partial "helpers/lib/image-handling/find-image-src" (dict "src" $inImages "page" $curPage "getRelative" $getRelative "ignoreBundleAssets" $ignoreBundleAssets "ignoreSiteAssets" $ignoreSiteAssets)) -}}
+        {{- $images = $images | append . -}}
+    {{- end -}}
+{{- end -}}
+{{- if $allFlat -}}
+    {{- if eq (len $images) 0 -}}
+        {{- $images = $curPage.Scratch.Get "non-existent-scratch" -}}
+    {{- else if eq (len $images) 1 -}}
+        {{- $images = (index $images 0).link -}}
+    {{- else -}}
+        {{- $imageLinks := (slice) -}}
+        {{- range $images -}}
+            {{- if reflect.IsMap . -}}
+                {{- $imageLinks = $imageLinks | append .link -}}
+            {{- else -}}
+                {{- $imageLinks = $imageLinks | append . -}}
+            {{- end -}}
+        {{- end -}}
+        {{- $images = $imageLinks -}}
+    {{- end -}}
+{{- end -}}
+{{- return $images -}}
