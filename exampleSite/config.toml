@@ -20,8 +20,7 @@ disableKinds = ["sitemap","RSS"]
 # and https://www.regisphilibert.com/blog/2018/08/hugo-multilingual-part-1-managing-content-translation/
 [languages]
     [languages.en]
-        languageName = ":en:"
-        languageAltTitle = "English"
+        languageName = "English"
         title = "Demo Site for DFD Image Handling Hugo Module"
         description = "Demo site for Hugo module for handling images and image-related functionality for themes"
         weight = 1
