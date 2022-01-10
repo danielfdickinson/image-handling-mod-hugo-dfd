@@ -1,5 +1,5 @@
 {{- $imageMetadata := partial "helpers/lib/metadata/gather-media-images" .Page -}}
-{{- $images := partial "helpers/lib/image-handling/generate-microformat-images" (dict "page" .Page "images" $imageMetadata) -}}
+{{- $images := partial "helpers/lib/microformats/generate-microformat-images" (dict "page" .Page "images" $imageMetadata) -}}
 {{- if reflect.IsMap $images -}}
 <div class="metadata-image-wrapper">
     <img class="metadata-image" src="{{ $images.link }}"{{ with $images.width }} width="{{ . }}"{{ end }}{{ with $images.height }} height="{{ . }}"{{ end }}{{ with $images.alt }} alt="{{ . }}"{{ end }}{{ with $images.title }} title="{{ . }}"{{ end }}>
