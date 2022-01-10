@@ -1,0 +1,40 @@
+{{- $curPage := .page -}}
+{{- $imageResource := .imageResource -}}
+{{- $relativeUrl := .getRelative -}}
+{{- $featuredAlt := $curPage.Params.imageFeaturedAlt | default $curPage.Params.imageCoverAlt | default $curPage.Params.imageThumbnailAlt -}}
+{{- $featuredTitle := $curPage.Params.imageFeaturedTitle | default $curPage.Params.imageCoverTitle | default $curPage.Params.imageThumbnailTitle -}}
+{{- $image := $curPage.Scratch.Get "non-existent-scratch" -}}
+{{- with $imageResource -}}
+    {{- $image = (dict "imageResource" . "link" .Permalink "url" .Permalink) -}}
+    {{- if $relativeUrl -}}
+        {{- $image = (dict "imageResource" . "link" .RelPermalink "url" .RelPermalink) -}}
+    {{- end -}}
+    {{- if partial "helpers/lib/image-handling/is-processable" . -}}
+        {{- $image = $image | merge (dict "width" .Width "height" .Height) -}}
+    {{- end -}}
+    {{- with $featuredAlt -}}
+        {{- if reflect.IsMap . -}}
+            {{- with (index . $image.url) -}}
+                {{ $image = $image | merge (dict "alt" . ) -}}
+            {{- end -}}
+        {{- else -}}
+            {{ $image = $image | merge (dict "alt" .) -}}
+        {{- end -}}
+    {{- end -}}    
+    {{- with $featuredTitle -}}
+        {{- if reflect.IsMap . -}}
+            {{- with (index . $image.url) -}}
+                {{ $image = $image | merge (dict "title" . ) -}}
+            {{- end -}}
+        {{- else -}}
+            {{ $image = $image | merge (dict "title" .) -}}
+        {{- end -}}
+    {{- end -}}    
+    {{- $secUrl := .Permalink -}}
+    {{- with urls.Parse $secUrl -}}
+        {{- if eq .Scheme "https" -}}
+            {{- $image = $image | merge (dict "secure_url" $secUrl) -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- return $image -}}
