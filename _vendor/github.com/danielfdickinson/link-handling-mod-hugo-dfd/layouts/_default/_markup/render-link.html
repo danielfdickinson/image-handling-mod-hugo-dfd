@@ -1,0 +1,29 @@
+{{- /* For internal links we:
+         1. Check of the link points to a file
+            a. If it does, we find the relLangURL (that is the URL of the page relative
+            the to site root (/ or baseURL))
+            b. If it does not, we check for any assets (site-wide .Resources) or 
+               page resources that match the link (e.g. from a page bundle)
+               i. If there are we use the assets relative permalink (again relative to
+               site root (/ or baseURL))
+         2. If nothing matched, we just use the link as it was given to us
+    */ -}}
+
+{{- /* As a special feature for markdown such as [](https://example.com) (that is a link
+       with no text), add "nofollow noreferrer noopener" as an easy way to add 'untrusted' external links.
+       If you need text and untrusted links, you will need a shortcode to support that.
+    */ -}}
+{{- $rel := .Page.Params.linkDefaultRelMarkdown | default .Page.Site.Params.linkDefaultRelMarkdown -}}
+{{- if strings.HasPrefix .Destination "http" }}
+    {{- if not .Text -}}
+         {{- $rel = "nofollow noreferrer noopener" -}}
+    {{- end -}}
+{{- end -}}
+
+{{- $destinationNoFind := .Page.Params.linkDefaultNoFindMarkdown | default .Page.Site.Params.linkDefaultNoFindMarkdown -}}
+{{- $wrapperElement := .Page.Params.linkWrapperMarkdown | default .Page.Site.Params.linkWrapperMarkdown | default "span" -}}
+{{- $wrapperClass := .Page.Params.linkWrapperClassMarkdown | default .Page.Site.Params.linkWrapperClassMarkdown | default "link-wrapper-demo-site" -}}
+{{- $linkClass := .Page.Params.linkClassMarkdown | default .Page.Site.Params.linkClassMarkdown | default "link-markdown-demo-site" -}}
+
+{{- partial "helpers/link-wrapper" (dict "page" .Page "destination" .Destination "title" .Title "text" .Text "rel" $rel "wrapperClass" $wrapperClass "linkClass" $linkClass "wrapperElement" $wrapperElement "destinationNoFind" $destinationNoFind) -}}
+{{- /* Drop trailing newlines */ -}}

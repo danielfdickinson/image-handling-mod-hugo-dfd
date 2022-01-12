@@ -1,0 +1,103 @@
+{{- $ctx := . -}}
+{{- $inPage := .page -}}
+{{- $inDestination := .destination -}}
+{{- /* For internal links we:
+         1. Check if the link points to a file
+            a. If it does, we find the relLangURL (that is the URL of the page relative
+            the to site root (/ or baseURL))
+            b. If it does not, we check for any assets (site-wide .Resources) or 
+               page resources that match the link (e.g. from a page bundle)
+               i. If there are we use the assets relative permalink (again relative to
+               site root (/ or baseURL))
+         2. If nothing matched, we just use the link as it was given to us
+    */ -}}
+{{- $path := "" -}}
+{{- $fragment := "" -}}
+{{- /* For external links we just use the link as is */ -}}
+{{- $external := false -}}
+{{- $destination := $inDestination -}}
+{{- $inUrl := urls.Parse $destination -}}
+{{- with $inUrl -}}
+    {{- if or .Host .Scheme -}}
+        {{- $external = true -}}
+    {{- end -}}
+    {{- $path = .Path -}}
+    {{- $fragment = .Fragment -}}
+{{- else -}}
+    {{- errorf printf "Unable to parse link destination '%s'" $destination -}}
+{{- end -}}
+{{- $tryResource := false -}}
+{{- $isFile := false -}}
+{{- /* We need to know the internal URL without any fragments (e.g. without #an-anchor) */ -}}
+{{- with $inPage -}}
+    {{- if $path -}}
+        {{- if not $external -}}{{- /* only try to find resources for internal links */ -}}
+            {{- /* fileExists operates relative to site root not relative to content directory */ -}}
+            {{- $filePath := (path.Join "/content" (.Site.LanguagePrefix) (.File.Path) $path) -}}{{- /* For links relative to the current page */ -}}
+            {{- if hasPrefix $path "/" -}}{{- /* For links relative to the output site root (e.g. /post/some-post) */ -}}
+                {{- $filePath = (path.Join "/content" (.Site.LanguagePrefix) $path) -}}
+            {{- else -}}
+                {{- $filePath = path.Join "/content" (.Site.LanguagePrefix) (.File.Path) ".." $path -}}
+            {{- end -}}
+            {{- if not (fileExists $filePath) -}}
+                {{- if or (fileExists (printf "%s.md" $filePath)) (fileExists (path.Join $filePath "_index.md")) (fileExists (path.Join $filePath "index.md")) -}}{{- /* Check if it is a Markdown content page */ -}}
+                    {{- $isFile = true -}}
+                {{- end -}}
+            {{- else -}}{{- /* Usually a link to an image or other non-page asset */ -}}
+                {{- $isFile = true -}}
+            {{- end -}}
+            {{- if not $isFile -}}
+                {{- if not (or .Data.Singular .Data.Plural .Data.Terms) -}}
+                    {{- $tryResource = true -}}
+                {{- end -}}
+            {{- else -}}{{- /* If the file exists */ -}}
+                {{- $destination = (strings.TrimSuffix ".md" (strings.TrimPrefix "/content" $filePath)) | relLangURL -}}
+                {{- if $fragment -}}
+                    {{- if ne (path.Ext $destination) "" -}}
+                        {{- $destination = printf "%s#%s" $destination $fragment -}}
+                    {{- else -}}
+                        {{- $destination = printf "%s/#%s" $destination $fragment -}}
+                    {{- end -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- /* If we have do not have a URL but do have a fragment */ -}}
+    {{- else if $fragment -}}{{- /* For a bare fragment, we know it is for this page */ -}}
+        {{- $destination = printf "%s#%s" (.RelPermalink) $fragment -}}
+    {{- end -}}
+    {{- if $tryResource -}}{{- /* We didn't find a matching file and it is an internal link */ -}}
+        {{- $destResource := resources.Get $path -}}{{- /* Look for a match in the 'assets' dir */ -}}
+        {{- if not $destResource -}}{{- /* otherwise look in current page bundle */ -}}
+            {{- $destResource = .Resources.GetMatch (printf "*%s*" (path.Base $path)) -}}
+        {{- end -}}
+        {{- if not $destResource -}}
+            {{- $destResource = .Site.GetPage $path -}}
+        {{- end -}}
+        {{- if $destResource -}}
+            {{- $destination = $destResource.RelPermalink -}}{{- /* We found a resource, so use it's relative permalink */ -}}
+            {{- if $fragment -}}
+                {{- if ne (path.Ext $destination) "" -}}
+                    {{- $destination = printf "%s#%s" $destination $fragment -}}
+                {{- else -}}
+                    {{- $destination = printf "%s/#%s" $destination $fragment -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- if not $destResource -}}
+            {{- $notFound := true -}}
+            {{- if or (eq (path.Base $path) "index.xml") (eq (path.Base $path) "sitemap.xml") -}}
+                {{- $notFound = false -}}
+            {{- end -}}
+            {{- range $taxonomyName, $taxonomy := .Site.Taxonomies -}}
+                {{- if or (hasPrefix $path $taxonomyName) (hasPrefix $path (printf "/%s" $taxonomyName)) -}}
+                    {{- $notFound = false -}}
+                {{- end -}}
+            {{- end -}}
+            {{- if $notFound -}}
+                {{- errorf (print "Couldn't find link '" $path "' for '" .Page.File.Path "'") -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- return $destination -}}
+{{- /* Drop trailing newlines */ -}}

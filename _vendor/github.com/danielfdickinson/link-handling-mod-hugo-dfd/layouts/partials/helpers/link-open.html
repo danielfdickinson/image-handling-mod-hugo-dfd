@@ -1,0 +1,42 @@
+{{- $ctx := . -}}
+{{- $inPage := .page -}}
+{{- $inDestination := .destination -}}
+{{- $inTitle := .title -}}
+{{- $inText := .text -}}
+{{- $inLinkElement := .linkElement -}}
+{{- $inClose := .close -}}
+{{- $inClass := .class -}}
+{{- $inTarget := .target -}}{{- /* For external links, do NOT use target="_blank" by default (see accessibility page for link to why) */ -}}
+{{- $inRel := .rel -}}
+{{- $inDestinationNoFind := .destinationNoFind -}}
+{{- $linkElement := $inLinkElement | default "a" -}}
+{{- $class := $inClass -}}
+{{- $doClose := $inClose | default true -}}
+{{- if eq $linkElement "link" -}}
+    {{ $doClose = $inClose | default false -}}
+{{- end -}}
+{{- $rel := $inRel | default $inPage.Params.linkDefaultRel | default $inPage.Site.Params.linkDefaultRel | default "noopener" -}}{{- /* ensure "noopener"(default on modern browsers anyway). */ -}}
+{{- if eq $linkElement "link" -}}
+    {{- $rel = $inRel | default $inPage.Params.linkLinkDefaultRel | default $inPage.Site.Params.linkLinkDefaultRel -}}{{- /* noopener not applicable as a default for 'link' elements */ -}}
+{{- end -}}
+{{- $destination := "" -}}
+{{- if ne $inDestinationNoFind true -}}
+    {{- with $inDestination -}}
+        {{- $destination = partial "helpers/lib/link-handling/find-destination" (dict "page" $inPage "destination" .) -}}
+    {{- end -}}
+{{- else -}}
+    {{- $destination = $inDestination -}}
+{{- end -}}
+{{- if eq $linkElement "link" -}}
+<link{{ (partial "helpers/libexec/link-handling/link-attrs" (dict "page" $inPage "destination" $destination "title" $inTitle "class" $inClass "target" $inTarget "rel" $rel)) | safeHTMLAttr -}}>
+{{- else if eq $linkElement "a" -}}
+<a{{ (partial "helpers/libexec/link-handling/link-attrs" (dict "page" $inPage "destination" $destination "title" $inTitle "class" $inClass "target" $inTarget "rel" $rel)) | safeHTMLAttr -}}>
+{{- end -}}
+{{- if $doClose -}}{{- if $inText -}}{{- $inText | safeHTML -}}{{- else -}}{{- $destination | safeHTML -}}{{- end -}}
+    {{- if eq $linkElement "link" -}}
+</link>
+    {{- else if eq $linkElement "a" -}}
+</a>
+    {{- end -}}
+{{- end -}}
+{{- /* Drop trailing newlines */ -}}
