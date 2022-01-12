@@ -4,3 +4,4 @@ node_modules
 .hugo_build.lock
 html-validate.log
 check-links.log
+hugo-audit.log
