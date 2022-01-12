@@ -2,10 +2,17 @@
 {{- $getRelative := .getRelative -}}
 {{- $finalDestination := "" -}}
 {{- $isFile := false -}}
+{{- $foundFile := false -}}
 {{- if $destination -}}
     {{- /* fileExists operates relative to site root not relative to applicable directory */ -}}
     {{- $filePath := path.Join "/static" $destination -}}{{- /* Non-resource images must be in 'static' */ -}}
     {{- if fileExists $filePath -}}
+        {{- $foundFile = true -}}
+    {{- else -}}
+        {{- $filePath = path.Join "/static" site.Language.Lang $destination -}}
+        {{- $foundFile = true -}}
+    {{- end -}}
+    {{- if $foundFile -}}
         {{- if not $getRelative -}}
             {{- $finalDestination = $destination | absURL -}}
         {{- else -}}
