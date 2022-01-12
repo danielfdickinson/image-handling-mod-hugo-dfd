@@ -5,16 +5,18 @@
 {{- $inThumbnailHeight := .thumbnailHeight -}}
 {{- $inAlt := .alt -}}
 {{- $inTitle := .title -}}
-{{- $inImage := .image -}}{{- /* Image dict has .imageResource if available and has .link */ -}}
+{{- $inImage := .image -}}
 {{- $inPage := .page -}}
+{{- $inClass := .class -}}
 {{- $inLink := .link -}}
+{{- $inLinkClass := .linkClass -}}
 {{- $inTarget := .target -}}
 {{- $inRel := .rel -}}
 {{- $inImageWrapper := .imageWrapper -}}
 {{- $inCaption := .caption -}}
 {{- $inAttr := .attr -}}
 {{- $inAttrLink := .attrLink -}}
-{{- $inClass := .class -}}
+{{- $inImageClass := .imageClass -}}
 {{- $inNoImageWrapper := .noImageWrapper -}}
 {{- $inImageSizes := .imageSizes -}}
 {{- $inThumbnailSizes := .thumbnailSizes -}}
@@ -64,17 +66,17 @@
 
     {{- if $imageWrapper -}}
         {{- if $class -}}
-            {{- printf "<%s class=\"%s\">" $imageWrapper $class | safeHTML -}}
+            {{- printf "\n<%s class=\"%s\">" $imageWrapper $class | safeHTML -}}
         {{- else -}}
-            {{- printf "<%s>" $imageWrapper | safeHTML -}}
+            {{- printf "\n<%s>" $imageWrapper | safeHTML -}}
         {{- end -}}
-    {{ end -}}
+    {{- end -}}
 
-    {{- $pictureOptions := (dict "width" $inWidth "height" $inHeight "thumbnailWidth" $inThumbnailWidth "thumbnailHeight" $inThumbnailHeight "alt" $alt "title" $inTitle "image" $inImage "page" $inPage "caption" $caption "class" (cond (eq $imageWrapper "") $class "") "imageSizes" $inImageSizes "thumbnailSizes" $inThumbnailSizes "singleSize" $inSingleSize "convertTo" $inConvertTo "thumbnails" $inDoThumbnails "fullSize" $inDoFullSize "sizesAttr" $inSizesAttr "thumbnailSizeAttr" $inThumbnailSizesAttr "loading" $inLoading "addLink" $addLink "link" $inLink "target" $inTarget "rel" $inRel "minThumbnailViewport" $inMinThumbnailViewport "addClass" (eq $imageWrapper "")) -}}
-    {{ partial "helpers/lib-output/image-handling/thumbnail-or-full-picture" $pictureOptions }}
+    {{- $pictureOptions := (dict "width" $inWidth "height" $inHeight "thumbnailWidth" $inThumbnailWidth "thumbnailHeight" $inThumbnailHeight "alt" $alt "title" $inTitle "image" $inImage "page" $inPage "caption" $caption "class" (cond (eq $imageWrapper "") $class $inImageClass) "linkClass" $inLinkClass "imageSizes" $inImageSizes "thumbnailSizes" $inThumbnailSizes "singleSize" $inSingleSize "convertTo" $inConvertTo "thumbnails" $inDoThumbnails "fullSize" $inDoFullSize "sizesAttr" $inSizesAttr "thumbnailSizeAttr" $inThumbnailSizesAttr "loading" $inLoading "addLink" $addLink "link" $inLink "target" $inTarget "rel" $inRel "minThumbnailViewport" $inMinThumbnailViewport) -}}
+    {{- partial "helpers/lib-output/image-handling/thumbnail-or-full-picture" $pictureOptions -}}
     {{- if $imageWrapper -}}
         {{- if or $inTitle $caption $inAttr -}}
-            {{ if (eq $imageWrapper "figure") }}<figcaption>{{ else if not $inTitle }}<span>{{ else }}<div>{{ end }}
+            {{- if (eq $imageWrapper "figure") -}}<figcaption>{{- else if not $inTitle -}}<span>{{- else -}}<div>{{- end -}}
                 {{- with $inTitle -}}
                     <h2>{{ . }}</h2>
                 {{- end -}}
@@ -88,9 +90,9 @@
                         <a href="{{ . }}">
                     {{- end -}}
                     {{- replaceRE "<(/?)p>" "<${1}span>" ($inAttr | $inPage.RenderString (dict "display" "block")) | safeHTML -}}
-                    {{- if $inAttrLink }}</a>{{ end }}</span>
+                    {{- if $inAttrLink -}}</a>{{- end -}}</span>
                 {{- end -}}
-            {{ if (eq $imageWrapper "figure") }}</figcaption>{{ else if not $inTitle }}</span>{{ else }}</div>{{ end }}
+            {{- if (eq $imageWrapper "figure") -}}</figcaption>{{- else if not $inTitle -}}</span>{{- else -}}</div>{{- end -}}
         {{- end -}}
         {{- printf "</%s>" $imageWrapper | safeHTML -}}
     {{- else -}}
