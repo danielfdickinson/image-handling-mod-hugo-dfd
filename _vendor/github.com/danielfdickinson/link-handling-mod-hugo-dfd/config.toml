@@ -1,0 +1,6 @@
+# Image metadata depends on the how images are handled and therefore
+# this module depends on an image-handling module.
+[module]
+  [module.hugoVersion]
+    min = "0.80.0"
+    extended = false

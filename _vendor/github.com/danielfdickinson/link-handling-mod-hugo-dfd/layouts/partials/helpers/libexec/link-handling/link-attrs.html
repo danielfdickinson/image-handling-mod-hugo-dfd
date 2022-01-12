@@ -1,0 +1,14 @@
+{{- $ctx := . -}}
+{{- $inPage := .page -}}
+{{- $inDestination := .destination -}}
+{{- $inTitle := .title -}}
+{{- $inClass := .class -}}
+{{- $inTarget := .target -}}
+{{- $inRel := .rel -}}
+
+{{- with $inClass }} class="{{ . }}"{{- end }}
+{{- with $inDestination }} href="{{ $inDestination | safeURL }}"{{- end }}
+{{- with $inTitle }} title="{{ . }}"{{- end }}
+{{- with $inTarget }} target="{{ . }}"{{- end }}
+{{- with $inRel }} rel="{{ . }}"{{- end }}
+{{- /* Drop trailing newlines */ -}}

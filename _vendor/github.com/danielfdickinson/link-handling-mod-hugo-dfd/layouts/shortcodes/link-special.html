@@ -1,0 +1,52 @@
+{{- /* Specially handled link (not just Markdown) */ -}}
+{{- $href := "" -}}
+{{- $title := "" -}}
+{{- $text := "" -}}
+{{- $rel := "" -}}
+{{- $target := "" -}}
+{{- $linkElement := "" -}}
+{{- $linkClass := "" -}}
+{{- $wrapperElement := "" -}}
+{{- $wrapperClass := "" -}}
+{{- $destinationNoFind := false -}}
+
+{{- with .Get "href" -}}
+    {{- $href = . -}}
+{{- else -}}
+    {{- with .Get 0 -}}
+        {{- $href = . -}}
+    {{- else -}}
+        {{- errorf "You must specify a destination for the link (aka href)" -}}
+    {{- end -}}
+{{- end -}}
+{{- with .Get "title" -}}
+    {{- $title = . -}}
+{{- end -}}
+{{- with .Inner -}}
+    {{- $text = . -}}
+{{- end -}}
+{{- with .Get "rel" -}}
+    {{- $rel = . -}}
+{{- end -}}
+{{- with .Get "target" -}}
+    {{- $target = . -}}
+{{- end -}}
+{{- with .Get "linkElement" -}}
+    {{- $linkElement = . -}}
+{{- end -}}
+{{- with .Get "linkClass" -}}
+    {{- $linkClass = . -}}
+{{- end -}}
+{{- with .Get "wrapperElement" -}}
+    {{- $wrapperElement = . -}}
+{{- end -}}
+{{- with .Get "wrapperClass" -}}
+    {{- $wrapperClass = . -}}
+{{- end -}}
+{{- with .Get "destinationNoFind" -}}
+    {{- if . -}}
+        {{- $destinationNoFind = true -}}
+    {{- end -}}
+{{- end -}}
+
+{{- partial "helpers/link-wrapper" (dict "page" .Page "destination" $href "title" $title "text" $text "rel" $rel "target" $target "linkElement" $linkElement "linkClass" $linkClass "wrapperClass" $wrapperClass "wrapperElement" $wrapperElement "destinationNoFind" $destinationNoFind ) -}}

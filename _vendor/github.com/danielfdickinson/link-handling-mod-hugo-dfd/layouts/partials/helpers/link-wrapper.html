@@ -1,0 +1,32 @@
+{{- $ctx := . -}}
+{{- $inPage := .page -}}
+{{- $inDestination := .destination -}}
+{{- $inTitle := .title -}}
+{{- $inText := .text -}}
+{{- $inRel := .rel -}}
+{{- $inTarget := .target -}}
+{{- $inLinkElement := .linkElement -}}
+{{- $inLinkClass := .linkClass }}
+{{- $inWrapperClass := .wrapperClass }}
+{{- $inWrapperElement := .wrapperElement -}}
+{{- $inDestinationNoFind := .destinationNoFind -}}
+
+{{- /* A "wrapperElement" that is not "div" or "span" (e.g. "none") will omit
+     * the wrapper around the link. This is most useful with a render-link hook.
+     */ -}}
+
+{{- /* Default it is not not wrap the link in another element */ -}}
+{{- $wrapperElement := $inWrapperElement | default .Page.Params.linkWrapperDefault | default .Page.Site.Params.linkWrapperDefault -}}
+
+{{- if eq $wrapperElement "div" -}}
+<div{{ with $inWrapperClass }} class="{{ . }}"{{ end }}>
+{{- else if eq $wrapperElement "span" -}}
+<span{{ with $inWrapperClass }} class="{{ . }}"{{ end }}>
+{{- end }}
+{{- partial "helpers/link-open" (dict "page" $inPage "destination" $inDestination "title" $inTitle "text" $inText "rel" $inRel "target" $inTarget "linkElement" $inLinkElement "class" $inLinkClass "destinationNoFind" $inDestinationNoFind) -}}
+{{- if eq $wrapperElement "div" -}}
+</div>
+{{- else if eq $wrapperElement "span" -}}
+</span>
+{{- end -}}
+{{- /* Drop trailing newlines */ -}}
