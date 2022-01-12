@@ -1,47 +1,29 @@
 {{- $curPage := .page -}}
 {{- $relativeUrl := .getRelative -}}
 {{- $featuredImages := $curPage.Scratch.Get "non-existent-scratch" -}}
-{{- $featuredImagesByName := $curPage.Scratch.Get "non-existent-scratch" -}}
+{{- $foundImages := $curPage.Scratch.Get "non-existent-scratch" -}}
+{{- $foundImagesByName := $curPage.Scratch.Get "non-existent-scratch" -}}
 {{- $image := $curPage.Scratch.Get "non-existent-scratch" -}}
 {{- /* Try page-level images first */ -}}
-{{- $featuredParam := $curPage.Params.imageFeatured | default $curPage.Params.imageCover | default $curPage.Params.imageThumbnail -}}
+{{- $featuredParam := $curPage.Params.imageFeatured | default $curPage.Params.imageCover | default $curPage.Params.imageThumbnail | default $curPage.Params.featured_image -}}
 {{- if $featuredParam -}}
-    {{- $featuredImages = partial "helpers/lib/image-handling/find-image-maps" (dict "page" $curPage "images" $featuredParam "ignoreBundleAssets" false "ignoreSiteAssets" true "getRelative" $relativeUrl) -}}
+    {{- $foundImages = partial "helpers/lib/image-handling/find-image-maps" (dict "page" $curPage "images" $featuredParam "ignoreBundleAssets" false "ignoreSiteAssets" false "ignoreStaticImages" true "getRelative" $relativeUrl "finalSearch" false) -}}
 {{- end -}}
 {{- $imageResources := $curPage.Resources.ByType "image" -}}
-{{ if and (not $featuredImages) $imageResources -}}
-    {{- $featuredImagesByName = $imageResources.Match "*feature*" -}}
+{{ if and (not $foundImages) $imageResources -}}
+    {{- $foundImagesByName = $imageResources.Match "*feature*" -}}
 {{- end -}}
-{{ if and (not $featuredImages) (not $featuredImagesByName) $imageResources -}}
-    {{- $featuredImagesByName = $imageResources.Match "{*cover*,*thumbnail*}" -}}
+{{ if and (not $foundImages) (not $foundImagesByName) $imageResources -}}
+    {{- $foundImagesByName = $imageResources.Match "{*cover*,*thumbnail*}" -}}
 {{- end -}}
-{{ if and (not $featuredImages) (not $featuredImagesByName) $imageResources -}}
-    {{- $featuredImages = partial "helpers/lib/image-handling/find-image-maps" (dict "page" $curPage "images" $imageResources "ignoreBundleAssets" true "ignoreSiteAssets" false "getRelative" $relativeUrl) -}}
+{{ if and (not $foundImages) (not $foundImagesByName) $featuredParam -}}
+    {{- $foundImages = partial "helpers/lib/image-handling/find-image-maps" (dict "page" $curPage "images" $featuredParam "ignoreBundleAssets" true "ignoreSiteAssets" true "ignoreStaticImages" false "getRelative" $relativeUrl "finalSearch" true) -}}
 {{- end -}}
-{{- with $featuredImagesByName -}}
-    {{- $featuredImages = (slice) -}}
-    {{- if reflect.IsSlice . -}}
-        {{- range . -}}
-            {{- $image = partial "helpers/lib/image-handling/generate-featured-image" (dict "page" $curPage "imageResource" . "getRelative" $relativeUrl) -}}
-            {{- $featuredImages = $featuredImages | append $image -}}
-        {{- end -}}
-    {{- else -}}
-        {{- $image = partial "helpers/lib/image-handling/generate-featured-image" (dict "page" $curPage "imageResource" . "getRelative" $relativeUrl) -}}
-        {{- $featuredImages = $image -}}
-    {{- end -}}
+{{- with $foundImagesByName -}}
+    {{- $featuredImages = . -}}
 {{- else -}}
-    {{- with $featuredImages -}}
-        {{- if reflect.IsMap . -}}
-            {{- $image = partial "helpers/lib/image-handling/generate-featured-image" (dict "page" $curPage "imageResource" .imageResource "getRelative" $relativeUrl) -}}
-            {{- $featuredImages = $image -}}
-        {{- else if reflect.IsSlice . -}}
-            {{- range . -}}
-                {{- if reflect.IsMap . -}}
-                    {{- $image = partial "helpers/lib/image-handling/generate-featured-image" (dict "page" $curPage "imageResource" .imageResource "getRelative" $relativeUrl) -}}
-                    {{- $featuredImages = $featuredImages | append $image -}}
-                {{- end -}}
-            {{- end -}}
-        {{- end -}}
+    {{- with $foundImages -}}
+        {{- $featuredImages = . -}}
     {{- end -}}
 {{- end -}}
 {{- return $featuredImages -}}

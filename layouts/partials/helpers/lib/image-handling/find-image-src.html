@@ -1,10 +1,12 @@
 {{- $destination := .src -}}
 {{- $curPage := .page -}}
-{{- $relativeURL := .getRelative -}}
+{{- $getRelative := .getRelative -}}
 {{- $ignoreBundleAssets := .ignoreBundleAssets -}}
 {{- $ignoreSiteAssets := .ignoreSiteAssets -}}
+{{- $ignoreStaticImages := .ignoreStaticImages -}}
 {{- $alt := .alt -}}
 {{- $title := .title -}}
+{{- $finalSearch := .finalSearch | default true -}}
 {{- $external := false -}}
 {{- $finalDestination := "" -}}
 {{- $path := "" -}}
@@ -28,23 +30,28 @@
         {{- $imageResource = resources.Get $path -}}
     {{- end -}}
     {{- /* Finally (for local images), try the 'static' directory (not a resource so no Hugo Pipes) */ -}}
-    {{- if not $imageResource -}}
-        {{- $finalDestination = partial "helpers/lib/image-handling/get-static-image" (dict "destination" $path "getRelative" false) -}}
-    {{- else -}}
+    {{- if and (not $imageResource) (ne $ignoreStaticImages true) -}}
+        {{- $finalDestination = partial "helpers/lib/image-handling/get-static-image" (dict "destination" $path "getRelative" $getRelative) -}}
+    {{- else if $imageResource -}}
         {{- /* For images resources, get the resulting link to the image */ -}}
-        {{- $finalDestination = partial "helpers/lib/image-handling/get-resource-link" (dict "imageResource" $imageResource "getRelative" false ) -}}
+        {{- $finalDestination = partial "helpers/lib/image-handling/get-resource-link" (dict "imageResource" $imageResource "getRelative" $getRelative) -}}
     {{- end -}}
-    {{- if not $finalDestination -}}
+    {{- if and (not $finalDestination) (eq $finalSearch true) -}}
         {{- if $curPage.File -}}
-            {{- errorf (printf "Image %s is missing and not external for page %s" $destination $curPage.File.Path) -}}
+            {{- errorf (printf "Image %s is missing and not external for page %s" $path $curPage.File.Path) -}}
         {{- else -}}
-            {{- errorf (printf "Image %s is missing and not external for page %s" $destination $curPage.Title) -}}
+            {{- errorf (printf "Image %s is missing and not external for page %s" $path $curPage.Title) -}}
         {{- end -}}
     {{- end -}}
 {{- else if $external -}}{{- /* Use external URLs verbatim (not as a resource so no Hugo Pipes; we don't use 0.92.x only functionality, yet) */ -}}
     {{- $finalDestination = $destination -}}
 {{- end -}}
 {{- $image := (dict "imageResource" $imageResource "link" $finalDestination "url" $finalDestination) -}}
+{{- with $image.imageResource -}}
+    {{- if partial "helpers/lib/image-handling/is-processable" . -}}
+        {{- $image = $image | merge (dict "width" .Width "height" .Height) -}}
+    {{- end -}}
+{{- end -}}
 {{- if $alt -}}
     {{ $image = $image | merge (dict "alt" $alt) -}}
 {{- end -}}    
