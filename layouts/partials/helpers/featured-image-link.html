@@ -1,0 +1,13 @@
+{{- $ctx := . -}}
+{{- $curPage := . -}}
+{{- $featuredImageLink := "" -}}
+{{- $featuredImage := partial "helpers/featured-image" .Page -}}
+{{- if $featuredImage }}
+    {{- $generatedImage := partial "helpers/lib/image-handling/generate-images" (dict "page" .Page "image" $featuredImage "singleSize" true) -}}
+    {{- if $generatedImage -}}
+        {{- $featuredImageLink = $generatedImage.finalSrc -}}
+    {{- else -}}
+        {{- $featuredImageLink = $featuredImage.url -}}
+    {{- end -}}
+{{- end -}}
+{{- return $featuredImageLink -}}
