@@ -6,6 +6,7 @@ enableGitInfo = true
 enableRobotsTXT = true
 summaryLength = 25
 disableKinds = ["sitemap","RSS"]
+timeout = 30000
 
 [taxonomies]
     tag = "tags"
@@ -16,6 +17,19 @@ disableKinds = ["sitemap","RSS"]
     useBaseURL = true
     imageConvertTo = "webp"
 
+[menu]
+    [[menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/about" # Replacing url with pageref requires Hugo 0.86.0
+        weight = 10
+
+    [[menu.main]]
+        identifier = "accessibility"
+        name = "Accessibility"
+        url = "/accessibility" # Replacing url with pageref requires Hugo 0.86.0
+        weight = 20
+
 # See https://gohugo.io/content-management/multilingual/
 # and https://www.regisphilibert.com/blog/2018/08/hugo-multilingual-part-1-managing-content-translation/
 [languages]
@@ -24,19 +38,6 @@ disableKinds = ["sitemap","RSS"]
         title = "Demo Site for DFD Image Handling Hugo Module"
         description = "Demo site for Hugo module for handling images and image-related functionality for themes"
         weight = 1
-    
-        [languages.en.menu]
-            [[languages.en.menu.main]]
-                identifier = "about"
-                name = "About"
-                url = "/about" # Replacing url with pageref requires Hugo 0.86.0
-                weight = 10
-
-            [[languages.en.menu.main]]
-                identifier = "accessibility"
-                name = "Accessibility"
-                url = "/accessibility" # Replacing url with pageref requires Hugo 0.86.0
-                weight = 20
 
 [author]
     name = "Daniel F. Dickinson"
@@ -102,6 +103,7 @@ disableKinds = ["sitemap","RSS"]
     [[module.mounts]]
         source = "content"
         target = "content"
+        lang = "en"
 
     [[module.imports]]
         path = "github.com/danielfdickinson/image-handling-mod-hugo-dfd"
