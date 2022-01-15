@@ -20,7 +20,16 @@
     {{- $foundImages = partial "helpers/lib/image-handling/find-image-maps" (dict "page" $curPage "images" $featuredParam "ignoreBundleAssets" true "ignoreSiteAssets" true "ignoreStaticImages" false "getRelative" $relativeUrl "finalSearch" true) -}}
 {{- end -}}
 {{- with $foundImagesByName -}}
-    {{- $featuredImages = . -}}
+    {{- if reflect.IsSlice . -}}
+        {{- $featuredImages = (slice) -}}
+        {{- range . -}}
+            {{ $image := partial "helpers/lib/image-handling/generate-featured-map" (dict "page" $curPage "imageResource" . "getRelative" $relativeUrl) -}}
+            {{- $featuredImages = $featuredImages | append $image -}}
+        {{- end -}}
+    {{- else -}}
+        {{ $image := partial "helpers/lib/image-handling/generate-featured-map" (dict "page" $curPage "imageResource" . "getRelative" $relativeUrl) -}}
+        {{- $featuredImages = $image -}}
+    {{- end -}}
 {{- else -}}
     {{- with $foundImages -}}
         {{- $featuredImages = . -}}
