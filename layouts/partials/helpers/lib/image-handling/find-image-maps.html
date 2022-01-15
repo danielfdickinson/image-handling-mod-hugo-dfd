@@ -17,7 +17,7 @@
             {{- with (partial "helpers/lib/image-handling/find-image-src" (dict "src" .src "alt" (cond (isset . "alt") .alt "") "title" (cond (isset . "title") .title "") "page" $curPage "getRelative" $getRelative "ignoreBundleAssets" $ignoreBundleAssets "ignoreSiteAssets" $ignoreSiteAssets "ignoreStaticImages" $ignoreStaticImages "finalSearch" $finalSearch)) -}}
                 {{- $images = $images | append . -}}
             {{- end -}}
-        {{- else if reflect.IsSlice . -}}            
+        {{- else if reflect.IsSlice . -}}
             {{- with (partial "helpers/lib/image-handling/find-image-src" (dict "src" (index . 0) "alt" (cond (isset . 1) (index . 1) "") "title" (cond (isset . 2) (index . 2) "") "page" $curPage "getRelative" $getRelative "ignoreBundleAssets" $ignoreBundleAssets "ignoreSiteAssets" $ignoreSiteAssets "ignoreStaticImages" $ignoreStaticImages "finalSearch" $finalSearch)) -}}
                 {{- $images = $images | append . -}}
             {{- end -}}
