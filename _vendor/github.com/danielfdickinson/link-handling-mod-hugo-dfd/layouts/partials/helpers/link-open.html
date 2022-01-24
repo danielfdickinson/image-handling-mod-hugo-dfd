@@ -6,7 +6,7 @@
 {{- $inLinkElement := .linkElement -}}
 {{- $inClose := .close -}}
 {{- $inClass := .class -}}
-{{- $inTarget := .target -}}{{- /* For external links, do NOT use target="_blank" by default (see accessibility page for link to why) */ -}}
+{{- $inTarget := .target -}}{{- /* For external links, do NOT use target="_blank" by default (see accessibility page for link to reasoning) */ -}}
 {{- $inRel := .rel -}}
 {{- $inDestinationNoFind := .destinationNoFind -}}
 {{- $linkElement := $inLinkElement | default "a" -}}
@@ -15,7 +15,7 @@
 {{- if eq $linkElement "link" -}}
     {{ $doClose = $inClose | default false -}}
 {{- end -}}
-{{- $rel := $inRel | default $inPage.Params.linkDefaultRel | default $inPage.Site.Params.linkDefaultRel | default "noopener" -}}{{- /* ensure "noopener"(default on modern browsers anyway). */ -}}
+{{- $rel := $inRel | default $inPage.Params.linkDefaultRel | default $inPage.Site.Params.linkDefaultRel | default "noopener" -}}{{- /* ensure "noopener"(default on modern browsers so not strictly necessary). */ -}}
 {{- if eq $linkElement "link" -}}
     {{- $rel = $inRel | default $inPage.Params.linkLinkDefaultRel | default $inPage.Site.Params.linkLinkDefaultRel -}}{{- /* noopener not applicable as a default for 'link' elements */ -}}
 {{- end -}}
@@ -27,7 +27,12 @@
 {{- else -}}
     {{- $destination = $inDestination -}}
 {{- end -}}
+{{- /* dict all on one line as we support Hugo 0.80.0 and multi-line support requires 0.88.1 or higher */ -}}
+{{- /* REVIEW: We could improve readability by merging the items in on
+     * a line at a time, but it might impact performance. Investigate.
+     */ -}}
 {{- if eq $linkElement "link" -}}
+{{- /* TODO: Add option for self-closing <link> elements */ -}}
 <link{{ (partial "helpers/libexec/link-handling/link-attrs" (dict "page" $inPage "destination" $destination "title" $inTitle "class" $inClass "target" $inTarget "rel" $rel)) | safeHTMLAttr -}}>
 {{- else if eq $linkElement "a" -}}
 <a{{ (partial "helpers/libexec/link-handling/link-attrs" (dict "page" $inPage "destination" $destination "title" $inTitle "class" $inClass "target" $inTarget "rel" $rel)) | safeHTMLAttr -}}>
