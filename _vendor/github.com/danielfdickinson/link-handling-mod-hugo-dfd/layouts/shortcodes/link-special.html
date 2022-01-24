@@ -49,4 +49,8 @@
     {{- end -}}
 {{- end -}}
 
+{{- /* dict all on one line as we support Hugo 0.80.0 and multi-line support requires 0.88.1 or higher */ -}}
+{{- /* REVIEW: We could improve readability by merging the items in on
+     * a line at a time, but it might impact performance. Investigate.
+     */ -}}
 {{- partial "helpers/link-wrapper" (dict "page" .Page "destination" $href "title" $title "text" $text "rel" $rel "target" $target "linkElement" $linkElement "linkClass" $linkClass "wrapperClass" $wrapperClass "wrapperElement" $wrapperElement "destinationNoFind" $destinationNoFind ) -}}
