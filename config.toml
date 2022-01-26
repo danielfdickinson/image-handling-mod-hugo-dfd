@@ -3,6 +3,5 @@
     min = "0.80.0"
     extended = false
 
-
   [[module.imports]]
     path = "github.com/danielfdickinson/link-handling-mod-hugo-dfd"
