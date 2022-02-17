@@ -15,8 +15,7 @@ A Hugo module for handling images and image-related functionality for themes
 * From Hugo content files
   * via a render-image hook
   * via a shortcode
-* TODO: #6 Cover images
-* Microformat (e.g. Open Graph/Twitter) support (in combination with [DFD Hugo Microformats Module](https://github.com/danielfdickinson/hugo-dfd-microformats) via [DFD Hugo Metadata Module](https://github.com/danielfdickinson/hugo-dfd-metadata-central),
+* Microformat (e.g. Open Graph/Twitter) support (in combination with [DFD Hugo Metadata Module](https://github.com/danielfdickinson/metadata-mod-hugo-dfd),
 * Thumbnails (e.g. for blog/taxonomy/HTML sitemap/etc listings)
   * Configurable between thumbnail and full width or height image
   * Sitewide defaults
@@ -36,18 +35,18 @@ A Hugo module for handling images and image-related functionality for themes
    ```toml
    [module]
      [[module.imports]]
-       path = "github.com/danielfdickinson/hugo-dfd-responsive-images"
+       path = "github.com/danielfdickinson/image-handling-mod-hugo-dfd"
    ```
    OR
    ``config.yaml``
    ```yaml
    module:
      imports:
-       - path: github.com/danielfdickinson/hugo-dfd-responsive-images
+       - path: github.com/danielfdickinson/image-handling-mod-hugo-dfd
    ```
 2. Execute
    ```bash
-   hugo mod get github.com/danielfdickinson/hugo-dfd-responsive-images
+   hugo mod get github.com/danielfdickinson/image-handling-mod-hugo-dfd
    hugo mod tidy
    ```
 
