@@ -13,7 +13,7 @@ description: "Daniel F. Dickinson makes his best effort to keep this site (hugo-
 
 ## Goals
 
-Over time the intent is move the images (at least) on this site to a 'Universal Design' principle instead of using well-meant tools that create different experiences for users facing barriers versus those who are not. For example: 'alt' tags often contain information that would be of interest to a sighted user if written well, and by the same token are often not written well because of the 'out of site, out of mind' effect. As such, good captions create a better experience for all compared to 'alt' tags.
+Over time the intent is move the images (at least) on this site to a 'Universal Design' principle instead of using well-meant tools that create different experiences for users facing barriers versus those who are not. For example: 'alt' tags often contain information that would be of interest to a sighted user if written well, and by the same token are often not written well because of the 'out of sight, out of mind' effect. As such, good captions create a better experience for all compared to 'alt' tags.
 
 Obviously there is a lot of work to do on this site, in that respect.
 
@@ -21,4 +21,4 @@ A more difficult challenge is to use language that is less complex, while saying
 
 ## Navigation Notes
 
-[We never open links in new tabs, use "Open link in new tab" if you want that](https://www.wildtechgarden.ca/blog/accessible-design-no-blank/). ([#dontbreakthebackbutton](https://www.linkedin.com/feed/hashtag/?keywords=dontbreakthebackbutton))
+[We never open links in new tabs, use "Open link in new tab" in your browser if you want that](https://www.wildtechgarden.ca/blog/accessible-design-no-blank/). ([#dontbreakthebackbutton](https://www.linkedin.com/feed/hashtag/?keywords=dontbreakthebackbutton))
