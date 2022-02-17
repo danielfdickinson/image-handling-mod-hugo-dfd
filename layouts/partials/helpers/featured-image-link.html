@@ -1,9 +1,9 @@
 {{- $ctx := . -}}
-{{- $curPage := . -}}
+{{- $curPage := .Page -}}
 {{- $featuredImageLink := "" -}}
-{{- $featuredImage := partial "helpers/featured-image" .Page -}}
+{{- $featuredImage := partial "helpers/featured-image" $curPage -}}
 {{- if $featuredImage }}
-    {{- $generatedImage := partial "helpers/lib/image-handling/generate-images" (dict "page" .Page "image" $featuredImage "singleSize" true) -}}
+    {{- $generatedImage := partial "helpers/lib/image-handling/generate-images" (dict "page" $curPage "image" $featuredImage "singleSize" true) -}}
     {{- if $generatedImage -}}
         {{- $featuredImageLink = $generatedImage.finalSrc -}}
     {{- else -}}
