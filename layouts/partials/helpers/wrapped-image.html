@@ -28,6 +28,7 @@
 {{- $inThumbnailSizesAttr := .thumbnailSizesAttr -}}
 {{- $inMinThumbnailViewport := .minThumbnailViewport -}}
 {{- $inLoading := .loading -}}
+{{- $inNoVisibleCaption := .noVisibleCaption -}}
 
 {{- with $inPage -}}
     {{- $addLink := or (.Params.imageLinkFull | default .Site.Params.imageLinkFull | default false) $inLink -}}
@@ -77,20 +78,22 @@
     {{- if $imageWrapper -}}
         {{- if or $inTitle $caption $inAttr -}}
             {{- if (eq $imageWrapper "figure") -}}<figcaption>{{- else if not $inTitle -}}<span>{{- else -}}<div>{{- end -}}
-                {{- with $inTitle -}}
-                    <h2>{{ . }}</h2>
-                {{- end -}}
-                {{- if or $caption $inAttr -}}<span>
+                {{- if ne $inNoVisibleCaption true -}}
+                    {{- with $inTitle -}}
+                        <h2>{{ . }}</h2>
+                    {{- end -}}
+                    {{- if or $caption $inAttr -}}<span>
                     {{- /* Can't have 'p' inside 'span' and rendering markdown sometimes results in a 'p' wrapper.
                         * We ensure we get a 'p' (display block) so that we after we convert them we have the
                         * expected spans (for CSS)
                         */ -}}
-                    {{- replaceRE "<(/?)p>" "<${1}span>" ($caption | $inPage.RenderString (dict "display" "block")) | safeHTML -}}
-                    {{- with $inAttrLink -}}
+                        {{- replaceRE "<(/?)p>" "<${1}span>" ($caption | $inPage.RenderString (dict "display" "block")) | safeHTML -}}
+                        {{- with $inAttrLink -}}
                         <a href="{{ . }}">
+                        {{- end -}}
+                        {{- replaceRE "<(/?)p>" "<${1}span>" ($inAttr | $inPage.RenderString (dict "display" "block")) | safeHTML -}}
+                        {{- if $inAttrLink -}}</a>{{- end -}}</span>
                     {{- end -}}
-                    {{- replaceRE "<(/?)p>" "<${1}span>" ($inAttr | $inPage.RenderString (dict "display" "block")) | safeHTML -}}
-                    {{- if $inAttrLink -}}</a>{{- end -}}</span>
                 {{- end -}}
             {{- if (eq $imageWrapper "figure") -}}</figcaption>{{- else if not $inTitle -}}</span>{{- else -}}</div>{{- end -}}
         {{- end -}}

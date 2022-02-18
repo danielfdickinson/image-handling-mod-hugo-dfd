@@ -269,6 +269,7 @@ See ['wrapped image' partial](#wrapped-image), below, for the full set of parame
     "thumbnailSizesAttr" "As with sizesAttr but for thumbnails"
     "minThumbnailViewport" "Minimum size of the viewport that is require to display thumbnails instead of full images"
     "loading" "If set, is the 'loading=' attribute for the 'img'"
+    "noVisibleCaption" "If true then when there is a title and/or caption with an imageWrapper do not display the title and/or caption (attributes only)"
     )
 -}}
 ```
