@@ -14,12 +14,12 @@
             {{- $image = $image | merge (dict "width" .Width "height" .Height) -}}
         {{- end -}}
     {{- end -}}
-    {{- with $curPage.Params.imageFeaturedAlt | default $curPage.Params.imageCoverAlt | default $curPage.Params.imageThumbnailAlt | default $curPage.Params.featuredImageAlt | default $curPage.Params.featuredAlt -}}
+    {{- with ($curPage.Params.imageFeaturedAlt | default $curPage.Params.imageCoverAlt | default $curPage.Params.imageThumbnailAlt | default $curPage.Params.featuredImageAlt | default $curPage.Params.featuredAlt) -}}
         {{ $image = $image | merge (dict "alt" .) -}}
-    {{- end -}}    
-    {{- with $curPage.Params.imageFeaturedTitle | default $curPage.Params.imageCoverTitle | default $curPage.Params.imageThumbnailTitle | default $curPage.Params.featuredImageTitle | default $curPage.Params.featuredTitle -}}
+    {{- end -}}
+    {{- with ($curPage.Params.imageFeaturedTitle | default $curPage.Params.imageCoverTitle | default $curPage.Params.imageThumbnailTitle | default $curPage.Params.featuredImageTitle | default $curPage.Params.featuredTitle) -}}
         {{ $image = $image | merge (dict "title" .) -}}
-    {{- end -}}    
+    {{- end -}}
     {{- if $image.url -}}
         {{- $secUrl := $image.url | absURL -}}
         {{- with urls.Parse $secUrl -}}
