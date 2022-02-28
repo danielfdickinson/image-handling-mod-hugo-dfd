@@ -1,0 +1,13 @@
+{{- $ctx := . -}}
+{{- $curPage := .Page -}}
+{{- $featuredImage := partial "helpers/featured-image" $curPage -}}
+{{- if $featuredImage -}}
+<div class="featured-image-flex-wrapper">
+    <div class="featured-image-thumbnail-article">
+        {{- partial "helpers/wrapped-image" (dict "page" .Page "image" $featuredImage "alt" (cond (isset $featuredImage "alt") $featuredImage.alt "") "title" (cond (isset $featuredImage "title") $featuredImage.title "") "noVisibleCaption" true "imageWrapper" "div" "class" "featured-image-thumbnail-wrapper" "imageClass" "featured-image-thumbnail" "linkClass" "featured-image-thumbnail-link") -}}
+    </div>
+    <div class="featured-image-header">
+        {{- partial "helpers/wrapped-image" (dict "page" .Page "image" $featuredImage "alt" (cond (isset $featuredImage "alt") $featuredImage.alt "") "title" (cond (isset $featuredImage "title") $featuredImage.title "") "noVisibleCaption" true "imageWrapper" "div" "class" "featured-image-wrapper" "imageClass" "featured-image" "linkClass" "featured-image-link") -}}
+    </div>
+</div>
+{{- end -}}
