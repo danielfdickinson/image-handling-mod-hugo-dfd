@@ -69,8 +69,8 @@ figcaption {
 }
 
 /* We don't specify a default height for bare img (no class or id)
- * because doing so is not reversible in more specific elements. This
- * is a major pain point for many projects including Bootstrap CSS v4.
+ * because doing so is not reversible in more
+ * specific elements. This is a major pain point for many projects.
  */
 
 #via-markdown ~ p img {
@@ -121,10 +121,7 @@ figcaption {
     box-sizing: content-box;
     display: block;
     height: unset;
-    width: none;
     margin: 0;
-    max-height: none;
-    max-width: none;
     min-height: max-content;
     min-width: max-content;
     overflow: visible;
@@ -178,6 +175,22 @@ figcaption {
     margin-right: 1em;
 }
 
+.main-test-min [id|="dfd-hugo-image-handling-module"] ~ #examples ~ [id|="result"] + p {
+    background-color: black;
+    display: block;
+    line-height: 1;
+    width: 100%;
+}
+
+.main-test-min [id|="dfd-hugo-image-handling-module"] ~ #examples ~ [id|="result"] + p img {
+    background-color: whitesmoke;
+    border: 2px solid black;
+    height: auto;
+    opacity: .75;
+    padding: .4em;
+    width: 100%;
+}
+
 @media screen and (max-width: 768px) {
     #markdown-thumbnail-test ~ p {
         display: block;
@@ -199,6 +212,130 @@ figcaption {
     .thumbnail-figure {
         display: block;
         margin-right: revert;
+    }
+}
+
+.metadata-image-wrapper {
+    width: 100%;
+}
+
+.metadata-image {
+    display: block;
+    margin-bottom: 1em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.featured-image-flex-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+}
+
+.featured-image-thumbnail-article {
+    flex: 0 0 50%;
+    width: 50%;
+}
+
+.featured-image-thumbnail-wrapper {
+    display: block;
+    overflow: hidden;
+    z-index: 3;
+}
+
+.featured-image-thumbnail-link {
+    display: block;
+}
+
+.featured-image-thumbnail {
+    display: block;
+    height: auto;
+    max-height: 9em;
+    max-width: 100%;
+    width: auto;
+}
+
+.featured-image-header {
+    flex: 0 0 50%;
+    margin-bottom: 1em;
+    overflow: hidden;
+    position: relative;
+    width: 50%;
+    z-index: 0;
+}
+
+.featured-image-wrapper {
+    display: block;
+    overflow: hidden;
+    z-index: 3;
+}
+
+.featured-image-link {
+    display: block;
+}
+
+.featured-image {
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .featured-image-flex-wrapper {
+        display: flex;
+        flex-flow: column wrap;
+    }
+
+    .featured-image-thumbnail-article {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    .featured-image-header {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    .featured-image-wrapper {
+        margin-top: 1em;
+        position: relative;
+    }
+
+    .featured-image {
+        height: auto;
+        margin-bottom: 0;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .featured-image-header {
+        height: 70vh;
+    }
+
+    .featured-image-wrapper {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .featured-image {
+        max-height: 100%;
+        max-width: 100%;
+        width: auto;
+    }
+
+    .featured-image:not([src*=".svg"]) {
+        height: fit-content;
+    }
+
+    .featured-image[src*=".svg"] {
+        height: auto;
+    }
+
+    .featured-image-link {
+        height: 100%;
+        width: 100%;
     }
 }
 ```
