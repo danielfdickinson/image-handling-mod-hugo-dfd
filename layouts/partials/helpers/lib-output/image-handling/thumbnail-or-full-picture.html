@@ -83,7 +83,7 @@
         {{- end -}}
         {{- if $inAddLink -}}
             {{- $linkHref := $imgFinalSrc -}}
-            {{- if $inLink -}}
+            {{- if (ne $inLink "") -}}
                 {{- $linkHref = $inLink -}}
             {{- end -}}
             {{- $rel := $inRel | default "noopener noreferrer" -}}
