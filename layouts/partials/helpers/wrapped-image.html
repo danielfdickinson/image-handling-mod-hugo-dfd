@@ -35,9 +35,6 @@
     {{- $link := $inLink -}}
     {{- $haveLink := ne $inLink "" -}}
     {{- $addFullLink := .Params.imageLinkFull | default .Site.Params.imageLinkFull | default false -}}
-    {{- if and $haveLink $addFullLink -}}
-        {{- $link = "" -}}
-    {{- end -}}
     {{- if or $haveLink $addFullLink -}}
         {{- $addLink = true -}}
     {{- end -}}
