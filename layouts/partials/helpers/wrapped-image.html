@@ -31,8 +31,16 @@
 {{- $inNoVisibleCaption := .noVisibleCaption -}}
 
 {{- with $inPage -}}
-    {{- $addLink := or (.Params.imageLinkFull | default .Site.Params.imageLinkFull | default false) $inLink -}}
-
+    {{- $addLink := false -}}
+    {{- $link := $inLink -}}
+    {{- $haveLink := ne $inLink "" -}}
+    {{- $addFullLink := .Params.imageLinkFull | default .Site.Params.imageLinkFull | default false -}}
+    {{- if and $haveLink $addFullLink -}}
+        {{- $link = "" -}}
+    {{- end -}}
+    {{- if or $haveLink $addFullLink -}}
+        {{- $addLink = true -}}
+    {{- end -}}
     {{- $alt := "" -}}
     {{- if or $inAlt $inCaption }}
         {{- with $inAlt -}}
@@ -73,7 +81,7 @@
         {{- end -}}
     {{- end -}}
 
-    {{- $pictureOptions := (dict "width" $inWidth "height" $inHeight "thumbnailWidth" $inThumbnailWidth "thumbnailHeight" $inThumbnailHeight "alt" $alt "title" $inTitle "image" $inImage "page" $inPage "caption" $caption "class" (cond (eq $imageWrapper "") $class $inImageClass) "linkClass" $inLinkClass "imageSizes" $inImageSizes "thumbnailSizes" $inThumbnailSizes "singleSize" $inSingleSize "convertTo" $inConvertTo "thumbnails" $inDoThumbnails "fullSize" $inDoFullSize "sizesAttr" $inSizesAttr "thumbnailSizeAttr" $inThumbnailSizesAttr "loading" $inLoading "addLink" $addLink "link" $inLink "target" $inTarget "rel" $inRel "minThumbnailViewport" $inMinThumbnailViewport) -}}
+    {{- $pictureOptions := (dict "width" $inWidth "height" $inHeight "thumbnailWidth" $inThumbnailWidth "thumbnailHeight" $inThumbnailHeight "alt" $alt "title" $inTitle "image" $inImage "page" $inPage "caption" $caption "class" (cond (eq $imageWrapper "") $class $inImageClass) "linkClass" $inLinkClass "imageSizes" $inImageSizes "thumbnailSizes" $inThumbnailSizes "singleSize" $inSingleSize "convertTo" $inConvertTo "thumbnails" $inDoThumbnails "fullSize" $inDoFullSize "sizesAttr" $inSizesAttr "thumbnailSizeAttr" $inThumbnailSizesAttr "loading" $inLoading "addLink" $addLink "link" $link "target" $inTarget "rel" $inRel "minThumbnailViewport" $inMinThumbnailViewport) -}}
     {{- partial "helpers/lib-output/image-handling/thumbnail-or-full-picture" $pictureOptions -}}
     {{- if $imageWrapper -}}
         {{- if or $inTitle $caption $inAttr -}}
