@@ -1,1 +1,1 @@
-# github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.2.0
+# github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.2.1
