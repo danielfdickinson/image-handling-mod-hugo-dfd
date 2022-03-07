@@ -18,7 +18,7 @@ A Hugo module for handling images and image-related functionality for themes (in
 * Microformat (e.g. Open Graph/Twitter) support (requires [DFD Hugo Metadata Module](https://github.com/danielfdickinson/metadata-mod-hugo-dfd) or equivalent),
 * Thumbnails (e.g. for blog/taxonomy/HTML sitemap/etc listings)
   * Configurable between thumbnail and full width or height image
-  * Sitewide defaults
+  * Sitewide defaults that are overridable per-page
 * Fallback for non-resource images
 * Image conversion (e.g. to webp)
 * Allows wrapping a link around the image(s) which points to the base image.
