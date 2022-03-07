@@ -27,25 +27,31 @@ A Hugo module for handling images and image-related functionality for themes (in
 * Configurable responsive behaviour (sizes attribute and sizes of images and/or alternate images based on media queries)
 * Allow disabling responsive images (e.g. single image/size; useful if all you want is image conversion or just the wrapper functionality).
 
-## Basic Usage
+## Basic Usage of the Module
+
 ### Importing the Module
 
 1. The first step to making use of this module is to add it to your site or theme. In your configuration file:
 
    ``config.toml``
+
    ```toml
    [module]
      [[module.imports]]
        path = "github.com/danielfdickinson/image-handling-mod-hugo-dfd"
    ```
+
    OR
    ``config.yaml``
+
    ```yaml
    module:
      imports:
        - path: github.com/danielfdickinson/image-handling-mod-hugo-dfd
    ```
+
 2. Execute
+
    ```bash
    hugo mod get github.com/danielfdickinson/image-handling-mod-hugo-dfd
    hugo mod tidy
@@ -421,8 +427,8 @@ See ['wrapped image' partial](#wrapped-image), below, for the full set of parame
      3. imageThumbnail
      4. featured_image
   2. If none found via step #1, look in the current page bundle for:
-     1. *feature*
-     2. *cover*,*thumbnail*
+     1. \*feature*
+     2. \*cover*,\*thumbnail*
   3. If not found via step #2, find images by page-level params, searching for images in the static directory.
 
 Featured images each have a URL, alt text (if any), title (if any), secure_url (https, if any), and the image resource (for images from a page bundle or from site assets), width (for processable images only), and height (for processable images only).
@@ -506,6 +512,7 @@ TODO: Add imageConvertMethod as an option for any image: [ Fit \| GrowFit \| Fil
 #### For Featured Images and Microformats
 
 'alt' text from one of:
+
 * imageFeaturedAlt
 * imageCoverAlt
 * imageThumbnailAlt
@@ -513,6 +520,7 @@ TODO: Add imageConvertMethod as an option for any image: [ Fit \| GrowFit \| Fil
 * featuredAlt
 
 'title' from one of:
+
 * imageFeaturedTitle
 * imageCoverTitle
 * imageThumbnailTitle
@@ -531,65 +539,70 @@ TODO: Add imageConvertMethod as an option for any image: [ Fit \| GrowFit \| Fil
 
 ### Test Image #1
 
-#### Source
+#### Source #1
+
 <https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/blob/main/exampleSite/content/post/testimage1/index.md>
 
-#### CSS
+#### CSS #1
 
 Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
 
-#### Result
+#### Result #1
 
 ![Image shows three different styling variations on a screenshot of a website](README-images/testimage1-result-screenshot.png)
 
 ### Test Image #2
 
-#### Source
+#### Source #2
+
 <https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/blob/main/exampleSite/content/post/testimage2/index.md>
 
-#### CSS
+#### CSS #2
 
 Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
 
-#### Result
+#### Result #2
 
 ![Image shows four different styling variations on a screenshot of a website](README-images/testimage2-result-screenshot.png)
 
 ### Test Image #3
 
-#### Source
+#### Source #3
+
 <https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/blob/main/exampleSite/content/post/testimage3/index.md>
 
-#### CSS
+#### CSS #3
 
 Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
 
-#### Result
+#### Result #3
 
 ![Image shows four different styling variations on a screenshot of a website](README-images/testimage3-result-screenshot.png)
 
 ### Test Thumbnails #1
 
-#### Source
+#### Source #4
+
 <https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/blob/main/exampleSite/content/post/test-thumbnails-1/index.md>
 
-#### CSS
+#### CSS #4
 
 Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
 
-#### Result
+#### Result #4
 
 ![Image shows three image thumbnails in a row (with large amounts space between them)](README-images/testthumbnails1-result-screenshot.png)
 
 ### Test Thumbnails #2
 
-#### Source
+#### Source #5
+
 <https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/blob/main/exampleSite/content/post/test-thumbnails-2/index.md>
 
-#### CSS
+#### CSS #5
 
 Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
 
-#### Result
+#### Result #5
 
 ![Image shows three image thumbnails in a row (with some space between them)](README-images/testthumbnails2-result-screenshot.png)
