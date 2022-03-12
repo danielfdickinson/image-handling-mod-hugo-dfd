@@ -12,11 +12,11 @@ imageAltAsCaption: true
 weight: 10
 ---
 
-## Via Markdown:
+## Via Markdown
 
 ![Screenshot of a web page with an aqua theme](featured-screenshot.png)
 
-## Via figure shortcode:
+## Via figure shortcode
 
 {{< figure class="responsive-figure" title="Figure 1: Differences between markdown figures and figure shortcode" src="screenshot.png" alt="Screenshot of a web page with an aqua theme" caption="For a figure caption can be different than alt text">}}
 
