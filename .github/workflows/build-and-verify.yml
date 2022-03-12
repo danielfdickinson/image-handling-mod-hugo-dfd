@@ -50,7 +50,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: "Check internal links"
-        uses: danielfdickinson/link-check-action-hugo-dfd@v0.2.3
+        uses: danielfdickinson/link-check-action-hugo-dfd@v0.2.4
         with:
           canonical-root: https://example.com/
           download-site-as: unminified-site-latest
