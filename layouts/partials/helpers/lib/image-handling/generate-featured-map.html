@@ -12,6 +12,13 @@
     {{- with . -}}
         {{- if partial "helpers/lib/image-handling/is-processable" . -}}
             {{- $image = $image | merge (dict "width" .Width "height" .Height) -}}
+        {{- else -}}
+            {{- with ($curPage.Params.imageFeaturedWidth | default $curPage.Params.imageCoverWidth | default $curPage.Params.featuredImageWidth | default $curPage.Params.featuredWidth) -}}
+                {{ $image = $image | merge (dict "width" .) -}}
+            {{- end -}}
+            {{- with ($curPage.Params.imageFeaturedHeight | default $curPage.Params.imageCoverHeight | default $curPage.Params.featuredImageHeight | default $curPage.Params.featuredHeight) -}}
+                {{ $image = $image | merge (dict "height" .) -}}
+            {{- end -}}
         {{- end -}}
     {{- end -}}
     {{- with ($curPage.Params.imageFeaturedAlt | default $curPage.Params.imageCoverAlt | default $curPage.Params.imageThumbnailAlt | default $curPage.Params.featuredImageAlt | default $curPage.Params.featuredAlt) -}}
