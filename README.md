@@ -86,6 +86,11 @@ figcaption {
     max-width: 100%;
 }
 
+#via-markdown ~ p span {
+    display: block;
+    margin-top: .4em;
+}
+
 #via-markdown ~ p span span {
     display: block;
     margin-top: .4em;
