@@ -389,6 +389,7 @@ See ['wrapped image' partial](#wrapped-image), below, for the full set of parame
     "thumbnailWidth" "90px"
     "thumbnailHeight" ""
     "alt" "Screenreader text"
+    "altRendered" "alt text is HTML, not Markdown or plain (default false)"
     "title" "Title (screenreaders and often tooltips)"
     "image" "Image source (usually relative to page bundle or assets) or srcset (from another partial, below)"
     "page" .Page (Hugo page context; it is unlikely  that you will want this to be other than .Page)
@@ -399,6 +400,7 @@ See ['wrapped image' partial](#wrapped-image), below, for the full set of parame
     "rel" "For link: E.g. ('nofollow')"
     "imageWrapper" "element in which to wrap <img> element"
     "caption" "A <figcaption> if image wrapper is <figure>, <span> if there is no title, or <div> if there is a title (because title will be wrapped in an <h2>"
+    "captionRendered" "caption is HTML, not Markdown or plain (default false)"
     "attr" "More caption text (but can be wrapped by a hyperlink via attrLink), only for a '<figure>'"
     "attrLink" "A hyperlink wrapped around attr, only if 'attr' above"
     "noImageWrapper" (If true you get a bare <img> element; default for render-image render hook)
