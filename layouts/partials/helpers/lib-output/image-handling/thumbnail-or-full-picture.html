@@ -74,6 +74,8 @@
 
     {{- $sizesAttr := $inSizesAttr | default .Params.imageSizesAttr | default .Site.Params.imageSizesAttr | default "80vw" -}}
     {{- $thumbnailSizesAttr := $inSizesAttr | default .Params.imageThumbnailSizesAttr | default .Site.Params.imageThumbnailSizesAttr | default "20vw" -}}
+    {{- $addLink := false -}}
+
     {{- if not (and (eq $fullImgMap.finalSrc "") (eq $thumbnailImgMap.finalSrc "")) -}}
         {{- $imgFinalSrc := "" -}}
         {{- if and $fullSize (ne $fullImgMap.finalSrc "") -}}
@@ -82,12 +84,17 @@
             {{- $imgFinalSrc = $thumbnailImgMap.finalSrc -}}
         {{- end -}}
         {{- if $inAddLink -}}
+            {{- $addLink = true -}}
             {{- $linkHref := $imgFinalSrc -}}
             {{- if (ne $inLink "") -}}
                 {{- $linkHref = $inLink -}}
             {{- end -}}
             {{- $rel := $inRel | default "noopener noreferrer" -}}
-            {{- partial "helpers/link-open" (dict "page" . "destination" $linkHref "class" $inLinkClass "close" false "target" $inTarget "rel" $rel "destinationNoFind" true) -}}
+            {{- if $linkHref -}}
+                {{- partial "helpers/link-open" (dict "page" . "destination" $linkHref "class" $inLinkClass "close" false "target" $inTarget "rel" $rel "destinationNoFind" true) -}}
+            {{- else -}}
+              {{- $addLink = false -}}
+            {{- end -}}
         {{- end -}}
         {{- $usePicture := false -}}
         {{- if (and (ne $fullImgMap.finalSrc "") (ne $thumbnailImgMap.finalSrc "")) -}}
@@ -115,6 +122,6 @@
         {{- if $usePicture -}}
             </picture>
         {{- end -}}
-        {{- if $inAddLink -}}</a>{{- end -}}
+        {{- if $addLink -}}</a>{{- end -}}
     {{- end -}}
 {{- end -}}
