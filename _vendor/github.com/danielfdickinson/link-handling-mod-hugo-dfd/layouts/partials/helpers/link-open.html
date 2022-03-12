@@ -27,21 +27,26 @@
 {{- else -}}
     {{- $destination = $inDestination -}}
 {{- end -}}
-{{- /* dict all on one line as we support Hugo 0.80.0 and multi-line support requires 0.88.1 or higher */ -}}
-{{- /* REVIEW: We could improve readability by merging the items in on
-     * a line at a time, but it might impact performance. Investigate.
-     */ -}}
-{{- if eq $linkElement "link" -}}
-{{- /* TODO: Add option for self-closing <link> elements */ -}}
-<link{{ (partial "helpers/libexec/link-handling/link-attrs" (dict "page" $inPage "destination" $destination "title" $inTitle "class" $inClass "target" $inTarget "rel" $rel)) | safeHTMLAttr -}}>
-{{- else if eq $linkElement "a" -}}
-<a{{ (partial "helpers/libexec/link-handling/link-attrs" (dict "page" $inPage "destination" $destination "title" $inTitle "class" $inClass "target" $inTarget "rel" $rel)) | safeHTMLAttr -}}>
-{{- end -}}
-{{- if $doClose -}}{{- if $inText -}}{{- $inText | safeHTML -}}{{- else -}}{{- $destination | safeHTML -}}{{- end -}}
+
+{{- if .destination -}}
+    {{- /* dict all on one line as we support Hugo 0.80.0 and multi-line support requires 0.88.1 or higher */ -}}
+    {{- /* REVIEW: We could improve readability by merging the items in on
+        * a line at a time, but it might impact performance. Investigate.
+        */ -}}
     {{- if eq $linkElement "link" -}}
-</link>
+    {{- /* TODO: Add option for self-closing <link> elements */ -}}
+    <link{{ (partial "helpers/libexec/link-handling/link-attrs" (dict "page" $inPage "destination" $destination "title" $inTitle "class" $inClass "target" $inTarget "rel" $rel)) | safeHTMLAttr -}}>
     {{- else if eq $linkElement "a" -}}
-</a>
+    <a{{ (partial "helpers/libexec/link-handling/link-attrs" (dict "page" $inPage "destination" $destination "title" $inTitle "class" $inClass "target" $inTarget "rel" $rel)) | safeHTMLAttr -}}>
     {{- end -}}
+    {{- if $doClose -}}{{- if $inText -}}{{- $inText | safeHTML -}}{{- else -}}{{- $destination | safeHTML -}}{{- end -}}
+        {{- if eq $linkElement "link" -}}
+    </link>
+        {{- else if eq $linkElement "a" -}}
+    </a>
+        {{- end -}}
+    {{- end -}}
+{{- else -}}
+    {{- if $inText -}}{{- $inText | safeHTML -}}{{- end -}}
 {{- end -}}
 {{- /* Drop trailing newlines */ -}}
