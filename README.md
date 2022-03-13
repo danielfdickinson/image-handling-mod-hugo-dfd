@@ -131,7 +131,6 @@ figcaption {
 .responsive-figure-originalheight img {
     box-sizing: content-box;
     display: block;
-    height: unset;
     margin: 0;
     min-height: max-content;
     min-width: max-content;
