@@ -6,7 +6,7 @@ enableGitInfo = true
 enableRobotsTXT = true
 summaryLength = 25
 disableKinds = ["sitemap","RSS"]
-timeout = 30000
+timeout = 50000
 
 [taxonomies]
     tag = "tags"
