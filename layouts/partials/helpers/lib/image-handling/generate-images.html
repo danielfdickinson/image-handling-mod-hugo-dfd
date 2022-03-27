@@ -10,6 +10,8 @@
 {{- $inSingleSize := .singleSize -}}
 {{- $inConvertTo := .convertTo -}}
 {{- $inConvertMethod := .convertMethod | default "Resize" -}}
+{{- $inRelativeUrl := .getRelative | default true -}}
+
 {{- $fullImage := $inImage.imageResource -}}
 {{- $finalSrc := "" -}}
 {{- $srcSet := (slice) -}}
@@ -92,7 +94,7 @@
             {{- if not $singleSize -}}
                 {{- $srcSetImageSizes := $imageSizes -}}
                 {{- if $responsiveImages -}}
-                    {{- $srcSet = partial "helpers/lib/image-handling/generate-srcset-slice" (dict "imageSizes" $imageSizes "imageConversion" $imageConversion "fullImage" $fullImage "fullConvertedImage" $fullConvertedImage) -}}
+                    {{- $srcSet = partial "helpers/lib/image-handling/generate-srcset-slice" (dict "imageSizes" $imageSizes "imageConversion" $imageConversion "fullImage" $fullImage "fullConvertedImage" $fullConvertedImage "getRelative" $inRelativeUrl) -}}
                 {{- end -}}
             {{- end -}}
         {{- else -}}{{- /* Is an image but not of a processable format */ -}}
@@ -100,6 +102,13 @@
         {{- end -}}
     {{- else -}}{{- /* Is not a known image format for Hugo */ -}}
         {{- $finalSrc = $inImage.link -}}
+    {{- end -}}
+{{- end -}}
+{{- if $finalSrc -}}
+    {{- if not $inRelativeUrl -}}
+        {{- $finalSrc = $finalSrc | absURL -}}
+    {{- else -}}
+        {{- $finalSrc = $finalSrc | absURL | relURL -}} {{- /* Canonicalize url */ -}}
     {{- end -}}
 {{- end -}}
 {{- $retMap := (dict "finalSrc" $finalSrc "srcSet" $srcSet "width" $fullWidth "height" $fullHeight "fullImage" $fullImage) -}}
