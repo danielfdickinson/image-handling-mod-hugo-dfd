@@ -10,7 +10,7 @@
         {{- $link := .link -}}
         {{- $alt := .alt -}}
         {{- if $image -}}{{- /* If we have an image resource, process the image */ -}}
-            {{ $imageMap := partial "helpers/lib/image-handling/generate-images" (dict "page" $inPage "singleSize" true "image" . "width" $microformatWidth "height" $microformatHeight "convertMethod" "GrowFit") -}}
+            {{ $imageMap := partial "helpers/lib/image-handling/generate-images" (dict "page" $inPage "singleSize" true "image" . "width" $microformatWidth "height" $microformatHeight "convertMethod" "GrowFit" "getRelative" false) -}}
             {{ $finalImages = $finalImages | append (dict "image" $imageMap.fullImage "link" $imageMap.finalSrc "width" $imageMap.width "height" $imageMap.height "alt" $alt) -}}
         {{- else -}}{{- /* If we don't have an image resource, just keep the map (which has the .link for the image) */ -}}
             {{- $finalImages = $finalImages | append . -}}
@@ -22,7 +22,7 @@
                 {{- $link := .link -}}
                 {{- $alt := .alt -}}
                 {{- if $image -}}{{- /* If we have an image resource, process the image */ -}}
-                    {{ $imageMap := partial "helpers/lib/image-handling/generate-images" (dict "page" $inPage "singleSize" true "image" . "width" $microformatWidth "height" $microformatHeight "convertMethod" "GrowFit") -}}
+                    {{ $imageMap := partial "helpers/lib/image-handling/generate-images" (dict "page" $inPage "singleSize" true "image" . "width" $microformatWidth "height" $microformatHeight "convertMethod" "GrowFit" "getRelative" false) -}}
                     {{ $finalImages = $finalImages | append (dict "image" $imageMap.fullImage "link" $imageMap.finalSrc "url" $imageMap.finalSrc "width" $imageMap.width "height" $imageMap.height "alt" $alt) -}}
                 {{- else -}}{{- /* If we don't have an image resource, just keep the map (which has the .link for the image) */ -}}
                     {{- $finalImages = $finalImages | append . -}}
