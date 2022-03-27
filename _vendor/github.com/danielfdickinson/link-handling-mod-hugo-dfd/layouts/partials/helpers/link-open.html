@@ -39,7 +39,16 @@
     {{- else if eq $linkElement "a" -}}
     <a{{ (partial "helpers/libexec/link-handling/link-attrs" (dict "page" $inPage "destination" $destination "title" $inTitle "class" $inClass "target" $inTarget "rel" $rel)) | safeHTMLAttr -}}>
     {{- end -}}
-    {{- if $doClose -}}{{- if $inText -}}{{- $inText | safeHTML -}}{{- else -}}{{- $destination | safeHTML -}}{{- end -}}
+    {{- if $doClose -}}
+        {{- if $inText -}}
+            {{- if findRE "<a [^>]*>.*</a>" $inText -}}
+                {{- replaceRE "<a [^>]*>(.*)</a>" "$1" $inText | safeHTML  -}}
+            {{- else -}}
+               {{- $inText | safeHTML -}}
+            {{- end -}}
+        {{- else -}}
+            {{- $destination | safeHTML -}}
+        {{- end -}}
         {{- if eq $linkElement "link" -}}
     </link>
         {{- else if eq $linkElement "a" -}}
