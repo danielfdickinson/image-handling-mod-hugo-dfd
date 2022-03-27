@@ -1,0 +1,25 @@
+{{- $images := partial "helpers/lib/metadata/gather-media-images" .Page -}}
+{{- $images = partial "helpers/lib/microformats/generate-microformat-images" (dict "page" .Page "images" $images) -}}
+{{- with $images -}}
+    <h2>Microformats images</h2>
+    <ul class="list-item-test-min">
+    {{- range . -}}
+        <li class="list-item-test-main"><pre><code>{{ .link }}</code></pre></li>
+    {{- end -}}
+    </ul>
+{{- end -}}
+    <footer class="footer-test-min bar-test-min">
+        <nav aria-label="{{ i18n "taxonomies" }}" class="nav-taxonomies-test-min bar-test-min">
+            <ul class="list-test-min bar-test-min linkbar-test-min">
+    {{- range $taxonomy_term, $taxonomy := .Site.Taxonomies -}}
+        {{- $count := len $taxonomy -}}
+        {{- with $.Site.GetPage (printf "/%s" $taxonomy_term) }}
+                <li class="list-item-test-min"><a class="link-test-min" href="{{- .Permalink -}}">{{ $taxonomy_term }}<span class="count-test-min"> ({{- $count -}})</span></a></li>
+        {{- end -}}
+    {{- end }}
+            </ul>
+        </nav>
+        <div class="footer-infobar-test-min bar-test-min">
+            <div class="copyright-info-test-min">Site <span>{{ .Site.Copyright }}</span></div>
+        </div>
+    </footer>
