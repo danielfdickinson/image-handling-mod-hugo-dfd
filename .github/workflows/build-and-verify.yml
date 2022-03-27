@@ -19,14 +19,26 @@ on:
       - '.vscode'
       - 'scripts'
 jobs:
+  check-source-code-validity:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Verify content formatting validity (Markdown lint)"
+        uses: DavidAnson/markdownlint-cli2-action@v5
+        with:
+          globs: |
+            README.md
+            exampleSite/content/*/*.md
+            exampleSite/content/**/*.md
   build-unminified-site:
+    needs: check-source-code-validity
     runs-on: ubuntu-20.04
     strategy:
       matrix:
         hugo: ["0.80.0", "0.88.1", "latest"]
     steps:
       - name: "Build Site with Hugo and Audit"
-        uses: danielfdickinson/build-audit-action-hugo-dfd@v0.2.0
+        uses: danielfdickinson/build-audit-action-hugo-dfd@v0.2.1-beta.1
         with:
           hugo-version: ${{ matrix.hugo }}
           upload-site-as: unminified-site-${{ matrix.hugo }}
@@ -41,7 +53,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: "Validate exampleSite HTML"
-        uses: danielfdickinson/validate-html-action-hugo-dfd@v0.2.1
+        uses: danielfdickinson/validate-html-action-hugo-dfd@v0.2.2-beta.4
         with:
           download-site-as: unminified-site-${{ matrix.hugo }}
   check-links:
@@ -50,7 +62,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: "Check internal links"
-        uses: danielfdickinson/link-check-action-hugo-dfd@v0.2.4
+        uses: danielfdickinson/link-check-action-hugo-dfd@v0.2.5-beta.2
         with:
           canonical-root: https://example.com/
           download-site-as: unminified-site-latest
