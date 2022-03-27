@@ -9,7 +9,7 @@ description: "Daniel F. Dickinson makes his best effort to keep this site (hugo-
 
 ## Statement
 
-[Daniel F. Dickinson](https://www.wildtechgarden.ca/about) makes his best effort to keep this site accessible and inclusive. If you find something that does not meet that goal, please use the [contact form on his main site](https://www.wildtechgarden.ca/contact) to let him know.
+[Daniel F. Dickinson](https://www.wildtechgarden.ca/about/) makes his best effort to keep this site accessible and inclusive. If you find something that does not meet that goal, please use the [contact form on his main site](https://www.wildtechgarden.ca/contact/) to let him know.
 
 ## Goals
 

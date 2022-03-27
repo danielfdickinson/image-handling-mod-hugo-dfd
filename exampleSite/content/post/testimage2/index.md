@@ -20,14 +20,14 @@ span wrapper, alt as caption:
 
 ![Photo of a rock garden with tulips and rust-coloured plants](backgarden-tulips+rocks.png)
 
-## Via figure shortcode (but \<div> as wrapper):
+## Via figure shortcode (but \<div> as wrapper)
 
 {{< figure class="responsive-div" imagewrapper="div" title="Figure 1: Differences between markdown figures and figure shortcode" src="backgarden-tulips+rocks.png" alt="Photo of a rock garden with tulips and rust-coloured plants" caption="For a figure caption can be different than alt text">}}
 
-## Via figure shortcode (originalheight):
+## Via figure shortcode (originalheight)
 
 {{< figure class="responsive-figure-originalheight" singlesize=true title="Figure 1: Differences between markdown figures and figure shortcode (original height)" src="backgarden-tulips+rocks.png" alt="Photo of a rock garden with tulips and rust-coloured plants (no caption specified so alt as caption)">}}
 
-## Via figure shortcode (fullwidth):
+## Via figure shortcode (fullwidth)
 
 {{< figure class="responsive-figure fullwidth" title="Figure 1: Differences between markdown figures and figure shortcode (full width)" src="backgarden-tulips+rocks.png" alt="Photo of a rock garden with tulips and rust-coloured plants (no caption specified so alt as caption)">}}
