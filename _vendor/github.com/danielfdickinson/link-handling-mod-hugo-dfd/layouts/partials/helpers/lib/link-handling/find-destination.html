@@ -28,6 +28,7 @@
 {{- else -}}
     {{- errorf printf "Unable to parse link destination '%s'" $destination -}}
 {{- end -}}
+{{- $tryStatic := false -}}
 {{- $tryResource := false -}}
 {{- $isFile := false -}}
 {{- with $inPage -}}
@@ -36,12 +37,13 @@
         {{- if not $external -}}{{- /* only try to find resources for internal links */ -}}
             {{- $filePath := "" -}}
             {{- if .File -}}
+                {{- /* FIXME: allow to use content dirs other than /content */ -}}
                 {{- /* fileExists operates relative to site root not relative to content directory */ -}}
                 {{- $filePath = (path.Join "/content" (.Site.LanguagePrefix) (.File.Path) $path) -}}{{- /* For links relative to the current page */ -}}
                 {{- if hasPrefix $path "/" -}}{{- /* For links relative to the output site root (e.g. /post/some-post) */ -}}
                     {{- $filePath = (path.Join "/content" (.Site.LanguagePrefix) $path) -}}
-                {{- else -}}
-                    {{- $filePath = path.Join "/content" (.Site.LanguagePrefix) (.File.Path) ".." $path -}}
+                {{- else if .IsSection -}}
+                    {{- $filePath = (path.Join "/content" (.Site.LanguagePrefix) ".." $path) -}}
                 {{- end -}}
                 {{- if not (fileExists $filePath) -}}
                     {{- if or (fileExists (printf "%s.md" $filePath)) (fileExists (path.Join $filePath "_index.md")) (fileExists (path.Join $filePath "index.md")) -}}{{- /* Check if it is a Markdown content page */ -}}
@@ -53,7 +55,7 @@
             {{- end -}}
             {{- if not $isFile -}}
                 {{- if not (or .Data.Singular .Data.Plural .Data.Terms) -}}
-                    {{- $tryResource = true -}}
+                    {{- $tryStatic = true -}}
                 {{- end -}}
             {{- else -}}{{- /* If the file exists */ -}}
                 {{- $destination = (strings.TrimSuffix ".md" (strings.TrimPrefix "/content" $filePath)) | relLangURL -}}
@@ -70,10 +72,32 @@
     {{- else if $fragment -}}{{- /* For a bare fragment, we know it is for this page */ -}}
         {{- $destination = printf "%s#%s" (.RelPermalink) $fragment -}}
     {{- end -}}
+    {{- if $tryStatic -}}
+        {{- $filePath := "" -}}
+        {{- if .File -}}
+            {{- /* FIXME: allow to use static dirs other than /static */ -}}
+            {{- /* fileExists operates relative to site root not relative to content directory */ -}}
+            {{- $filePath = (path.Join "/static" (.Site.LanguagePrefix) (.File.Path) $path) -}}{{- /* For links relative to the current page */ -}}
+            {{- if hasPrefix $path "/" -}}{{- /* For links relative to the output site root (e.g. /post/some-post) */ -}}
+                {{- $filePath = (path.Join "/static" (.Site.LanguagePrefix) $path) -}}
+            {{- end -}}
+            {{- if (fileExists $filePath) -}}
+                {{- $isFile = true -}}
+            {{- end -}}
+        {{- end -}}
+        {{- if not $isFile -}}
+            {{- if not (or .Data.Singular .Data.Plural .Data.Terms) -}}
+                {{- $tryResource = true -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
     {{- if $tryResource -}}{{- /* We didn't find a matching file and it is an internal link */ -}}
         {{- $destResource := resources.Get $path -}}{{- /* Look for a match in the 'assets' dir */ -}}
         {{- if not $destResource -}}{{- /* otherwise look in current page bundle */ -}}
             {{- $destResource = .Resources.GetMatch (printf "*%s*" (path.Base $path)) -}}
+        {{- end -}}
+        {{- if not $destResource -}}
+            {{- $destResource = .GetPage $path -}}
         {{- end -}}
         {{- if not $destResource -}}
             {{- $destResource = .Site.GetPage $path -}}
