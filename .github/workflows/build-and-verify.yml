@@ -7,17 +7,13 @@ on:
       - opened
       - synchronize
       - reopened
+    branches:
+      - main
+      - 'v[0-9]*'
   push:
     branches:
-      - 'feature**'
       - main
-      - 'staging**'
-    paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
-      - '.gitignore'
-      - '.vscode'
-      - 'scripts'
+      - 'v[0-9]*'
 jobs:
   check-source-code-validity:
     runs-on: ubuntu-20.04
