@@ -17,9 +17,7 @@
      * NOTE: We don't allow arbitrary wrappers to avoid unsafe HTML.
      */ -}}
 
-{{- /* Default it is to not wrap the link in another element.
-     * NOTE: The Markdown render-link hook overrides this to wrap Markdown links in span.
-     */ -}}
+{{- /* Default it is to not wrap the link in another element. */ -}}
 {{- $wrapperElement := $inWrapperElement | default .Page.Params.linkWrapperDefault | default .Page.Site.Params.linkWrapperDefault -}}
 
 {{- if eq $wrapperElement "div" -}}
@@ -28,7 +26,7 @@
 <span{{ with $inWrapperClass }} class="{{ . }}"{{ end }}>
 {{- end }}
 {{- /* dict all on one line as we support Hugo 0.80.0 and multi-line support requires 0.88.1 or higher */ -}}
-{{- /* REVIEW: We could improve readability by merging the items in on
+{{- /* REVIEW: We could improve readability by merging the items in one
      * a line at a time, but it might impact performance. Investigate.
      */ -}}
 {{- partial "helpers/link-open" (dict "page" $inPage "destination" $inDestination "title" $inTitle "text" $inText "rel" $inRel "target" $inTarget "linkElement" $inLinkElement "class" $inLinkClass "destinationNoFind" $inDestinationNoFind) -}}
