@@ -1,0 +1,25 @@
+# https://editorconfig.org/ for details
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+indent_style = space
+indent_size = 4
+
+[bash/**.sh]
+shell_variant      = bash
+binary_next_line   = false
+switch_case_indent = false
+space_redirects    = false
+keep_padding       = false
+function_next_line = false
+
+# Ignore "third party" directories
+[third_party/**]
+ignore = true
+[vendor/**]
+ignore = true
+[_vendor/**]
+ignore = true
