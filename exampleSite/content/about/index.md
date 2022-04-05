@@ -11,4 +11,4 @@ tags:
 
 Demo site for a [Hugo](https://gohugo.io/) [module](https://gohugo.io/hugo-modules/) for adding responsive images handling to themes, sites, or other modules.
 
-See the [documentation](/post/) for more information. You probably want to start with the [README](/post/readme), or see [posts](/post) for some bare-bones usage samples.  (On an actual site you would of course spruce things up with more/better CSS).
+See the [documentation from the README](post/readme) for more information, or see [posts](post) for some bare-bones usage samples.  (On an actual site you would of course spruce things up with more/better CSS).
