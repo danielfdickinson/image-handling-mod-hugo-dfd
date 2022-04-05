@@ -55,13 +55,16 @@ jobs:
   check-links:
     needs: build-unminified-site
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        hugo: ["0.80.0", "0.88.1", "latest"]
     steps:
       - uses: actions/checkout@v3
       - name: "Check internal links"
         uses: danielfdickinson/link-check-action-hugo-dfd@v0.2
         with:
           canonical-root: https://example.com/
-          download-site-as: unminified-site-latest
+          download-site-as: unminified-site-${{ matrix.hugo }}
           entry-point: index.html
           upload-logs-as: check-links-failure
           upload-logs-retention: 3
