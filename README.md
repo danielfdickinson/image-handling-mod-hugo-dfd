@@ -1,35 +1,35 @@
-# DFD Hugo Image Handling Module
+# DFD Hugo image handling module
 
 A Hugo module for handling images and image-related functionality for themes (including enabling responsive images).
 
 ## Status
 
-![build-and-verify](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/actions/workflows/build-and-verify.yml/badge.svg)
+[![build-and-verify](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/actions/workflows/build-and-verify.yml/badge.svg)](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/actions/workflows/build-and-verify.yml)
 
-## GitHub Repository
+## GitHub repository
 
 <https://github.com/danielfdickinson/image-handling-mod-hugo-dfd>
 
 ## Features
 
 * From Hugo content files
-  * via a render-image hook (Markdown content only)
-  * via a shortcode (override of default 'figure' shortcode from Hugo core)
-* Microformat (e.g. Open Graph/Twitter) support (requires [DFD Hugo Metadata Module](https://github.com/danielfdickinson/metadata-mod-hugo-dfd) or equivalent),
-* Thumbnails (e.g. for blog/taxonomy/HTML sitemap/etc listings)
+  * via a render-image hook _[Note 1](#note-1)_
+  * via a shortcode _[Note 2](#note-2)_
+* Microformat (e.g. Open Graph/Twitter) support _[Note 3](#note-3)_
+* Thumbnails _[Note 4](#note-4)_
   * Configurable between thumbnail and full width or height image
   * Sitewide defaults that are overridable per-page
 * Fallback for non-resource images
-* Image conversion (e.g. to webp)
+* Image conversion _[Note 5](#note-5)_
 * Allows wrapping a link around the image(s) which points to the base image.
-  * (optionally can point to original format image)
+  * optionally can point to original format image
 * Allows wrapping a link around the image(s) which points to any URL.
-* Configurable responsive behaviour (sizes attribute and sizes of images and/or alternate images based on media queries)
-* Allow disabling responsive images (e.g. single image/size; useful if all you want is image conversion or just the wrapper functionality).
+* Configurable responsive behaviour _[Note 6](#note-6)_
+* Allow disabling responsive images _[Note 7](#note-7)_
 
-## Basic Usage of the Module
+## Basic usage of the module
 
-### Importing the Module
+### Importing the module
 
 1. The first step to making use of this module is to add it to your site or theme. In your configuration file:
 
@@ -57,318 +57,34 @@ A Hugo module for handling images and image-related functionality for themes (in
    hugo mod tidy
    ```
 
-### Add the Image
+### Add the image
 
-1. Place your image (e.g. ``screenshot.png``) in a [Page Bundle](https://gohugo.io/content-management/page-bundles/)
-   * **NB** You can only use subdirectories with leaf bundles. For branch bundles the image must be in the same directory as the ``_index.md``.
-2. OR under ``assets`` in your project root (in which case you can use subdirectories under ``assets`` (e.g. ``assets/path/to/screenshot.png``))
+1. Place your image in a [page bundle](https://gohugo.io/content-management/page-bundles/) (e.g. `screenshot.png`) _[Note 8](#note-8)_
+2. OR under `assets` in your project root _[Note 9](#note-9)_
 
-**NB** If you don't use a page bundle or ``assets`` (e.g. if you place the image under ``static``, the image can still be used, but cannot be made responsive).
+If you don't use a page bundle or ``assets``, the image can still be used, but cannot be made responsive _[Note 10](#note-10)_
 
-### Add CSS to Style the Images
+### Add CSS to style the images
 
-For example for the demo site we use:
+[For the demo we use a small custom CSS file](README-assets/sample.css)
 
-```css
-figcaption {
-    font-style: italic;
-}
+### Use markdown (render-image render hook makes it responsive)
 
-/* We don't specify a default height for bare img (no class or id)
- * because doing so is not reversible in more
- * specific elements. This is a major pain point for many projects.
- */
-
-#via-markdown ~ p img {
-    height: auto;
-    width: auto;
-    max-height: 50vh;
-    max-width: 100%;
-}
-
-#via-markdown ~ p span {
-    display: block;
-    margin-top: .4em;
-}
-
-#via-markdown ~ p span span {
-    display: block;
-    margin-top: .4em;
-}
-
-.responsive-thumbnail {
-    display: inline-block;
-    margin-right: 1em;
-}
-
-.responsive-figure img {
-    height: auto;
-    width: auto;
-    max-height: 50vh;
-    max-width: 100%;
-}
-
-.responsive-figure figcaption h2 {
-    font-size: 1rem;
-}
-
-.responsive-figure figcaption p {
-    font-size: .875rem;
-}
-
-.responsive-figure.fullwidth img {
-    height: auto;
-    width: 100%;
-    max-height: unset;
-}
-
-.responsive-figure-originalheight {
-    display: block;
-    margin: 0;
-    overflow: visible;
-}
-
-.responsive-figure-originalheight img {
-    box-sizing: content-box;
-    display: block;
-    margin: 0;
-    min-height: max-content;
-    min-width: max-content;
-    overflow: visible;
-}
-
-.markdown-image-wrapper > span {
-    display: block;
-    margin-top: .4em;
-}
-
-.markdown-image-wrapper img {
-    height: auto;
-    width: auto;
-    max-height: 50vh;
-    max-width: 100%;
-}
-
-.responsive-div img {
-    height: auto;
-    width: auto;
-    max-height: 50vh;
-    max-width: 100%;
-}
-
-.responsive-markdown img {
-    height: auto;
-    width: auto;
-    max-height: 50vh;
-    max-width: 100%;
-}
-
-#markdown-thumbnail-test ~ p {
-    display: inline-block;
-    margin-right: 1em;
-}
-
-.thumbnail-markdown {
-    display: inline-block;
-}
-
-.thumbnail-markdown span span {
-    display: none;
-}
-
-.thumbnail-figure figcaption {
-    display: none;
-}
-
-.thumbnail-figure {
-    display: inline-block;
-    margin-right: 1em;
-}
-
-.main-test-min [id|="dfd-hugo-image-handling-module"] ~ #examples ~ [id|="result"] + p {
-    background-color: black;
-    display: block;
-    line-height: 1;
-    width: 100%;
-}
-
-.main-test-min [id|="dfd-hugo-image-handling-module"] ~ #examples ~ [id|="result"] + p img {
-    background-color: whitesmoke;
-    border: 2px solid black;
-    height: auto;
-    opacity: .75;
-    padding: .4em;
-    width: 100%;
-}
-
-@media screen and (max-width: 768px) {
-    #markdown-thumbnail-test ~ p {
-        display: block;
-        margin-right: revert;
-    }
-
-    .thumbnail-markdown {
-        display: revert;
-    }
-
-    .thumbnail-markdown span span {
-        display: block;
-    }
-
-    .thumbnail-figure figcaption {
-        display: block;
-    }
-
-    .thumbnail-figure {
-        display: block;
-        margin-right: revert;
-    }
-}
-
-.metadata-image-wrapper {
-    width: 100%;
-}
-
-.metadata-image {
-    display: block;
-    margin-bottom: 1em;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.featured-image-flex-wrapper {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-}
-
-.featured-image-thumbnail-article {
-    flex: 0 0 50%;
-    width: 50%;
-}
-
-.featured-image-thumbnail-wrapper {
-    display: block;
-    overflow: hidden;
-    z-index: 3;
-}
-
-.featured-image-thumbnail-link {
-    display: block;
-}
-
-.featured-image-thumbnail {
-    display: block;
-    height: auto;
-    max-height: 9em;
-    max-width: 100%;
-    width: auto;
-}
-
-.featured-image-header {
-    flex: 0 0 50%;
-    margin-bottom: 1em;
-    overflow: hidden;
-    position: relative;
-    width: 50%;
-    z-index: 0;
-}
-
-.featured-image-wrapper {
-    display: block;
-    overflow: hidden;
-    z-index: 3;
-}
-
-.featured-image-link {
-    display: block;
-}
-
-.featured-image {
-    display: block;
-}
-
-@media screen and (max-width: 768px) {
-    .featured-image-flex-wrapper {
-        display: flex;
-        flex-flow: column wrap;
-    }
-
-    .featured-image-thumbnail-article {
-        flex: 1 1 100%;
-        width: 100%;
-    }
-
-    .featured-image-header {
-        flex: 1 1 100%;
-        width: 100%;
-    }
-
-    .featured-image-wrapper {
-        margin-top: 1em;
-        position: relative;
-    }
-
-    .featured-image {
-        height: auto;
-        margin-bottom: 0;
-        width: 100%;
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .featured-image-header {
-        height: 70vh;
-    }
-
-    .featured-image-wrapper {
-        bottom: 0;
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-
-    .featured-image {
-        max-height: 100%;
-        max-width: 100%;
-        width: auto;
-    }
-
-    .featured-image:not([src*=".svg"]) {
-        height: fit-content;
-    }
-
-    .featured-image[src*=".svg"] {
-        height: auto;
-    }
-
-    .featured-image-link {
-        height: 100%;
-        width: 100%;
-    }
-}
-```
-
-### Use Markdown (render-image render hook makes it responsive)
-
-E.g.
+### Example #1
 
 ```markdown
 ![Screenshot of a web page with an aqua theme](screenshot.png)
 ```
 
-### Use Figure Shortcode
+### Use figure shortcode
 
-E.g.
-
-### Example #1
+### Example #2
 
 ```markdown
 {{< figure class="responsive-figure" title="Figure 1: Differences between markdown figures and figure shortcode" src="screenshot.png" alt="Screenshot of a web page with an aqua theme" caption="For a figure caption can be different than alt text">}}
 ```
 
-### Example #2
+### Example #3
 
 ```markdown
 {{< figure class="responsive-figure fullwidth" title="Figure 1: Differences between markdown figures and figure shortcode (full width)" src="screenshot.png" alt="Screenshot of a web page with an aqua theme" caption="For a figure caption can be different than alt text">}}
@@ -376,14 +92,14 @@ E.g.
 
 See ['wrapped image' partial](#wrapped-image), below, for the full set of parameters you can use with the shortcode.
 
-## Advanced Usage
+## Advanced usage
 
-### Image Handling Partials
+### Image handling partials
 
-#### Wrapped Image
+#### Wrapped image
 
 * You have access to the ``helpers/wrapped-image`` partial in your layouts and shortcodes.
-* Outputs the HTML to display an image (an \<img> tag) which is responsive by default (but doesn't have to be, optionally wrapped in \<figure>, \<span>, or \<div>, all if which maybe optionally wrapped in a link (\<a href="..."> element).
+* Outputs the HTML to display an image (an \<img> tag) which is responsive by default _[Note 11](#note-11)_.
 * Not all combinations of parameters make sense.
 
 ```html
@@ -403,7 +119,7 @@ See ['wrapped image' partial](#wrapped-image), below, for the full set of parame
     "target" "For link: E.g. ('_blank')"
     "rel" "For link: E.g. ('nofollow')"
     "imageWrapper" "element in which to wrap <img> element"
-    "caption" "A <figcaption> if image wrapper is <figure>, <span> if there is no title, or <div> if there is a title (because title will be wrapped in an <h2>"
+    "caption" "A <figcaption> if image wrapper is <figure>, <span> if there is no title, or <div> if there is a title (because title will be wrapped in an <h2>)"
     "captionRendered" "caption is HTML, not Markdown or plain (default false)"
     "attr" "More caption text (but can be wrapped by a hyperlink via attrLink), only for a '<figure>'"
     "attrLink" "A hyperlink wrapped around attr, only if 'attr' above"
@@ -423,7 +139,7 @@ See ['wrapped image' partial](#wrapped-image), below, for the full set of parame
 -}}
 ```
 
-#### Featured Images
+#### Featured images
 
 * You have access to the ``helpers/featured-images`` partial in your layouts and shortcodes.
 * Returns the set of featured images and related parameters for this page
@@ -437,42 +153,49 @@ See ['wrapped image' partial](#wrapped-image), below, for the full set of parame
      2. \*cover*,\*thumbnail*
   3. If not found via step #2, find images by page-level params, searching for images in the static directory.
 
-Featured images each have a URL, alt text (if any), title (if any), secure_url (https, if any), and the image resource (for images from a page bundle or from site assets), width (for processable images only), and height (for processable images only).
+Featured images each have a url and may have
+
+* alt text
+* title
+* secure_url
+* the image resource (for images from a page bundle or from site assets)
+* width (for processable images only)
+* height (for processable images only).
 
 ```html
 {{ partial "helpers/featured-images" . -}}
 ```
 
-#### Featured Image
+#### Featured image
 
-* As [Featured Images](#featured-images) but only returns the first featured image found above.
+* As [featured images](#featured-images) but only returns the first featured image found above.
 
 ```html
 {{ partial "helpers/featured-image" . -}}
 ```
 
-#### Featured Image Link
+#### Featured image link
 
-* As [Featured Image](#featured-image) but only returns the link (URL) of the featured image.
+* As [featured image](#featured-image) but only returns the link (URL) of the featured image.
 
 ```html
 {{ partial "helpers/featured-image-link" . -}}
 ```
 
-### Metadata Gathering
+### Metadata gathering
 
-See [DFD Hugo Metadata Module](https://github.com/danielfdickinson/metadata-mod-hugo-dfd) for more information.
+See [DFD Hugo metadata module](https://github.com/danielfdickinson/metadata-mod-hugo-dfd) for more information.
 
 Metadata types that can be gathered are:
 
-* ``media-images`` A slice if maps (dictionaries) with image information for use in microformats and other metadata; images matched are the same as [Featured Images](#featured-images) above.
-* ``media-image`` A map (dictionary) with image information for the first image from ``media-images`` which corresponds to [Featured Image](#featured-image) above.
+* ``media-images`` A slice of maps (dictionaries) with image information for use in microformats and other metadata; images matched are the same as [featured images](#featured-images) above.
+* ``media-image`` A map (dictionary) with image information for the first image from ``media-images`` which corresponds to [featured image](#featured-image) above.
 
-Gathering image metadata may also create an image for specifically for use with microformats (see [For Microformats](#for-microformats) , below).
+Gathering image metadata may also create an image for specifically for use with microformats (see [for microformats](#for-microformats) , below).
 
-### Site or Page Params
+### `.Site` or `.Page` params
 
-#### For All Processable Images
+#### For all processable images
 
 Currently:
 
@@ -481,7 +204,7 @@ Currently:
 * tif/tiff
 * bmp
 * gif
-* webp (only for Hugo Extended)
+* webp (only for Hugo extended)
 
 | Param | Default | Description |
 |-------|---------|-------------|
@@ -492,13 +215,13 @@ Currently:
 
 TODO: Add imageConvertMethod as an option for any image: [ Fit \| GrowFit \| Fill \| Resize ].
 
-#### For All Image Shortcodes
+#### For all image shortcodes
 
 | Param | Default | Description |
 |-------|---------|-------------|
 | imageLoading | _(nil)_ | Default value of the 'loading=' attribute for all images on the page (or site, for site-level) |
 
-#### For Wrapped Images
+#### For wrapped images
 
 | Param | Default | Description |
 |-------|---------|-------------|
@@ -515,7 +238,7 @@ TODO: Add imageConvertMethod as an option for any image: [ Fit \| GrowFit \| Fil
 | imageThumbnailSizesAttr | 20vw | For thumbnail images the default "sizes=" attribute |
 | imageMinThumbnailViewport | 768px | Minimum viewport for which to generate thumbnails |
 
-#### For Featured Images and Microformats
+#### For featured images and microformats
 
 'alt' text from one of:
 
@@ -533,7 +256,7 @@ TODO: Add imageConvertMethod as an option for any image: [ Fit \| GrowFit \| Fil
 * featuredImageTitle
 * featuredTitle
 
-#### For Microformats
+#### For microformats
 
 | Param | Default | Description |
 |-------|---------|-------------|
@@ -543,7 +266,7 @@ TODO: Add imageConvertMethod as an option for any image: [ Fit \| GrowFit \| Fil
 
 ## Examples
 
-### Test Image #1
+### Test image #1
 
 #### Source #1
 
@@ -555,9 +278,9 @@ Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = 
 
 #### Result #1
 
-![Image shows three different styling variations on a screenshot of a website](README-images/testimage1-result-screenshot.png)
+![Image shows three different styling variations on a screenshot of a website](README-assets/testimage1-result-screenshot.png)
 
-### Test Image #2
+### Test image #2
 
 #### Source #2
 
@@ -569,9 +292,9 @@ Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = 
 
 #### Result #2
 
-![Image shows four different styling variations on a screenshot of a website](README-images/testimage2-result-screenshot.png)
+![Image shows four different styling variations on a screenshot of a website](README-assets/testimage2-result-screenshot.png)
 
-### Test Image #3
+### Test image #3
 
 #### Source #3
 
@@ -583,9 +306,9 @@ Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = 
 
 #### Result #3
 
-![Image shows four different styling variations on a screenshot of a website](README-images/testimage3-result-screenshot.png)
+![Image shows four different styling variations on a screenshot of a website](README-assets/testimage3-result-screenshot.png)
 
-### Test Thumbnails #1
+### Test thumbnails #1
 
 #### Source #4
 
@@ -597,9 +320,9 @@ Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = 
 
 #### Result #4
 
-![Image shows three image thumbnails in a row (with large amounts space between them)](README-images/testthumbnails1-result-screenshot.png)
+![Image shows three image thumbnails in a row (with large amounts space between them)](README-assets/testthumbnails1-result-screenshot.png)
 
-### Test Thumbnails #2
+### Test thumbnails #2
 
 #### Source #5
 
@@ -611,4 +334,61 @@ Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = 
 
 #### Result #5
 
-![Image shows three image thumbnails in a row (with some space between them)](README-images/testthumbnails2-result-screenshot.png)
+![Image shows three image thumbnails in a row (with some space between them)](README-assets/testthumbnails2-result-screenshot.png)
+
+## Endnotes
+
+### Note 1
+
+Markdown content only
+
+### Note 2
+
+Override of default 'figure' shortcode from Hugo core
+
+### Note 3
+
+Requires [DFD Hugo metadata module](https://github.com/danielfdickinson/metadata-mod-hugo-dfd) or equivalent
+
+### Note 4
+
+E.g. for blog/taxonomy/HTML sitemap/etc listings
+
+### Note 5
+
+E.g. to webp
+
+### Note 6
+
+Sizes attribute and sizes of images and/or alternate images based on media queries
+
+### Note 7
+
+E.g. single image/size; useful if all you want is image conversion or just the wrapper functionality
+
+### Note 8
+
+**NB** You can only use subdirectories with leaf bundles. For branch bundles the image must be in the same directory as the `_index.md`
+
+### Note 9
+
+This allows using subdirectories under `assets` (e.g. `assets/path/to/screenshot.png` which would render to `/path/to/screenshot.png`).
+
+### Note 10
+
+E.g. if you place the image under ``static``
+
+### Note 11
+
+But doesn't have to be, optionally wrapped in \<figure>, \<span>, or \<div>, all if which maybe optionally wrapped in a link (\<a href="..."> element)
+
+## Contributions welcome
+
+If [your issue can't be found when searching both open and closed issues](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/issues?q=is%3Aissue), please add it!
+
+Please [check open issues on danielfdickinson/image-handling-mod-hugo-dfd](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/issues)
+for enhancements and bugs that you would like resolved, write the fix, and submit a pull request!
+
+As well, documentation improvements are always handy.
+
+Thank you, and I hope you find this repository useful.

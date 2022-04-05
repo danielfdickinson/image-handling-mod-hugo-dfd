@@ -129,8 +129,8 @@ timeout = 50000
           target = "assets/README-dfd-image-handling.md"
 
       [[module.imports.mounts]]
-          source = "README-images"
-          target = "assets/README-images"
+          source = "README-assets"
+          target = "assets/README-assets"
 
       [[module.imports.mounts]]
           source = "i18n"
