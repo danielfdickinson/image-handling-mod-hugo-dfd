@@ -1,0 +1,3 @@
+[submodule "check-scripts"]
+	path = scripts
+	url = https://github.com/danielfdickinson/check-scripts-hugo-dfd.git
