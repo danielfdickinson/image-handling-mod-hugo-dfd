@@ -12,7 +12,7 @@
 {{- end -}}
 
 {{- $destinationNoFind := .Page.Params.linkDefaultNoFindMarkdown | default .Page.Site.Params.linkDefaultNoFindMarkdown -}}
-{{- $wrapperElement := .Page.Params.linkWrapperMarkdown | default .Page.Site.Params.linkWrapperMarkdown | default "span" -}}
+{{- $wrapperElement := .Page.Params.linkWrapperMarkdown | default .Page.Site.Params.linkWrapperMarkdown -}}
 {{- $wrapperClass := .Page.Params.linkWrapperClassMarkdown | default .Page.Site.Params.linkWrapperClassMarkdown | default "link-wrapper-demo-site" -}}
 {{- $linkClass := .Page.Params.linkClassMarkdown | default .Page.Site.Params.linkClassMarkdown | default "link-markdown-demo-site" -}}
 
