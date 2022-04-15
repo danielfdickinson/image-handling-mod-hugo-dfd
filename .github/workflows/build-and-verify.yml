@@ -34,7 +34,7 @@ jobs:
         hugo: ["0.80.0", "0.88.1", "latest"]
     steps:
       - name: "Build Site with Hugo and Audit"
-        uses: danielfdickinson/build-audit-action-hugo-dfd@v0.2
+        uses: danielfdickinson/build-audit-action-hugo-dfd@main
         with:
           hugo-version: ${{ matrix.hugo }}
           upload-site-as: unminified-site-${{ matrix.hugo }}
