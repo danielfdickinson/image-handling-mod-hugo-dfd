@@ -6,7 +6,7 @@
 {{- $rel := .Page.Params.linkDefaultRelMarkdown | default .Page.Site.Params.linkDefaultRelMarkdown -}}
 {{- if strings.HasPrefix .Destination "http" }}
     {{- if not .Text -}}
-        {{- /* TODO: Make this configurable */ -}}
+        {{- /* TODO: #27 Make condition configurable */ -}}
         {{- $rel = "nofollow noreferrer noopener" -}}
     {{- end -}}
 {{- end -}}
@@ -17,8 +17,5 @@
 {{- $linkClass := .Page.Params.linkClassMarkdown | default .Page.Site.Params.linkClassMarkdown | default "link-markdown-demo-site" -}}
 
 {{- /* dict all on one line as we support Hugo 0.80.0 and multi-line support requires 0.88.1 or higher */ -}}
-{{- /* REVIEW: We could improve readability by merging the items in on
-    * a line at a time, but it might impact performance. Investigate.
-    */ -}}
 {{- partial "helpers/link-wrapper" (dict "page" .Page "destination" .Destination "title" .Title "text" .Text "rel" $rel "wrapperClass" $wrapperClass "linkClass" $linkClass "wrapperElement" $wrapperElement "destinationNoFind" $destinationNoFind) -}}
 {{- /* Drop trailing newlines */ -}}

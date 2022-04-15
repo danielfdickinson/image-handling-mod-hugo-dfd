@@ -37,14 +37,14 @@
         {{- if not $external -}}{{- /* only try to find resources for internal links */ -}}
             {{- $filePath := "" -}}
             {{- if .File -}}
-                {{- /* FIXME: allow to use content dirs other than /content */ -}}
+                {{- /* FIXME: #28 allow to use content dirs other than /content */ -}}
                 {{- /* fileExists operates relative to site root not relative to content directory */ -}}
-                {{- $filePath = (path.Join "/content" (.Site.LanguagePrefix) (.File.Path) $path) -}}{{- /* For links relative to the current page */ -}}
+                {{- $filePath = (path.Join "/content" (.Site.LanguagePrefix) (strings.TrimSuffix (path.Ext (.File.Path)) (.File.Path)) $path) -}}{{- /* For links relative to the current page */ -}}
                 {{- if hasPrefix $path "/" -}}{{- /* For links relative to the output site root (e.g. /post/some-post) */ -}}
                     {{- $filePath = (path.Join "/content" (.Site.LanguagePrefix) $path) -}}
                 {{- else if .Parent -}}
                     {{- if not .Parent.IsHome -}}
-                        {{- $filePath = (path.Join "/content" (.Site.LanguagePrefix) (.File.Path) ".." $path) -}}
+                        {{- $filePath = (path.Join "/content" (.Site.LanguagePrefix) (strings.TrimSuffix (path.Ext (.File.Path)) (.File.Path)) ".." $path) -}}
                     {{- end -}}
                 {{- end -}}
                 {{- if not (fileExists $filePath) -}}
@@ -77,7 +77,7 @@
     {{- if $tryStatic -}}
         {{- $filePath := "" -}}
         {{- if .File -}}
-            {{- /* FIXME: allow to use static dirs other than /static */ -}}
+            {{- /* FIXME: #29 allow to use static dirs other than /static */ -}}
             {{- /* fileExists operates relative to site root not relative to content directory */ -}}
             {{- $filePath = (path.Join "/static" (.Site.LanguagePrefix) (.File.Path) $path) -}}{{- /* For links relative to the current page */ -}}
             {{- if hasPrefix $path "/" -}}{{- /* For links relative to the output site root (e.g. /post/some-post) */ -}}
@@ -117,12 +117,12 @@
         {{- if not $destResource -}}
             {{- $notFound := true -}}
             {{- /* HACK: Omit Sitemap and RSS feeds from 'not found' */ -}}
-            {{- /* TODO: Check of sitemap or fees are being created and only omit from 'not found' if they are. */ -}}
+            {{- /* TODO: #23 Check if sitemap or feeds are being created and only omit from 'not found' if they are. */ -}}
             {{- if or (eq (path.Base $path) "index.xml") (eq (path.Base $path) "sitemap.xml") -}}
                 {{- $notFound = false -}}
             {{- end -}}
             {{- /* HACK: Omit taxonomies and terms from 'not found' */ -}}
-            {{- /* TODO: Only omit taxonomies and/or terms that are actually being generated. */ -}}
+            {{- /* TODO: #24 Only omit taxonomies and/or terms that are actually being generated. */ -}}
             {{- range $taxonomyName, $taxonomy := .Site.Taxonomies -}}
                 {{- if or (hasPrefix $path $taxonomyName) (hasPrefix $path (printf "/%s" $taxonomyName)) -}}
                     {{- $notFound = false -}}
