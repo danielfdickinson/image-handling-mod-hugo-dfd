@@ -30,37 +30,63 @@
 {{- end -}}
 {{- $tryStatic := false -}}
 {{- $tryResource := false -}}
-{{- $isFile := false -}}
+{{- $tryPaths := (slice) -}}
+{{- $baseTry := "" -}}
+{{- $notFound := false -}}
 {{- with $inPage -}}
     {{- /* We need to know the internal URL without any fragments (e.g. without #an-anchor) */ -}}
     {{- if $path -}}
         {{- if not $external -}}{{- /* only try to find resources for internal links */ -}}
-            {{- $filePath := "" -}}
-            {{- if .File -}}
-                {{- /* FIXME: #28 allow to use content dirs other than /content */ -}}
-                {{- /* fileExists operates relative to site root not relative to content directory */ -}}
-                {{- $filePath = (path.Join "/content" (.Site.LanguagePrefix) (strings.TrimSuffix (path.Ext (.File.Path)) (.File.Path)) $path) -}}{{- /* For links relative to the current page */ -}}
-                {{- if hasPrefix $path "/" -}}{{- /* For links relative to the output site root (e.g. /post/some-post) */ -}}
-                    {{- $filePath = (path.Join "/content" (.Site.LanguagePrefix) $path) -}}
-                {{- else if .Parent -}}
-                    {{- if not .Parent.IsHome -}}
-                        {{- $filePath = (path.Join "/content" (.Site.LanguagePrefix) (strings.TrimSuffix (path.Ext (.File.Path)) (.File.Path)) ".." $path) -}}
+            {{- $notFound = true -}}
+            {{- $baseTry = $path -}}
+            {{- if not (hasPrefix $path "/") -}}
+                {{- if .File -}}
+                    {{- $baseTry = (path.Join "/" (.Site.LanguagePrefix) (strings.TrimSuffix (path.Ext (.File.Path)) (.File.Path)) $path) -}}{{- /* For links relative to the current page */ -}}
+                    {{- if not .IsHome -}}
+                        {{- $baseTry = (path.Join "/" (.Site.LanguagePrefix) (strings.TrimSuffix (path.Ext (.File.Path)) (.File.Path)) ".." $path) -}}
                     {{- end -}}
-                {{- end -}}
-                {{- if not (fileExists $filePath) -}}
-                    {{- if or (fileExists (printf "%s.md" $filePath)) (fileExists (path.Join $filePath "_index.md")) (fileExists (path.Join $filePath "index.md")) -}}{{- /* Check if it is a Markdown content page */ -}}
-                        {{- $isFile = true -}}
-                    {{- end -}}
-                {{- else -}}{{- /* Usually a link to an image or other non-page asset */ -}}
-                    {{- $isFile = true -}}
                 {{- end -}}
             {{- end -}}
-            {{- if not $isFile -}}
-                {{- if not (or .Data.Singular .Data.Plural .Data.Terms) -}}
-                    {{- $tryStatic = true -}}
+            {{- if strings.HasSuffix $baseTry ".md" -}}
+                {{- /* $baseTry = (strings.TrimSuffix ".md" $baseTry) */ -}}
+                {{ $tryPaths = $tryPaths | append $baseTry -}}
+            {{- else -}}
+                {{ $tryPaths = $tryPaths | append $baseTry -}}
+                {{- if eq (path.Ext $baseTry) "" -}}
+                    {{- $tryPaths = $tryPaths | append (path.Join $baseTry "index.md") -}}
+                    {{- $tryPaths = $tryPaths | append (path.Join $baseTry "_ index.md") -}}
                 {{- end -}}
-            {{- else -}}{{- /* If the file exists */ -}}
-                {{- $destination = (strings.TrimSuffix ".md" (strings.TrimPrefix "/content" $filePath)) | relLangURL -}}
+            {{- end -}}
+            {{- if and (path.Ext $path) (ne (path.Ext $path) ".md") -}}
+                {{- /* Try relative to the 'assets' dir or page dir */ -}}
+                {{- $tryPaths = $tryPaths | append $path -}}
+            {{- end -}}
+            {{ $tryResource = true -}}
+        {{- end -}}
+    {{- /* If we have do not have a URL but do have a fragment */ -}}
+    {{- else if $fragment -}}{{- /* For a bare fragment, we know it is for this page */ -}}
+        {{- $destination = printf "%s#%s" (.RelPermalink) $fragment -}}
+    {{- end -}}
+    {{- range $tryPaths -}}
+        {{- if and $tryResource $notFound -}} {{- /* If we have already found a match */ -}}
+            {{- if strings.HasSuffix . "/" -}}
+                {{- $path = strings.TrimSuffix . "/" -}}
+            {{- end -}}
+            {{- $destResource := false -}}
+            {{- if and (path.Ext .) (ne (path.Ext .) ".md") -}}
+                {{- $destResource = resources.Get . -}}{{- /* Look for a match in the 'assets' dir */ -}}
+                {{- if not $destResource -}}{{- /* otherwise look in current page bundle */ -}}
+                    {{- $destResource = $inPage.Resources.GetMatch (printf "*%s*" (path.Base .)) -}}
+                {{- end -}}
+            {{- end -}}
+            {{- if not $destResource -}}
+                {{- $destResource = $inPage.GetPage . -}}
+            {{- end -}}
+            {{- if not $destResource -}}
+                {{- $destResource = site.GetPage . -}}
+            {{- end -}}
+            {{- if $destResource -}}
+                {{- $destination = $destResource.RelPermalink -}}{{- /* We found a resource, so use its relative permalink */ -}}
                 {{- if $fragment -}}
                     {{- if ne (path.Ext $destination) "" -}}
                         {{- $destination = printf "%s#%s" $destination $fragment -}}
@@ -68,73 +94,36 @@
                         {{- $destination = printf "%s/#%s" (strings.TrimSuffix "/" $destination) $fragment -}}
                     {{- end -}}
                 {{- end -}}
-            {{- end -}}
-        {{- end -}}
-    {{- /* If we have do not have a URL but do have a fragment */ -}}
-    {{- else if $fragment -}}{{- /* For a bare fragment, we know it is for this page */ -}}
-        {{- $destination = printf "%s#%s" (.RelPermalink) $fragment -}}
-    {{- end -}}
-    {{- if $tryStatic -}}
-        {{- $filePath := "" -}}
-        {{- if .File -}}
-            {{- /* FIXME: #29 allow to use static dirs other than /static */ -}}
-            {{- /* fileExists operates relative to site root not relative to content directory */ -}}
-            {{- $filePath = (path.Join "/static" (.Site.LanguagePrefix) (.File.Path) $path) -}}{{- /* For links relative to the current page */ -}}
-            {{- if hasPrefix $path "/" -}}{{- /* For links relative to the output site root (e.g. /post/some-post) */ -}}
-                {{- $filePath = (path.Join "/static" (.Site.LanguagePrefix) $path) -}}
-            {{- end -}}
-            {{- if (fileExists $filePath) -}}
-                {{- $isFile = true -}}
-            {{- end -}}
-        {{- end -}}
-        {{- if not $isFile -}}
-            {{- if not (or .Data.Singular .Data.Plural .Data.Terms) -}}
-                {{- $tryResource = true -}}
-            {{- end -}}
-        {{- end -}}
-    {{- end -}}
-    {{- if $tryResource -}}{{- /* We didn't find a matching file and it is an internal link */ -}}
-        {{- $destResource := resources.Get $path -}}{{- /* Look for a match in the 'assets' dir */ -}}
-        {{- if not $destResource -}}{{- /* otherwise look in current page bundle */ -}}
-            {{- $destResource = .Resources.GetMatch (printf "*%s*" (path.Base $path)) -}}
-        {{- end -}}
-        {{- if not $destResource -}}
-            {{- $destResource = .GetPage $path -}}
-        {{- end -}}
-        {{- if not $destResource -}}
-            {{- $destResource = .Site.GetPage $path -}}
-        {{- end -}}
-        {{- if $destResource -}}
-            {{- $destination = $destResource.RelPermalink -}}{{- /* We found a resource, so use its relative permalink */ -}}
-            {{- if $fragment -}}
-                {{- if ne (path.Ext $destination) "" -}}
-                    {{- $destination = printf "%s#%s" $destination $fragment -}}
-                {{- else -}}
-                    {{- $destination = printf "%s/#%s" (strings.TrimSuffix "/" $destination) $fragment -}}
-                {{- end -}}
-            {{- end -}}
-        {{- end -}}
-        {{- if not $destResource -}}
-            {{- $notFound := true -}}
-            {{- /* HACK: Omit Sitemap and RSS feeds from 'not found' */ -}}
-            {{- /* TODO: #23 Check if sitemap or feeds are being created and only omit from 'not found' if they are. */ -}}
-            {{- if or (eq (path.Base $path) "index.xml") (eq (path.Base $path) "sitemap.xml") -}}
                 {{- $notFound = false -}}
             {{- end -}}
-            {{- /* HACK: Omit taxonomies and terms from 'not found' */ -}}
-            {{- /* TODO: #24 Only omit taxonomies and/or terms that are actually being generated. */ -}}
-            {{- range $taxonomyName, $taxonomy := .Site.Taxonomies -}}
-                {{- if or (hasPrefix $path $taxonomyName) (hasPrefix $path (printf "/%s" $taxonomyName)) -}}
+            {{- if not $destResource -}}
+                {{- /* HACK: Omit Sitemap and RSS feeds from 'not found' */ -}}
+                {{- /* TODO: #23 Check if sitemap or feeds are being created and only omit from 'not found' if they are. */ -}}
+                {{- if or (eq (path.Base $path) "index.xml") (eq (path.Base $path) "sitemap.xml") -}}
+                    {{- $notFound = false -}}
+                {{- end -}}
+                {{- /* HACK: Omit taxonomies and terms from 'not found' */ -}}
+                {{- /* TODO: #24 Only omit taxonomies and/or terms that are actually being generated. */ -}}
+                {{- range $taxonomyName, $taxonomy := site.Taxonomies -}}
+                    {{- if or (hasPrefix $path $taxonomyName) (hasPrefix $path (printf "/%s" $taxonomyName)) -}}
+                        {{- $notFound = false -}}
+                    {{- end -}}
+                {{- end -}}
+                {{- /* Try a last ditch check of '/static' */ -}}
+                {{- $staticFile := path.Join "/static" $path -}}
+                {{- if fileExists $staticFile -}}
                     {{- $notFound = false -}}
                 {{- end -}}
             {{- end -}}
-            {{- if $notFound -}}
-                {{- if .File -}}
-                    {{- errorf (print "Couldn't find link '" $path "' for '" .File.Path "'") -}}
-                {{- else -}}
-                    {{- errorf (print "Couldn't find link '" $path "' for '" .Title "'") -}}
-                {{- end -}}
-            {{- end -}}
+        {{- else -}}
+            {{- $notFound = false -}}
+        {{- end -}}
+    {{- end -}}
+    {{- if $notFound -}}
+        {{- if $inPage.File -}}
+            {{- errorf (print "Couldn't find link '" (index $tryPaths 0) "' for '" $inPage.File.Path "'") -}}
+        {{- else -}}
+            {{- errorf (print "Couldn't find link '" (index $tryPaths 0) "' for '" $inPage.Title "'") -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
