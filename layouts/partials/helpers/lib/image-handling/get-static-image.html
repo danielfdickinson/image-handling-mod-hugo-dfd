@@ -10,9 +10,11 @@
         {{- $foundFile = true -}}
     {{- else -}}
         {{- $filePath = path.Join "/static" site.Language.Lang $destination -}}
-        {{- $foundFile = true -}}
+        {{- if fileExists $filePath -}}
+            {{- $foundFile = true -}}
+        {{- end -}}
     {{- end -}}
-    {{- if $foundFile -}}
+    {{- if eq $foundFile true -}}
         {{- if not $getRelative -}}
             {{- $finalDestination = $destination | absURL -}}
         {{- else -}}
