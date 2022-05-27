@@ -20,6 +20,21 @@
     {{- errorf printf "Unable to parse image src '%s'" $destination -}}
 {{- end -}}
 {{- if and $path (not $external) -}}
+    {{- /* For compatibility with Git repos, strip relative paths; the repos need them */ -}}
+    {{- /* but resources expect a different 'root' */ -}}
+    {{- if hasPrefix $path ".." -}}
+        {{ $newPath := "" -}}
+        {{ $doneRelStrip := false -}}
+        {{- range split $path "/" -}}
+            {{- if or (ne . "..") $doneRelStrip -}}
+                {{- $newPath = path.Join $newPath  . -}}
+                {{- $doneRelStrip = true -}}
+            {{- end -}}
+        {{- end -}}
+        {{- if ne $newPath "" -}}
+            {{- $path = $newPath -}}
+        {{- end -}}
+    {{- end -}}
     {{- /* Prefer page bundle assets unless we are ignoring page bundles */ -}}
     {{- if ne $ignoreBundleAssets true -}}
         {{- $imageResources := $curPage.Resources.ByType "image" -}}
@@ -36,7 +51,7 @@
         {{- /* For images resources, get the resulting link to the image */ -}}
         {{- $finalDestination = partial "helpers/lib/image-handling/get-resource-link" (dict "imageResource" $imageResource "getRelative" $getRelative) -}}
     {{- end -}}
-    {{- if and (not $finalDestination) (eq $finalSearch true) -}}
+    {{- if and (or (not $finalDestination) (eq $finalDestination "")) (ne $finalSearch false) -}}
         {{- if $curPage.File -}}
             {{- errorf (printf "Image %s is missing and not external for page %s" $path $curPage.File.Path) -}}
         {{- else -}}
