@@ -73,7 +73,7 @@ If you don't use a page bundle or ``assets``, the image can still be used, but c
 ### Example #1
 
 ```markdown
-![Screenshot of a web page with an aqua theme](screenshot.png)
+![Screenshot of a web page with an aqua theme]\(screenshot.png)
 ```
 
 ### Use figure shortcode
@@ -81,13 +81,13 @@ If you don't use a page bundle or ``assets``, the image can still be used, but c
 ### Example #2
 
 ```markdown
-{{< figure class="responsive-figure" title="Figure 1: Differences between markdown figures and figure shortcode" src="screenshot.png" alt="Screenshot of a web page with an aqua theme" caption="For a figure caption can be different than alt text">}}
+{{\< figure class="responsive-figure" title="Figure 1: Differences between markdown figures and figure shortcode" src="screenshot.png" alt="Screenshot of a web page with an aqua theme" caption="For a figure caption can be different than alt text">}}
 ```
 
 ### Example #3
 
 ```markdown
-{{< figure class="responsive-figure fullwidth" title="Figure 1: Differences between markdown figures and figure shortcode (full width)" src="screenshot.png" alt="Screenshot of a web page with an aqua theme" caption="For a figure caption can be different than alt text">}}
+{{\< figure class="responsive-figure fullwidth" title="Figure 1: Differences between markdown figures and figure shortcode (full width)" src="screenshot.png" alt="Screenshot of a web page with an aqua theme" caption="For a figure caption can be different than alt text">}}
 ```
 
 See ['wrapped image' partial](#wrapped-image), below, for the full set of parameters you can use with the shortcode.
