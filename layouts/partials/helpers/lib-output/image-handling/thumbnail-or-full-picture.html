@@ -83,7 +83,7 @@
         {{- else -}}
             {{- $imgFinalSrc = $thumbnailImgMap.finalSrc -}}
         {{- end -}}
-        {{- if $inAddLink -}}
+        {{- if and $inAddLink (not (strings.HasPrefix $imgFinalSrc "data:image")) -}}
             {{- $addLink = true -}}
             {{- $linkHref := $imgFinalSrc -}}
             {{- if (ne $inLink "") -}}
