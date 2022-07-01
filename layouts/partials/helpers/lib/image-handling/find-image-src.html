@@ -8,18 +8,24 @@
 {{- $title := .title -}}
 {{- $finalSearch := .finalSearch | default true -}}
 {{- $external := false -}}
+{{- $base64 := false -}}
 {{- $finalDestination := "" -}}
+{{- $finalSrc := "" -}}
 {{- $path := "" -}}
 {{- $imageResource := $curPage.Scratch.Get "non-existent-scratch" -}}
-{{- with urls.Parse $destination -}}
-    {{- if or .Host .Scheme -}}
-        {{- $external = true -}}
-    {{- end -}}
-    {{- $path = .Path -}}
+{{- if strings.HasPrefix $destination "data:image" -}}
+    {{- $base64 = true -}}
 {{- else -}}
-    {{- errorf printf "Unable to parse image src '%s'" $destination -}}
+    {{- with urls.Parse $destination -}}
+        {{- if or .Host .Scheme -}}
+            {{- $external = true -}}
+        {{- end -}}
+        {{- $path = .Path -}}
+    {{- else -}}
+        {{- errorf printf "Unable to parse image src '%s'" $destination -}}
+    {{- end -}}
 {{- end -}}
-{{- if and $path (not $external) -}}
+{{- if and $path (not $external) (not $base64) -}}
     {{- /* For compatibility with Git repos, strip relative paths; the repos need them */ -}}
     {{- /* but resources expect a different 'root' */ -}}
     {{- if hasPrefix $path ".." -}}
@@ -60,8 +66,10 @@
     {{- end -}}
 {{- else if $external -}}{{- /* Use external URLs verbatim (not as a resource so no Hugo Pipes; we don't use 0.92.x only functionality, yet) */ -}}
     {{- $finalDestination = $destination -}}
+{{- else if $base64 -}}
+    {{- $finalSrc = $destination -}}
 {{- end -}}
-{{- $image := (dict "imageResource" $imageResource "link" $finalDestination "url" $finalDestination) -}}
+{{- $image := (dict "imageResource" $imageResource "link" $finalDestination "url" $finalDestination "specialSrc" $finalSrc) -}}
 {{- with $image.imageResource -}}
     {{- if partial "helpers/lib/image-handling/is-processable" . -}}
         {{- $image = $image | merge (dict "width" .Width "height" .Height) -}}
@@ -81,7 +89,7 @@
         {{- end -}}
     {{- end -}}
 {{- end -}}
-{{- if not (or $image.imageResource $image.link) -}}
+{{- if not (or $image.imageResource $image.link $image.specialSrc) -}}
     {{- $image = $curPage.Scratch.Get "non-existent-scratch" -}}
 {{- end -}}
 {{- return $image -}}

@@ -100,15 +100,19 @@
         {{- else -}}{{- /* Is an image but not of a processable format */ -}}
             {{- $finalSrc = $fullImage.RelPermalink -}}
         {{- end -}}
-    {{- else -}}{{- /* Is not a known image format for Hugo */ -}}
+    {{- else if not $inImage.specialSrc -}}{{- /* Is not a known image format for Hugo */ -}}
         {{- $finalSrc = $inImage.link -}}
+    {{- else -}}
+        {{- $finalSrc = $inImage.specialSrc | safeHTMLAttr -}}
     {{- end -}}
 {{- end -}}
 {{- if $finalSrc -}}
-    {{- if not $inRelativeUrl -}}
-        {{- $finalSrc = $finalSrc | absURL -}}
-    {{- else -}}
-        {{- $finalSrc = $finalSrc | absURL | relURL -}} {{- /* Canonicalize url */ -}}
+   {{- if not $inImage.specialSrc -}}
+        {{- if not $inRelativeUrl -}}
+            {{- $finalSrc = $finalSrc | absURL -}}
+        {{- else -}}
+            {{- $finalSrc = $finalSrc | absURL | relURL -}} {{- /* Canonicalize url */ -}}
+        {{- end -}}
     {{- end -}}
 {{- end -}}
 {{- $retMap := (dict "finalSrc" $finalSrc "srcSet" $srcSet "width" $fullWidth "height" $fullHeight "fullImage" $fullImage) -}}

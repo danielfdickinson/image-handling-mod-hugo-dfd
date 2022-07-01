@@ -20,6 +20,10 @@
         {{- else -}}
             {{- $finalDestination = $destination | absURL | relURL -}}{{- /* Canonicalize the URL */ -}}
         {{- end -}}
+    {{- else if strings.HasPrefix $destination "data:image" -}}
+        {{- $finalDestination = $destination -}}
     {{- end -}}
 {{- end -}}
 {{- return $finalDestination -}}
+{{- /* Remove trailing newlines */ -}}
+
