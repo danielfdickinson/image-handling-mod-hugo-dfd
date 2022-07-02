@@ -238,8 +238,7 @@ Currently:
 | imageConvertTo | _(nil)_ | Convert all images to specified format (must be an a format supported by Hugo; "webp" requires Hugo Extended) |
 | imageImageSizes | ["480","720","1080","1280","1600","2048"] | Sizes (widths) of responsive image to generate |
 | singleSize | false (when true overrides default imageImagesSizes to "\<image-width>x\<image-height>"]) | Only generate one size of image |
-
-TODO: Add imageConvertMethod as an option for any image: [ Fit \| GrowFit \| Fill \| Resize ].
+| imageConvertMethod | Resize | Set method for resize/crop of image, from [ Fit \| GrowFit \| Fill \| Resize ] |
 
 #### For all image shortcodes
 
@@ -286,9 +285,9 @@ TODO: Add imageConvertMethod as an option for any image: [ Fit \| GrowFit \| Fil
 
 | Param | Default | Description |
 |-------|---------|-------------|
-| microformatWidth | 1200 | Default width for microformat image (e.g. OpenGraph) |
-| microformatHeight | 630 | Default height for microformat image (.e.g OpenGraph) |
-| microformatConvertMethod | GrowFit | Default method for resize/crop of microformat image [ Fit \| GrowFit \| Fill \| Resize ] |
+| microformatWidth | 1200 | Default width for microformat image (e.g. Open Graph) |
+| microformatHeight | 630 | Default height for microformat image (.e.g Open Graph) |
+| microformatSizingMethod | Fill | Default method for resize/crop of microformat image [ Fit \| GrowFit \| Fill \| Resize ] |
 
 ## Examples
 
