@@ -29,6 +29,13 @@ A Hugo module for handling images and image-related functionality for themes (in
 
 ## Basic usage of the module
 
+### Prerequisites
+
+1. You must have in directory containing a hugo site (e.g. such as created by `hugo new site <directory>`).
+2. You must have a recent version of Go installed (see section [Prequisite in 'Use Hugo Modules' in the Hugo documentation](https://gohugo.io/hugo-modules/use-modules/#prerequisite)).
+3. The site must be initialized as a Hugo module (see ['Initialize a New Module' in the Hugo documentation](https://gohugo.io/hugo-modules/use-modules/#initialize-a-new-module), or the output of `hugo mod init`).
+4. Before the site will build correctly, [you will also need a theme installed](https://gohugo.io/getting-started/quick-start/#step-3-add-a-theme).
+
 ### Importing the module
 
 1. The first step to making use of this module is to add it to your site or theme. In your configuration file:
