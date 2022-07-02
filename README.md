@@ -26,6 +26,7 @@ A Hugo module for handling images and image-related functionality for themes (in
 * Allows wrapping a link around the image(s) which points to any URL.
 * Configurable responsive behaviour _[Note 6](#note-6)_
 * Allow disabling responsive images _[Note 7](#note-7)_
+* Supports embedded base64 encoded images.
 
 ## Basic usage of the module
 
@@ -100,6 +101,24 @@ If you don't use a page bundle or ``assets``, the image can still be used, but c
 See ['wrapped image' partial](#wrapped-image), below, for the full set of parameters you can use with the shortcode.
 
 ## Advanced usage
+
+### base64 encoded images
+
+The `src` parameter can be provided as a base64-encoded image instead of a filename or URI. For example:
+
+```markdown
+![Portion of a class diagram](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA…)
+```
+
+or more usefully:
+
+```markdown
+![Portion of a class diagram][reference-to-image]
+
+Other markdown / text.
+
+[reference-to-image]:data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA…
+```
 
 ### Image handling partials
 
