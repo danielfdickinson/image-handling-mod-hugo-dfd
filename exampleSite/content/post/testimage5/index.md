@@ -12,4 +12,4 @@ weight: 10
 
 ## Remote image
 
-{{< figure link="https://www.istockphoto.com/" src="https://media.istockphoto.com/photos/young-woman-watches-sunrise-outside-camping-tent-picture-id1248575497?s=612x612" height="50" >}}
+{{< figure link="https://www.istockphoto.com/" src="https://media.istockphoto.com/photos/young-woman-watches-sunrise-outside-camping-tent-picture-id1248575497?s=612x612" height="50" alt="young woman watches sunrise outside camping tent" >}}
