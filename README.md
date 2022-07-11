@@ -405,7 +405,7 @@ E.g. if you place the image under ``static``
 
 ### Note 11
 
-But doesn't have to be, optionally wrapped in \<figure>, \<span>, or \<div>, all if which maybe optionally wrapped in a link (\<a href="..."> element)
+But doesn't have to be, and can be optionally wrapped in \<figure>, \<span>, or \<div>.
 
 ## Contributions welcome
 
