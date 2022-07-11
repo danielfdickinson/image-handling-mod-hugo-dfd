@@ -14,6 +14,10 @@ on:
     branches:
       - main
       - 'v[0-9]*'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
 jobs:
   check-source-code-validity:
     runs-on: ubuntu-20.04
@@ -49,7 +53,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: "Validate exampleSite HTML"
-        uses: danielfdickinson/validate-html-action-hugo-dfd@v0.2
+        uses: danielfdickinson/validate-html-action-hugo-dfd@main
         with:
           download-site-as: unminified-site-${{ matrix.hugo }}
   check-links:
@@ -61,10 +65,48 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: "Check internal links"
-        uses: danielfdickinson/link-check-action-hugo-dfd@v0.2
+        uses: danielfdickinson/link-check-action-hugo-dfd@main
         with:
           canonical-root: https://example.com/
           download-site-as: unminified-site-${{ matrix.hugo }}
           entry-point: index.html
           upload-logs-as: check-links-failure
           upload-logs-retention: 3
+  build-minified-site:
+    needs:
+      - check-source-code-validity
+    runs-on: ubuntu-20.04
+    if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+    steps:
+      - name: "Build Site with Hugo and Audit"
+        uses: danielfdickinson/build-audit-action-hugo-dfd@main
+        with:
+          upload-site-as: minified-site
+          use-lfs: true
+          source-directory: exampleSite
+  deploy-minified-site:
+    needs:
+      - build-minified-site
+      - validate-unminified-html
+      - check-links
+    environment: production
+    runs-on: ubuntu-20.04
+    if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: minified-site
+      - name: "Extract site and configs"
+        shell: bash
+        env:
+          DOWNLOAD_SITE_FILENAME: hugo-site.tar
+        run: tar -xf "${DOWNLOAD_SITE_FILENAME}"
+      - name: "Deploy Minified Site"
+        uses: wlixcc/SFTP-Deploy-Action@v1.0
+        with:
+          local_path: './public/*'
+          port: ${{ secrets.DEPLOY_SFTP_PORT }}
+          server: ${{ secrets.DEPLOY_SFTP_HOSTNAME }}
+          ssh_private_key: ${{ secrets.DEPLOY_SFTP_PRIVATE_KEY }}
+          remote_path: ${{ secrets.DEPLOY_SFTP_REMOTE_PATH }}
+          username: ${{ secrets.DEPLOY_SFTP_USERNAME }}
