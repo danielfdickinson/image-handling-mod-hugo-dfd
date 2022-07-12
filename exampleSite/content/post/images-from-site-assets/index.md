@@ -18,3 +18,14 @@ images:
 There should be three.
 
 {{< show-metadata-images >}}
+
+## Static image
+
+### Markdown
+
+![squarish ASCII art smiley face](/substatic/featured-favicon-ascface-512x512.png)
+
+### Figure
+
+{{< figure class="a-test-class" imageClass="per-image-class" alt="squarish ASCII art smiley face" src="/substatic/featured-favicon-ascface-512x512.png" ignoreStaticImages="false" >}}
+

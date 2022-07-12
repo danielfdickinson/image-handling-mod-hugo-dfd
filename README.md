@@ -100,6 +100,15 @@ If you don't use a page bundle or ``assets``, the image can still be used, but c
 
 See ['wrapped image' partial](#wrapped-image), below, for the full set of parameters you can use with the shortcode.
 
+**NOTE**: The default for the `figure` shortcode is to `ignoreStaticImages`. If you want
+to changes that, add a parameter `ignoreStaticImages="false"`. For example:
+
+```markdown
+{{</* figure class="static-figure" title="Figure 1: Differences between markdown figures and figure shortcode" src="/images/screenshot.png" alt="Screenshot of a web page with an aqua theme" caption="For a figure caption can be different than alt text" ignoreStaticImages="false" */>}}
+```
+
+Static images cannot be made responsive _[Note 10](#note-10)_
+
 ## Advanced usage
 
 ### base64 encoded images
