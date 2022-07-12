@@ -435,3 +435,7 @@ for enhancements and bugs that you would like resolved, write the fix, and submi
 As well, documentation improvements are always handy.
 
 Thank you, and I hope you find this repository useful.
+
+## Support and general questions
+
+Please use [GitHub Discussions](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/discussions) for support and general questions.
