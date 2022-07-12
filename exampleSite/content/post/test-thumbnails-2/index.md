@@ -9,7 +9,7 @@ tags:
     - Thumbnails
 author: "Daniel F. Dickinson"
 imageLinkFull: true
-imageAltAsCaption: true
+imageAltAsCaption: false
 imageAddWrapper: span
 imageAddClass: "responsive-markdown thumbnail-markdown"
 imageThumbnails: true
