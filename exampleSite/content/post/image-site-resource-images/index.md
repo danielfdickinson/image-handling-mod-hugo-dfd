@@ -15,6 +15,7 @@ images:
 
 ## Image(s) found for this page via ``gather-images``
 
-There should be three.
+There should be three. They are all full width and are cut off at a height of
+630px.
 
 {{< show-metadata-images >}}

@@ -10,12 +10,12 @@ tags:
 images:
     - [dont-break-the-back-button.svg, "A black backwards pointing arrow with a red 'stop' circle over the top"]
     - [/substatic/featured-favicon-ascface-512x512.png, "squarish ASCII art smiley"]
-    - [https://www.wildtechgarden.ca/deploy-admin/hugo-on-netlify-with-wsl/cover-hugo-source-code-in-vscode.png, "a screenshot of source code in VSCode editor"]
+    - ["https://media.istockphoto.com/photos/young-woman-watches-sunrise-outside-camping-tent-picture-id1248575497?s=612x612", "young woman watches sunrise outside camping tent"]
 ---
 
 ## Image(s) found for this page via ``gather-images``
 
-There should be three.
+There should be three. The third one is loaded from a remote source (<https://istockphoto.com>).
 
 {{< show-metadata-images >}}
 
