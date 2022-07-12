@@ -28,4 +28,3 @@ There should be three.
 ### Figure
 
 {{< figure class="a-test-class" imageClass="per-image-class" alt="squarish ASCII art smiley face" src="/substatic/featured-favicon-ascface-512x512.png" ignoreStaticImages="false" >}}
-
