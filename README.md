@@ -260,7 +260,7 @@ Currently:
 
 | Param | Default | Description |
 |-------|---------|-------------|
-| imageLinkFull | _(nil)_ | Link in which to wrap image if not provided by shortcode or partial (always applies to markdown images) |
+| imageLinkFull | _(nil)_ | Link in which to wrap image if not provided by shortcode or partial (always applies to markdown images) _[Note 12](#note-12)_ |
 | imageAddWrapper | _(nil)_ | Element in which to wrap image if not provided by shortcode or partial (always applies to markdown images) |
 | imageAddClass | _(nil)_ | Classes (space separated string) to add to wrapper element or img element if no image wrapper |
 | imageAltAsCaption | false | Use alt text as caption when using image wrapper (unless caption specified) |
@@ -416,6 +416,10 @@ E.g. if you place the image under ``static``
 ### Note 11
 
 But doesn't have to be, and can be optionally wrapped in \<figure>, \<span>, or \<div>.
+
+### Note 12
+
+When using Markdown, if you add links to the full image _and_ wrap the image in a (Markdown) link, the wrapping link will be ignored. Fixing that requires using a `link-render-hook` such as provided by [DFDs Hugo link handling module](https://github.com/danielfdickinson/link-handling-mod-hugo-dfd)
 
 ## Contributions welcome
 
