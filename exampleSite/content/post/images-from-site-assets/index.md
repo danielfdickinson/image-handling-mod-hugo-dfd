@@ -9,7 +9,7 @@ tags:
     - opengraph
 images:
     - [dont-break-the-back-button.svg, "A black backwards pointing arrow with a red 'stop' circle over the top"]
-    - [/substatic/featured-favicon-ascface-512x512.png, "squarish ASCI art smiley"]
+    - [/substatic/featured-favicon-ascface-512x512.png, "squarish ASCII art smiley"]
     - [https://www.wildtechgarden.ca/deploy-admin/hugo-on-netlify-with-wsl/cover-hugo-source-code-in-vscode.png, "a screenshot of source code in VSCode editor"]
 ---
 
