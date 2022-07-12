@@ -10,6 +10,10 @@ A Hugo module for handling images and image-related functionality for themes (in
 
 <https://github.com/danielfdickinson/image-handling-mod-hugo-dfd>
 
+## Site with examples
+
+<https://image-handling-mod.wildtechgarden.ca>
+
 ## Features
 
 * From Hugo content files
