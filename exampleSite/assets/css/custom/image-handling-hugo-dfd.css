@@ -264,7 +264,7 @@ figcaption {
     }
 
     .featured-image:not([src*=".svg"]) {
-        height: fit-content;
+        height: max-content;
     }
 
     .featured-image[src*=".svg"] {
