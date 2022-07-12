@@ -154,6 +154,7 @@ Other markdown / text.
     "target" "For link: E.g. ('_blank')"
     "rel" "For link: E.g. ('nofollow')"
     "imageWrapper" "element in which to wrap <img> element"
+    "imageClass" "when there is a wrapper, the class to apply to the <img> element"
     "caption" "A <figcaption> if image wrapper is <figure>, <span> if there is no title, or <div> if there is a title (because title will be wrapped in an <h2>)"
     "captionRendered" "caption is HTML, not Markdown or plain (default false)"
     "attr" "More caption text (but can be wrapped by a hyperlink via attrLink), only for a '<figure>'"
