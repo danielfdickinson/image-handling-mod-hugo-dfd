@@ -1,6 +1,6 @@
 module github.com/danielfdickinson/image-handling-mod-hugo-dfd/exampleSite
 
-go 1.17
+go 1.15
 
 require (
 	github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.3.1 // indirect
