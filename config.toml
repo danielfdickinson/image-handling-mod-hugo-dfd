@@ -1,5 +1,5 @@
 [module]
-  [module.hugoVersion]
-    min = "0.80.0"
-    extended = false
+[module.hugoVersion]
+min = "0.80.0"
+extended = false
 
