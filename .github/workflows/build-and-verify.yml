@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        hugo: ["0.80.0", "0.88.1", "latest"]
+        hugo: ["0.80.0", "0.88.1", "0.96.0", "latest"]
     steps:
       - name: "Build Site with Hugo and Audit"
         uses: danielfdickinson/build-audit-action-hugo-dfd@v0.2
@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        hugo: ["0.80.0", "0.88.1", "latest"]
+        hugo: ["0.80.0", "0.88.1", "0.96.0", "latest"]
     steps:
       - uses: actions/checkout@v3
       - name: "Validate exampleSite HTML"
@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        hugo: ["0.80.0", "0.88.1", "latest"]
+        hugo: ["0.80.0", "0.88.1", "0.96.0", "latest"]
     steps:
       - uses: actions/checkout@v3
       - name: "Check internal links"
