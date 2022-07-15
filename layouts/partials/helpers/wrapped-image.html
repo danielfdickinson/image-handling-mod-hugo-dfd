@@ -133,13 +133,15 @@
         {{- end -}}
         {{- printf "</%s>" $imageWrapper | safeHTML -}}
     {{- else -}}
-        {{- if or $caption $inAttr -}}<span>
-            {{- (replaceRE "<(/?)p>" "<${1}span>" $renderedCaption) | safeHTML -}}
-            {{- with $inAttrLink -}}
-                <a href="{{ . }}">
+        {{- if ne $inNoVisibleCaption true -}}
+            {{- if or $caption $inAttr -}}<span>
+                {{- (replaceRE "<(/?)p>" "<${1}span>" $renderedCaption) | safeHTML -}}
+                {{- with $inAttrLink -}}
+                    <a href="{{ . }}">
+                {{- end -}}
+                {{- replaceRE "<(/?)p>" "<$1{s}pan>" ($inAttr | $inPage.RenderString (dict "display" "block")) | safeHTML -}}
+                {{- if $inAttrLink }}</a>{{ end }}</span>
             {{- end -}}
-            {{- replaceRE "<(/?)p>" "<$1{s}pan>" ($inAttr | $inPage.RenderString (dict "display" "block")) | safeHTML -}}
-            {{- if $inAttrLink }}</a>{{ end }}</span>
         {{- end -}}
     {{- end -}}
 {{- end -}}
