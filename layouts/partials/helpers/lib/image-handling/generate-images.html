@@ -9,7 +9,7 @@
 {{- $inImageSizes := .imageSizes -}}
 {{- $inSingleSize := .singleSize -}}
 {{- $inConvertTo := .convertTo -}}
-{{- $inConvertMethod := .convertMethod | default "Resize" -}}
+{{- $inConvertMethod := .convertMethod | default $inPage.Params.imageConvertMethod | default $inPage.Site.Params.imageConvertMethod | default "Resize" -}}
 {{- $inRelativeUrl := .getRelative | default true -}}
 
 {{- $fullImage := $inImage.imageResource -}}
@@ -62,6 +62,13 @@
                 {{- $imageConversion = printf " %s" . -}}
             {{- end -}}
 
+            {{- $pagePath := "" -}}
+            {{- if $inPage.File -}}
+                {{- $pagePath = $inPage.File.TranslationBaseName -}}
+            {{- else -}}
+                {{- $pathPath = $inPage.Title -}}
+            {{- end -}}
+
             {{- if eq $inConvertMethod "Resize" -}}
                 {{- if or (ne $fullImage.Width $fullWidth) (ne $fullImage.Height $fullHeight) $convertTo -}}
                     {{- $fullConvertedImage = $fullImage.Resize $imageOptions -}}
@@ -70,17 +77,17 @@
                 {{- end -}}
             {{- else if eq $inConvertMethod "Fit" -}}
                 {{- if or (eq $fullHeight "") (eq (int $fullHeight) 0) -}}
-                    {{- errorf (printf "Must specify a height with 'Fit' for image '%s' on page '%s'" $fullImage.RelPermalink $inPage) -}}
+                    {{- errorf (printf "Must specify a height with 'Fit' for image '%s' on page '%s'" $fullImage.RelPermalink $pagePath) -}}
                 {{- end -}}
                 {{- $fullConvertedImage = $fullImage.Fit $imageOptions -}}
             {{- else if eq $inConvertMethod "Fill" -}}
                 {{- if or (eq $fullHeight "") (eq (int $fullHeight) 0) -}}
-                    {{- errorf (printf "Must specify a height with 'Fill' for image '%s' on page '%s'" $fullImage.RelPermalink $inPage) -}}
+                    {{- errorf (printf "Must specify a height with 'Fill' for image '%s' on page '%s'" $fullImage.RelPermalink $pagePath) -}}
                 {{- end -}}
                 {{- $fullConvertedImage = $fullImage.Fill $imageOptions -}}
             {{- else if eq $inConvertMethod "GrowFit" -}}
                 {{- if or (eq $fullHeight "") (eq (int $fullHeight) 0) -}}
-                    {{- errorf (printf "Must specify a height with 'GrowFit' for image '%s' on page '%s'" $fullImage.RelPermalink $inPage) -}}
+                    {{- errorf (printf "Must specify a height with 'GrowFit' for image '%s' on page '%s'" $fullImage.RelPermalink $pagePath) -}}
                 {{- end -}}
                 {{- $fullConvertedImage = $fullImage.Resize (printf "%dx%s" $fullWidth $imageConversion) -}}
                 {{- $fullConvertedImage = $fullConvertedImage.Fit (printf "%dx%d%s" $fullWidth $fullHeight $imageConversion) -}}
