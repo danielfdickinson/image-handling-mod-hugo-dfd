@@ -140,6 +140,7 @@ Other markdown / text.
 * You have access to the ``helpers/wrapped-image`` partial in your layouts and shortcodes.
 * Outputs the HTML to display an image (an \<img> tag) which is responsive by default _[Note 11](#note-11)_.
 * Not all combinations of parameters make sense.
+* When using 'imageFeatured' and/or thumbnails, you might find _noVisibleCaption_ extremely helpful if you use `imageAltAsCaption` as your site default.
 
 ```html
 {{ partial "helpers/wrapped-image" (
