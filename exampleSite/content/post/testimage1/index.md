@@ -22,4 +22,4 @@ weight: 10
 
 ## Via figure shortcode (fullwidth)
 
-{{< figure class="responsive-figure fullwidth" title="Figure 1: Differences between markdown figures and figure shortcode (full width)" src="screenshot.png" alt="Screenshot of a web page with an aqua theme" caption="For a figure caption can be different than alt text">}}
+{{< figure class="responsive-figure fullwidth" title="Figure 1: Figure shortcode with noVisibleCaption=true (full width)" src="screenshot.png" alt="Screenshot of a web page with an aqua theme" noVisibleCaption=true >}}
