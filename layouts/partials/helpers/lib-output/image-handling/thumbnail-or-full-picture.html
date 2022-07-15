@@ -25,6 +25,7 @@
 {{- $inRel := .rel -}}
 {{- $inAddLink := .addLink -}}
 {{- $inAddClass := .addClass -}}
+{{- $inImageConvertMethod := .imageConvertMethod -}}
 
 {{- $fullImgMap := (dict "finalSrc" "") -}}
 
@@ -42,14 +43,14 @@
 {{- with $inPage -}}
     {{- if reflect.IsMap $inImage -}}
         {{- if $fullSize -}}
-            {{- $fullImgMap = partial "helpers/lib/image-handling/generate-images" (dict "width" $inWidth "height" $inHeight "image" $inImage "page" . "imageSizes" $inImageSizes "singleSize" $inSingleSize "convertTo" $inConvertTo) -}}
+            {{- $fullImgMap = partial "helpers/lib/image-handling/generate-images" (dict "width" $inWidth "height" $inHeight "image" $inImage "page" $inPage "imageSizes" $inImageSizes "singleSize" $inSingleSize "convertTo" $inConvertTo "convertMethod" $inImageConvertMethod) -}}
         {{- else -}}
             {{- $thumbnailWidth = $inThumbnailWidth | default $inWidth | default .Params.imageThumbnailWidth | default .Site.Params.imageThumbnailWidth | default "512" -}}
             {{- $thumbnailHeight = $inThumbnailHeight | default $inHeight | default .Params.imageThumbnailHeight | default .Site.Params.imageThumbnailHeight | default "auto" -}}
         {{- end -}}
 
         {{- if $thumbnails -}}
-            {{- $thumbnailImgMap = partial "helpers/lib/image-handling/generate-images" (dict "width" $thumbnailWidth "height" $thumbnailHeight "image" $inImage "page" . "imageSizes" $thumbnailSizes "singleSize" $inSingleSize "convertTo" $inConvertTo) -}}
+            {{- $thumbnailImgMap = partial "helpers/lib/image-handling/generate-images" (dict "width" $thumbnailWidth "height" $thumbnailHeight "image" $inImage "page" $inPage "imageSizes" $thumbnailSizes "singleSize" $inSingleSize "convertTo" $inConvertTo "convertMethod" $inImageConvertMethod) -}}
         {{- end -}}
     {{- else if not (reflect.IsSlice $inImage) -}}
         {{- $fullImgMap = (dict "finalSrc" $inImage "srcSet" (slice)) -}}
