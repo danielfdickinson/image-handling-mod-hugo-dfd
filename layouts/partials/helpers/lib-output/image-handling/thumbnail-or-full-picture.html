@@ -101,11 +101,11 @@
     {{- if $usePicture -}}
         <picture{{ with $class }} class="{{ . }}"{{ end }}>
         {{- if and $thumbnails (ne $thumbnailImgMap.finalSrc "") -}}
-            {{- $sourceOptions := (dict "imgMap" $thumbnailImgMap "page" . "useSrcSet" (cond (ge (len $thumbnailImgMap.srcSet) 1) true false) "sizesAttr" $thumbnailSizesAttr "media" $thumbnailMedia) -}}
+            {{- $sourceOptions := (dict "imgMap" $thumbnailImgMap "page" . "sizesAttr" $thumbnailSizesAttr "media" $thumbnailMedia) -}}
             {{- partial "helpers/lib-output/image-handling/source-element" $sourceOptions -}}
         {{- end -}}
         {{- if and $fullSize (ne $fullImgMap.finalSrc "") -}}
-            {{- $sourceOptions := (dict "imgMap" $fullImgMap "page" . "useSrcSet" (cond (ge (len $fullImgMap.srcSet) 1) true false) "sizesAttr" $sizesAttr) -}}
+            {{- $sourceOptions := (dict "imgMap" $fullImgMap "page" . "sizesAttr" $sizesAttr) -}}
             {{- partial "helpers/lib-output/image-handling/source-element" $sourceOptions -}}
         {{- end -}}
         {{- $class := "" -}}
