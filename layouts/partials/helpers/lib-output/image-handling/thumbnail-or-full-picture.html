@@ -26,6 +26,8 @@
 {{- $inAddLink := .addLink -}}
 {{- $inAddClass := .addClass -}}
 {{- $inImageConvertMethod := .imageConvertMethod -}}
+{{- $inImageOverlay := .imageOverlay -}}
+{{- $inTextOverlay := .textOverlay -}}
 
 {{- $fullImgMap := (dict "finalSrc" "") -}}
 
@@ -43,14 +45,14 @@
 {{- with $inPage -}}
     {{- if reflect.IsMap $inImage -}}
         {{- if $fullSize -}}
-            {{- $fullImgMap = partial "helpers/lib/image-handling/generate-images" (dict "width" $inWidth "height" $inHeight "image" $inImage "page" $inPage "imageSizes" $inImageSizes "singleSize" $inSingleSize "convertTo" $inConvertTo "convertMethod" $inImageConvertMethod) -}}
+            {{- $fullImgMap = partial "helpers/lib/image-handling/generate-images" (dict "width" $inWidth "height" $inHeight "image" $inImage "page" $inPage "imageSizes" $inImageSizes "singleSize" $inSingleSize "convertTo" $inConvertTo "convertMethod" $inImageConvertMethod "imageOverlay" $inImageOverlay "textOverlay" $inTextOverlay) -}}
         {{- else -}}
             {{- $thumbnailWidth = $inThumbnailWidth | default $inWidth | default .Params.imageThumbnailWidth | default .Site.Params.imageThumbnailWidth | default "512" -}}
             {{- $thumbnailHeight = $inThumbnailHeight | default $inHeight | default .Params.imageThumbnailHeight | default .Site.Params.imageThumbnailHeight | default "auto" -}}
         {{- end -}}
 
         {{- if $thumbnails -}}
-            {{- $thumbnailImgMap = partial "helpers/lib/image-handling/generate-images" (dict "width" $thumbnailWidth "height" $thumbnailHeight "image" $inImage "page" $inPage "imageSizes" $thumbnailSizes "singleSize" $inSingleSize "convertTo" $inConvertTo "convertMethod" $inImageConvertMethod) -}}
+            {{- $thumbnailImgMap = partial "helpers/lib/image-handling/generate-images" (dict "width" $thumbnailWidth "height" $thumbnailHeight "image" $inImage "page" $inPage "imageSizes" $thumbnailSizes "singleSize" $inSingleSize "convertTo" $inConvertTo "convertMethod" $inImageConvertMethod "imageOverlay" $inImageOverlay "textOverlay" $inTextOverlay) -}}
         {{- end -}}
     {{- else if not (reflect.IsSlice $inImage) -}}
         {{- $fullImgMap = (dict "finalSrc" $inImage "srcSet" (slice)) -}}

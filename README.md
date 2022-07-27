@@ -31,6 +31,7 @@ A Hugo module for handling images and image-related functionality for themes (in
 * Configurable responsive behaviour _[Note 6](#note-6)_
 * Allow disabling responsive images _[Note 7](#note-7)_
 * Supports embedded base64 encoded images.
+* Supports image and/or text overlays
 
 ## Basic usage of the module
 
@@ -177,6 +178,8 @@ Other markdown / text.
     "loading" "If set, is the 'loading=' attribute for the 'img'"
     "noVisibleCaption" "If true then when there is a title and/or caption with an imageWrapper do not display the title and/or caption (attributes only)"
     "imageConvertMethod" "Set method for resize/crop of image, from [ Fit \| GrowFit \| Fill \| Resize ]"
+    "imageOverlay" "Dict with src, x, and y for image, and x, y position to overlay 'src' on the main image"
+    "textOverlay" "Dict with text, opts (which is a dict, see [Hugo docs](https://gohugo.io/functions/images/#text)) which specifies text to overlay over an image and the options (color, size, etc)"
     )
 -}}
 ```
@@ -252,7 +255,7 @@ Currently:
 |-------|---------|-------------|
 | imageResponsive | true | Make images responsive (have srcset and sizes) |
 | imageConvertTo | _(nil)_ | Convert all images to specified format (must be an a format supported by Hugo; "webp" requires Hugo Extended) |
-| imageImageSizes | ["480","720","1080","1280","1600","2048"] | Sizes (widths) of responsive image to generate |
+| imageImageSizes | ["480", "720", "1080", "1280", "1600", "2048"] | Sizes (widths) of responsive image to generate |
 | singleSize | false (when true overrides default imageImagesSizes to "\<image-width>x\<image-height>"]) | Only generate one size of image |
 | imageConvertMethod | Resize | Set method for resize/crop of image, from [ Fit \| GrowFit \| Fill \| Resize ] |
 
@@ -273,7 +276,7 @@ Currently:
 | imageSizesAttr | 80vw | For responsive images the default "sizes=" attribute |
 | imageFullSize | true | generate full sized image |
 | imageThumbnails | false | Whether or not to generate thumbnail images |
-| imageThumbnailSizes | ["180","360","512"] | Default image sizes (widths) to generate when generating thumbnails |
+| imageThumbnailSizes | ["180", "360", "512"] | Default image sizes (widths) to generate when generating thumbnails |
 | imageThumbnailWidth | 512 | Width of 'base' thumbnail |
 | imageThumbnailHeight | _(based on thumbnail width and aspect ratio)_ | Height of 'base' thumbnail |
 | imageThumbnailSizesAttr | 20vw | For thumbnail images the default "sizes=" attribute |
@@ -304,6 +307,20 @@ Currently:
 | microformatWidth | 1200 | Default width for microformat image (e.g. Open Graph) |
 | microformatHeight | 630 | Default height for microformat image (.e.g Open Graph) |
 | microformatSizingMethod | Fill | Default method for resize/crop of microformat image [ Fit \| GrowFit \| Fill \| Resize ] |
+| microformatImageOverlay | _(none)_ | Dict with src, x, and y for image, and x, y position to overlay 'src' on the main image |
+| microformatTextOverlay | _(none)_ | Slice of dicts with text, opts (which is a dict, see [Hugo docs](https://gohugo.io/functions/images/#text)) which specifies text to overlay over an image and the options (color, size, etc). Overrides use of title and/or description as overlay text (below). |
+| microformatTitleAsOverlayText | _false_ | Use page .Title as overlay text |
+| microformatDescriptionAsOverlayText | _false_ | Use page .Description as overlay text |
+| microformatOverlayTitleColor | _#fff_ | Colour for title as overlay text |
+| microformatOverlayTitleSize | _96_ | Size in pixels for title as overlay text |
+| microformatOverlayTitleSpacing | _2_ | Line spacing for title as overlay text |
+| microformatOverlayTitleStartX | _0_ | Start X position for title as overlay text |
+| microformatOverlayTitleStartY | _0_ | StartY position for title as overlay text |
+| microformatOverlayTextColor | _#fff_ | Colour for description as overlay text |
+| microformatOverlayTextSize | _96_ | Size in pixels for description as overlay text |
+| microformatOverlayTextSpacing | _2_ | Line spacing for description as overlay text |
+| microformatOverlayTextStartX | _0_ | Start X position for description as overlay text |
+| microformatOverlayTextStartY | _0_ | Start Y position for description as overlay text |
 
 ## Examples
 
