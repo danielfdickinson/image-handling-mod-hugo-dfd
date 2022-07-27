@@ -2,8 +2,9 @@
 {{- $curPage := .Page -}}
 {{- $featuredImageLink := "" -}}
 {{- $featuredImage := partial "helpers/featured-image" $curPage -}}
-{{- if $featuredImage }}
-    {{- $generatedImage := partial "helpers/lib/image-handling/generate-images" (dict "page" $curPage "image" $featuredImage "singleSize" true) -}}
+{{- $featuredImageOverlayImage := .Page.Params.imageMarkdownOverlayImage | default .Page.Site.Params.imageMarkdownOverlayImage -}}
+{{- $featuredImageOverlayText := .Page.Params.imageMarkdownOverlayText | default .Page.Site.Params.imageMarkdownOverlayText -}}{{- if $featuredImage }}
+    {{- $generatedImage := partial "helpers/lib/image-handling/generate-images" (dict "page" $curPage "image" $featuredImage "singleSize" true "imageOverlay" $featuredImageOverlayImage "textOverlay" $featuredImageOverlayText) -}}
     {{- if $generatedImage -}}
         {{- $featuredImageLink = $generatedImage.finalSrc -}}
     {{- else -}}

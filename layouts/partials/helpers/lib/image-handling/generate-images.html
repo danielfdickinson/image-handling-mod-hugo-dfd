@@ -11,6 +11,8 @@
 {{- $inConvertTo := .convertTo -}}
 {{- $inConvertMethod := .convertMethod | default $inPage.Params.imageConvertMethod | default $inPage.Site.Params.imageConvertMethod | default "Resize" -}}
 {{- $inRelativeUrl := .getRelative | default true -}}
+{{- $inImageOverlay := .imageOverlay -}}
+{{- $inTextOverlay := .textOverlay -}}
 
 {{- $fullImage := $inImage.imageResource -}}
 {{- $finalSrc := "" -}}
@@ -66,7 +68,7 @@
             {{- if $inPage.File -}}
                 {{- $pagePath = $inPage.File.TranslationBaseName -}}
             {{- else -}}
-                {{- $pathPath = $inPage.Title -}}
+                {{- $pagePath = $inPage.Title -}}
             {{- end -}}
 
             {{- if eq $inConvertMethod "Resize" -}}
@@ -93,6 +95,26 @@
                 {{- $fullConvertedImage = $fullConvertedImage.Fit (printf "%dx%d%s" $fullWidth $fullHeight $imageConversion) -}}
             {{- else -}}
                 {{- $fullConvertedImage = $fullImage.Resize (printf "%dx%d%s" $fullImage.Width $fullImage.Height $imageConversion) -}}
+            {{- end -}}
+            {{- if $inImageOverlay -}}
+                {{- if and (isset $inImageOverlay "src") (isset $inImageOverlay "x") (isset $inImageOverlay "y") -}}
+                    {{- $overlayImage := partial "helpers/lib/image-handling/find-image-src" (dict "page" $inPage "ignoreStaticImages" true "finalSearch" false "src" $inImageOverlay.src) -}}
+                    {{- if and (reflect.IsMap $overlayImage) (partial "helpers/lib/image-handling/is-processable" $overlayImage.imageResource) -}}
+                        {{- $overlayFilter := images.Overlay $overlayImage.imageResource $inImageOverlay.x $inImageOverlay.y -}}
+                        {{- $fullConvertedImage = $fullConvertedImage.Filter $overlayFilter -}}
+                    {{- end -}}
+                {{- end -}}
+            {{- end -}}
+            {{- if $inTextOverlay -}}
+                {{- if not (reflect.IsSlice $inTextOverlay) -}}
+                    {{- $inTextOverlay = (slice $inTextOverlay) -}}
+                {{- end -}}
+                {{- range $inTextOverlay -}}
+                    {{- if and (reflect.IsMap .) (isset . "text") (isset . "opts") (reflect.IsMap .opts) -}}
+                        {{- $overlayFilter := images.Text .text .opts -}}
+                        {{- $fullConvertedImage = $fullConvertedImage.Filter $overlayFilter -}}
+                    {{- end -}}
+                {{- end -}}
             {{- end -}}
             {{- $finalSrc = $fullConvertedImage.RelPermalink -}}
             {{- $fullHeight = $fullConvertedImage.Height -}}
