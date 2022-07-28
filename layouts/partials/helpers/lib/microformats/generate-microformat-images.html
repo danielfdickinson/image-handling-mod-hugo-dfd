@@ -19,11 +19,13 @@
 {{- $microformatOverlayTextStartX := int ($inPage.Params.microformatOverlayTextStartX | default $inPage.Site.Params.microformatOverlayTextStartX | default 0) -}}
 {{- $microformatOverlayTextStartY := int ($inPage.Params.microformatOverlayTextStartY | default $inPage.Site.Params.microformatOverlayTextStartY | default 0) -}}
 {{- if not $microformatOverlayText -}}
-    {{- if and $microformatTitleAsOverlay $inPage.Params.title -}}
-        {{- $microformatOverlayText = (slice (dict "text" $inPage.Title "opts" (dict "x" $microformatOverlayTitleStartX "y" $microformatOverlayTitleStartY "color" $microformatOverlayTitleColor "linespacing" $microformatOverlayTitleSpacing "size" $microformatOverlayTitleSize))) -}}
+    {{- $pageTitle := partial "helpers/lib/metadata/gather-title-page.html" $inPage -}}
+    {{- if and $microformatTitleAsOverlay $pageTitle -}}
+        {{- $microformatOverlayText = (slice (dict "text" $pageTitle "opts" (dict "x" $microformatOverlayTitleStartX "y" $microformatOverlayTitleStartY "color" $microformatOverlayTitleColor "linespacing" $microformatOverlayTitleSpacing "size" $microformatOverlayTitleSize))) -}}
     {{- end -}}
-    {{- if and $microformatDescriptionAsOverlay ($inPage.Description | plainify) -}}
-        {{- $microformatOverlayText = $microformatOverlayText | append (slice (dict "text" $inPage.Params.description "opts" (dict "x" $microformatOverlayTextStartX "y" $microformatOverlayTextStartY "color" $microformatOverlayTextColor "linespacing" $microformatOverlayTextSpacing "size" $microformatOverlayTextSize))) -}}
+    {{- $description := partial "helpers/lib/metadata/gather-description-no-fallback.html" $inPage -}}
+    {{- if and $microformatDescriptionAsOverlay $description -}}
+        {{- $microformatOverlayText = $microformatOverlayText | append (slice (dict "text" $description "opts" (dict "x" $microformatOverlayTextStartX "y" $microformatOverlayTextStartY "color" $microformatOverlayTextColor "linespacing" $microformatOverlayTextSpacing "size" $microformatOverlayTextSize))) -}}
     {{- end -}}
 {{- end -}}
 {{- with $inImages -}}
