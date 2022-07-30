@@ -23,7 +23,7 @@
     {{- if and $microformatTitleAsOverlay $pageTitle -}}
         {{- $microformatOverlayText = (slice (dict "text" $pageTitle "opts" (dict "x" $microformatOverlayTitleStartX "y" $microformatOverlayTitleStartY "color" $microformatOverlayTitleColor "linespacing" $microformatOverlayTitleSpacing "size" $microformatOverlayTitleSize))) -}}
     {{- end -}}
-    {{- $description := partial "helpers/lib/metadata/gather-description-no-fallback.html" $inPage -}}
+    {{- $description := partial "helpers/lib/metadata/gather-description.html" $inPage | htmlUnescape -}}
     {{- if and $microformatDescriptionAsOverlay $description -}}
         {{- $microformatOverlayText = $microformatOverlayText | append (slice (dict "text" $description "opts" (dict "x" $microformatOverlayTextStartX "y" $microformatOverlayTextStartY "color" $microformatOverlayTextColor "linespacing" $microformatOverlayTextSpacing "size" $microformatOverlayTextSize))) -}}
     {{- end -}}
