@@ -1,0 +1,9 @@
+{{- $generatedAlt := "" -}}
+{{- $generatedAltPrefix := .Page.Params.imageFeaturedGenAltPrefix | default .Page.Site.Params.imageFeaturedGenAltPrefix | default "" -}}
+{{- $pageTitle := partial "helpers/lib/metadata/gather-title-page.html" . -}}
+{{- $pageDescription := partial "helpers/lib/metadata/gather-description.html" . -}}
+{{- if and (not (isset .Page.Params "imageFeaturedAlt")) $generatedAltPrefix $pageTitle $pageDescription -}}
+    {{- $generatedAlt = delimit (slice $generatedAltPrefix $pageTitle $pageDescription) "—" -}}
+{{- end -}}
+{{- return $generatedAlt -}}
+{{- /* Remove trailing newlines */ -}}
