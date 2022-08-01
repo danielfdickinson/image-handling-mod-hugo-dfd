@@ -7,7 +7,7 @@ categories:
 tags:
     - Example Post
 author: "Daniel F. Dickinson"
-weight: 10
+weight: 50
 ---
 
 ## Remote image

@@ -4,9 +4,8 @@ date: 2022-02-27T19:46:36Z
 publishDate: 2022-02-27T19:46:36Z
 author: Daniel F. Dickinson
 tags:
+    - featured
     - images
-    - metadata
-    - opengraph
 imageFeaturedAlt: "Tired and exhausted stick figure (illustration)"
 imageLinkFull: true
 ---

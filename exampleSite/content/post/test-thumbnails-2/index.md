@@ -13,7 +13,7 @@ imageAltAsCaption: false
 imageAddWrapper: span
 imageAddClass: "responsive-markdown thumbnail-markdown"
 imageThumbnails: true
-weight: 60
+weight: 210
 ---
 
 ## Markdown Thumbnail Test

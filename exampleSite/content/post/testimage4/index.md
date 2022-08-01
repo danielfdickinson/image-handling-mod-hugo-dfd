@@ -9,7 +9,7 @@ tags:
 author: "Daniel F. Dickinson"
 imageLinkFull: true
 imageAltAsCaption: true
-weight: 10
+weight: 40
 ---
 
 ## Via Markdown

@@ -1,13 +1,29 @@
 {{- $ctx := . -}}
+{{- $classPrefix := "featured-image" -}}
+{{- if eq (.Get 0) "metadata" -}}
+    {{- $classPrefix = "metadata-image" -}}
+{{- end -}}
 {{- $curPage := .Page -}}
-{{- $featuredImage := partial "helpers/featured-image" $curPage -}}
-{{- if $featuredImage -}}
+{{- $featuredImages := partial "helpers/featured-images" $curPage -}}
+{{- if $featuredImages -}}
+        {{- if eq $classPrefix "metadata-image" -}}
+<div class="metadata-images-wrapper">
+        {{- end -}}
+    {{- range $featuredImages -}}
+        {{- if eq $classPrefix "featured-image" -}}
 <div class="featured-image-flex-wrapper">
     <div class="featured-image-thumbnail-article">
-        {{- partial "helpers/wrapped-image" (dict "page" .Page "image" $featuredImage "alt" (cond (isset $featuredImage "alt") $featuredImage.alt "") "title" (cond (isset $featuredImage "title") $featuredImage.title "") "noVisibleCaption" true "imageWrapper" "div" "class" "featured-image-thumbnail-wrapper" "imageClass" "featured-image-thumbnail" "linkClass" "featured-image-thumbnail-link") -}}
+        {{- partial "helpers/wrapped-image" (dict "page" $curPage "image" . "alt" (cond (isset . "alt") .alt "") "title" (cond (isset . "title") .title "") "noVisibleCaption" true "imageWrapper" "div" "class" "featured-image-thumbnail-wrapper" "imageClass" "featured-image-thumbnail" "linkClass" "featured-image-thumbnail-link") -}}
     </div>
     <div class="featured-image-header">
-        {{- partial "helpers/wrapped-image" (dict "page" .Page "image" $featuredImage "alt" (cond (isset $featuredImage "alt") $featuredImage.alt "") "title" (cond (isset $featuredImage "title") $featuredImage.title "") "noVisibleCaption" true "imageWrapper" "div" "class" "featured-image-wrapper" "imageClass" "featured-image" "linkClass" "featured-image-link") -}}
+        {{- end -}}
+        {{- partial "helpers/wrapped-image" (dict "page" $curPage "image" . "alt" (cond (isset . "alt") .alt "") "title" (cond (isset . "title") .title "") "noVisibleCaption" true "imageWrapper" "div" "class" (printf "%s-wrapper" $classPrefix) "imageClass" $classPrefix "linkClass" "featured-image-link") -}}
+        {{- if eq $classPrefix "featured-image" -}}
     </div>
 </div>
+        {{- end -}}
+    {{- end -}}
+    {{- if eq $classPrefix "metadata-image" -}}
+</div>
+    {{- end -}}
 {{- end -}}

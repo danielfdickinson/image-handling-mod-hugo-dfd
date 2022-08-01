@@ -12,7 +12,7 @@ imageLinkFull: false
 imageAltAsCaption: true
 imageAddWrapper: span
 imageAddClass: markdown-tt1-wrapper
-weight: 40
+weight: 200
 ---
 
 {{< figure class="responsive-figure thumbnail-figure" thumbnails=true title="Figure 1: Differences between markdown figures and figure shortcode" src="screenshot.png" alt="Screenshot of a web page with an aqua theme" caption="For a figure caption can be different than alt text">}}

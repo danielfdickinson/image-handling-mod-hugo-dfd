@@ -4,14 +4,11 @@ date: 2022-01-03T04:55:23Z
 publishDate: 2022-01-03T04:55:23Z
 author: Daniel F. Dickinson
 tags:
+    - featured
     - images
-    - metadata
-    - opengraph
 imageFeaturedAlt: "A black backwards pointing arrow with a red 'stop' circle over the top"
 ---
 
-## Image(s) found for this page via ``gather-images``
+There should be only one. It should be cut off at 630px height.
 
-There should be only one.
-
-{{< show-metadata-images >}}
+{{< show-featured-images "metadata" >}}

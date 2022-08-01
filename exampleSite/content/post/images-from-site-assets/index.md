@@ -4,20 +4,33 @@ date: 2022-01-03T01:57:06Z
 publishDate: 2022-01-03T01:57:06Z
 author: Daniel F. Dickinson
 tags:
+    - featured
     - images
-    - metadata
-    - opengraph
 images:
     - [dont-break-the-back-button.svg, "A black backwards pointing arrow with a red 'stop' circle over the top"]
     - [/substatic/featured-favicon-ascface-512x512.png, "squarish ASCII art smiley"]
     - ["https://media.istockphoto.com/photos/young-woman-watches-sunrise-outside-camping-tent-picture-id1248575497?s=612x612", "young woman watches sunrise outside camping tent"]
 ---
 
-## Image(s) found for this page via ``gather-images``
+Based on the following frontmatter, there should be two. The second one is loaded from a remote source (<https://istockphoto.com>). The static image is ignored because static images are only processed if no resource images are found.
 
-There should be three. The third one is loaded from a remote source (<https://istockphoto.com>).
+The displayed images from frontmatter should be cut off at 630px height.
 
-{{< show-metadata-images >}}
+See [README.md—Featured imges](../README.md#featured-images)
+
+
+``` yaml
+images:
+    - [dont-break-the-back-button.svg, "A black backwards pointing arrow with a red 'stop' circle over the top"]
+    - [/substatic/featured-favicon-ascface-512x512.png, "squarish ASCII art smiley"]
+    - ["https://media.istockphoto.com/photos/young-woman-watches-sunrise-outside-camping-tent-picture-id1248575497?s=612x612", "young woman watches sunrise outside camping tent"]
+
+```
+
+
+The static image 
+
+{{< show-featured-images "metadata" >}}
 
 ## Static image
 
