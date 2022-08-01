@@ -7,14 +7,17 @@
         {{ with (partial "helpers/lib/metadata/gather-title-site" .) -}}
             {{- $foundTitle = . -}}
         {{- end -}}
-    {{- else if .TranslationKey -}}
-        {{- if .IsSection -}}
-            {{- $foundTitle = (path.BaseName .TranslationKey) | humanize | pluralize | title -}}
-        {{- else -}}
-            {{- $foundTitle = (path.BaseName .TranslationKey) | humanize | title -}}
-        {{- end -}}
     {{- else -}}
-        {{- $foundTitle = i18n "untitled" -}}
+        {{- $foundTitle = path.Base .TranslationKey -}}
+        {{- if $foundTitle -}}
+            {{- if .IsSection -}}
+                {{- $foundTitle = $foundTitle | humanize | pluralize -}}
+            {{- else -}}
+                {{- $foundTitle = $foundTitle | humanize -}}
+            {{- end -}}
+        {{- else -}}
+            {{- $foundTitle = i18n "untitled" -}}
+        {{- end -}}
     {{- end -}}
 {{- end -}}
 {{- if $foundTitle -}}
