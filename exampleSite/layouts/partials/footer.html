@@ -4,7 +4,10 @@
     <h2>Microformats images</h2>
     <ul class="list-item-test-min">
     {{- range . -}}
-        <li class="list-item-test-main"><pre><code>{{ .link }}</code></pre></li>
+        <li class="list-item-test-main"><pre><code>{{ .link }}</code></pre>
+            <ul><li><pre><code>{{ .alt }}</code></pre>
+            </li></ul>
+        </li>
     {{- end -}}
     </ul>
 {{- end -}}

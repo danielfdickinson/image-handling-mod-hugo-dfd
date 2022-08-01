@@ -3,7 +3,7 @@
 {{- $pageTitle := partial "helpers/lib/metadata/gather-title-page.html" . -}}
 {{- $pageDescription := partial "helpers/lib/metadata/gather-description.html" . -}}
 {{- if and (not (isset .Page.Params "imageFeaturedAlt")) $generatedAltPrefix $pageTitle $pageDescription -}}
-    {{- $generatedAlt = delimit (slice $generatedAltPrefix $pageTitle $pageDescription) "—" -}}
+    {{- $generatedAlt = delimit (slice $generatedAltPrefix $pageTitle $pageDescription) "—" | htmlUnescape -}}
 {{- end -}}
 {{- return $generatedAlt -}}
 {{- /* Remove trailing newlines */ -}}
