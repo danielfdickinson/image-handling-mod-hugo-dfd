@@ -28,7 +28,7 @@ jobs:
         with:
           globs: |
             README.md
-            exampleSite/content/*/*.md
+            exampleSite/content/*.md
             exampleSite/content/**/*.md
   build-unminified-site:
     needs: check-source-code-validity

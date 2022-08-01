@@ -75,7 +75,7 @@
         {{- $image = $image | merge (dict "width" .Width "height" .Height) -}}
     {{- end -}}
 {{- end -}}
-{{- with ($alt | default $curPage.Params.imageFeaturedAlt | default $curPage.Params.imageCoverAlt | default $curPage.Params.imageThumbnailAlt | default $curPage.Params.featuredImageAlt | default $curPage.Params.featuredAlt | default (partial "helpers/lib/image-handling/generate-alt-text.html" $curPage)) -}}
+{{- with ($alt | default $curPage.Params.imageFeaturedAlt | default $curPage.Params.imageCoverAlt | default $curPage.Params.imageThumbnailAlt | default $curPage.Params.featuredImageAlt | default $curPage.Params.featuredAlt) -}}
     {{ $image = $image | merge (dict "alt" .) -}}
 {{- end -}}
 {{- with ($title | default $curPage.Params.imageFeaturedTitle | default $curPage.Params.imageCoverTitle | default $curPage.Params.imageThumbnailTitle | default $curPage.Params.featuredImageTitle | default $curPage.Params.featuredTitle) -}}

@@ -5,7 +5,7 @@
 {{- $foundImagesByName := $curPage.Scratch.Get "non-existent-scratch" -}}
 {{- $image := $curPage.Scratch.Get "non-existent-scratch" -}}
 {{- /* Try page-level images first */ -}}
-{{- $featuredParam := $curPage.Params.imageFeatured | default $curPage.Params.imageCover | default $curPage.Params.imageThumbnail | default $curPage.Params.featured_image -}}
+{{- $featuredParam := $curPage.Params.imageFeatured | default $curPage.Params.imageCover | default $curPage.Params.imageThumbnail | default $curPage.Params.featured_image | default $curPage.Params.images -}}
 {{- if $featuredParam -}}
     {{- $foundImages = partial "helpers/lib/image-handling/find-image-maps" (dict "page" $curPage "images" $featuredParam "ignoreBundleAssets" false "ignoreSiteAssets" false "ignoreStaticImages" true "getRelative" $relativeUrl "finalSearch" false) -}}
 {{- end -}}
