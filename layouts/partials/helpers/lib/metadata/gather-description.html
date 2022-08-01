@@ -1,7 +1,7 @@
 {{- $foundTitle := path.Base .TranslationKey -}}
 {{- $description := .Description -}}
 {{- if not .IsHome -}}
-    {{- $description = $description | default .Params.description -}}
+    {{- $description = ($description | default .Params.description | default (partial "helpers/lib/metadata/gather-summary" .)) -}}
     {{- /* For the found description: Turn into plain text, replace newlines and carriage-returns with spaces, and condense any multiple space sequence to a single space */ -}}
     {{- $description = strings.TrimRight " " (strings.TrimLeft " " (replaceRE " +" " " (replaceRE "(\n|\r)" " " ($description | plainify)))) -}}
     {{- if and (not $description) (or .Data.Plural .Data.Singular) -}}
@@ -13,7 +13,7 @@
         {{- end -}}
     {{- end -}}
 {{- else -}}
-    {{- $description = $description | default .Params.description | default .Site.Params.description -}}
+    {{- $description = ($description | default .Params.description | default .Site.Params.description | default .Site.Params.summary) -}}
     {{- /* For the found description: Render markdown if present, turn into plain text, replace newlines and carriage-returns with spaces, then condense any multiple space sequence to a single space */ -}}
     {{- $description = strings.TrimRight " " (strings.TrimLeft " " (replaceRE " +" " " (replaceRE "(\n|\r)" " " ($description | .RenderString | plainify)))) -}}
 {{- end -}}
