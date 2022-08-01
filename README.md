@@ -192,6 +192,7 @@ Other markdown / text.
      2. imageCover
      3. imageThumbnail
      4. featured_image
+     5. images
   2. If none found via step #1, look in the current page bundle for:
      1. \*feature*
      2. \*cover*,\*thumbnail*
