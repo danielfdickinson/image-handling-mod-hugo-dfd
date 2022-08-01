@@ -19,17 +19,16 @@ A Hugo module for handling images and image-related functionality for themes (in
 * From Hugo content files
   * via a render-image hook _[Note 1](#note-1)_
   * via a shortcode _[Note 2](#note-2)_
-* Microformat (e.g. Open Graph/Twitter) support _[Note 3](#note-3)_
-* Thumbnails _[Note 4](#note-4)_
+* Thumbnails _[Note 3](#note-3)_
   * Configurable between thumbnail and full width or height image
   * Sitewide defaults that are overridable per-page
 * Fallback for non-resource images
-* Image conversion _[Note 5](#note-5)_
+* Image conversion _[Note 4](#note-4)_
 * Allows wrapping a link around the image(s) which points to the base image.
   * optionally can point to original format image
 * Allows wrapping a link around the image(s) which points to any URL.
-* Configurable responsive behaviour _[Note 6](#note-6)_
-* Allow disabling responsive images _[Note 7](#note-7)_
+* Configurable responsive behaviour _[Note 5](#note-5)_
+* Allow disabling responsive images _[Note 6](#note-6)_
 * Supports embedded base64 encoded images.
 * Supports image and/or text overlays
 
@@ -38,7 +37,7 @@ A Hugo module for handling images and image-related functionality for themes (in
 ### Prerequisites
 
 1. You must have in directory containing a hugo site (e.g. such as created by `hugo new site <directory>`).
-2. You must have a recent version of Go installed (see section [Prequisite in 'Use Hugo Modules' in the Hugo documentation](https://gohugo.io/hugo-modules/use-modules/#prerequisite)).
+2. You must have a recent version of Go installed (see section [Prerequisite in 'Use Hugo Modules' in the Hugo documentation](https://gohugo.io/hugo-modules/use-modules/#prerequisite)).
 3. The site must be initialized as a Hugo module (see ['Initialize a New Module' in the Hugo documentation](https://gohugo.io/hugo-modules/use-modules/#initialize-a-new-module), or the output of `hugo mod init`).
 4. Before the site will build correctly, [you will also need a theme installed](https://gohugo.io/getting-started/quick-start/#step-3-add-a-theme).
 
@@ -50,8 +49,8 @@ A Hugo module for handling images and image-related functionality for themes (in
 
    ```toml
    [module]
-     [[module.imports]]
-       path = "github.com/danielfdickinson/image-handling-mod-hugo-dfd"
+   [[module.imports]]
+   path = "github.com/danielfdickinson/image-handling-mod-hugo-dfd"
    ```
 
    OR
@@ -72,10 +71,10 @@ A Hugo module for handling images and image-related functionality for themes (in
 
 ### Add the image
 
-1. Place your image in a [page bundle](https://gohugo.io/content-management/page-bundles/) (e.g. `screenshot.png`) _[Note 8](#note-8)_
-2. OR under `assets` in your project root _[Note 9](#note-9)_
+1. Place your image in a [page bundle](https://gohugo.io/content-management/page-bundles/) (e.g. `screenshot.png`) _[Note 7](#note-7)_
+2. OR under `assets` in your project root _[Note 8](#note-8)_
 
-If you don't use a page bundle or ``assets``, the image can still be used, but cannot be made responsive _[Note 10](#note-10)_
+If you don't use a page bundle or ``assets``, the image can still be used, but cannot be made responsive _[Note 9](#note-9)_
 
 ### Add CSS to style the images
 
@@ -112,7 +111,7 @@ to changes that, add a parameter `ignoreStaticImages="false"`. For example:
 {{</* figure class="static-figure" title="Figure 1: Differences between markdown figures and figure shortcode" src="/images/screenshot.png" alt="Screenshot of a web page with an aqua theme" caption="For a figure caption can be different than alt text" ignoreStaticImages="false" */>}}
 ```
 
-Static images cannot be made responsive _[Note 10](#note-10)_
+Static images cannot be made responsive _[Note 9](#note-9)_
 
 ## Advanced usage
 
@@ -139,7 +138,7 @@ Other markdown / text.
 #### Wrapped image
 
 * You have access to the ``helpers/wrapped-image`` partial in your layouts and shortcodes.
-* Outputs the HTML to display an image (an \<img> tag) which is responsive by default _[Note 11](#note-11)_.
+* Outputs the HTML to display an image (an \<img> tag) which is responsive by default _[Note 10](#note-10)_.
 * Not all combinations of parameters make sense.
 * When using 'imageFeatured' and/or thumbnails, you might find _noVisibleCaption_ extremely helpful if you use `imageAltAsCaption` as your site default.
 
@@ -227,17 +226,6 @@ Featured images each have a url and may have
 {{ partial "helpers/featured-image-link" . -}}
 ```
 
-### Metadata gathering
-
-See [DFD Hugo metadata module](https://github.com/danielfdickinson/metadata-mod-hugo-dfd) for more information.
-
-Metadata types that can be gathered are:
-
-* ``media-images`` A slice of maps (dictionaries) with image information for use in microformats and other metadata; images matched are the same as [featured images](#featured-images) above.
-* ``media-image`` A map (dictionary) with image information for the first image from ``media-images`` which corresponds to [featured image](#featured-image) above.
-
-Gathering image metadata may also create an image for specifically for use with microformats (see [for microformats](#for-microformats) , below).
-
 ### `.Site` or `.Page` params
 
 #### For all processable images
@@ -269,7 +257,7 @@ Currently:
 
 | Param | Default | Description |
 |-------|---------|-------------|
-| imageLinkFull | _(nil)_ | Link in which to wrap image if not provided by shortcode or partial (always applies to markdown images) _[Note 12](#note-12)_ |
+| imageLinkFull | _(nil)_ | Link in which to wrap image if not provided by shortcode or partial (always applies to markdown images) _[Note 12](#note-11)_ |
 | imageAddWrapper | _(nil)_ | Element in which to wrap image if not provided by shortcode or partial (always applies to markdown images) |
 | imageAddClass | _(nil)_ | Classes (space separated string) to add to wrapper element or img element if no image wrapper |
 | imageAltAsCaption | false | Use alt text as caption when using image wrapper (unless caption specified) |
@@ -299,28 +287,6 @@ Currently:
 * imageThumbnailTitle
 * featuredImageTitle
 * featuredTitle
-
-#### For microformats
-
-| Param | Default | Description |
-|-------|---------|-------------|
-| microformatWidth | 1200 | Default width for microformat image (e.g. Open Graph) |
-| microformatHeight | 630 | Default height for microformat image (.e.g Open Graph) |
-| microformatSizingMethod | Fill | Default method for resize/crop of microformat image [ Fit \| GrowFit \| Fill \| Resize ] |
-| microformatImageOverlay | _(none)_ | Dict with src, x, and y for image, and x, y position to overlay 'src' on the main image |
-| microformatTextOverlay | _(none)_ | Slice of dicts with text, opts (which is a dict, see [Hugo docs](https://gohugo.io/functions/images/#text)) which specifies text to overlay over an image and the options (color, size, etc). Overrides use of title and/or description as overlay text (below). |
-| microformatTitleAsOverlayText | _false_ | Use page .Title as overlay text |
-| microformatDescriptionAsOverlayText | _false_ | Use page .Description as overlay text |
-| microformatOverlayTitleColor | _#fff_ | Colour for title as overlay text |
-| microformatOverlayTitleSize | _96_ | Size in pixels for title as overlay text |
-| microformatOverlayTitleSpacing | _2_ | Line spacing for title as overlay text |
-| microformatOverlayTitleStartX | _0_ | Start X position for title as overlay text |
-| microformatOverlayTitleStartY | _0_ | StartY position for title as overlay text |
-| microformatOverlayTextColor | _#fff_ | Colour for description as overlay text |
-| microformatOverlayTextSize | _96_ | Size in pixels for description as overlay text |
-| microformatOverlayTextSpacing | _2_ | Line spacing for description as overlay text |
-| microformatOverlayTextStartX | _0_ | Start X position for description as overlay text |
-| microformatOverlayTextStartY | _0_ | Start Y position for description as overlay text |
 
 ## Examples
 
@@ -406,41 +372,37 @@ Override of default 'figure' shortcode from Hugo core
 
 ### Note 3
 
-Requires [DFD Hugo metadata module](https://github.com/danielfdickinson/metadata-mod-hugo-dfd) or equivalent
+E.g. for blog/taxonomy/HTML sitemap/etc listings
 
 ### Note 4
 
-E.g. for blog/taxonomy/HTML sitemap/etc listings
+E.g. to webp
 
 ### Note 5
 
-E.g. to webp
+Sizes attribute and sizes of images and/or alternate images based on media queries
 
 ### Note 6
 
-Sizes attribute and sizes of images and/or alternate images based on media queries
+E.g. single image/size; useful if all you want is image conversion or just the wrapper functionality
 
 ### Note 7
 
-E.g. single image/size; useful if all you want is image conversion or just the wrapper functionality
+**NB** You can only use subdirectories with leaf bundles. For branch bundles the image must be in the same directory as the `_index.md`
 
 ### Note 8
 
-**NB** You can only use subdirectories with leaf bundles. For branch bundles the image must be in the same directory as the `_index.md`
+This allows using subdirectories under `assets` (e.g. `assets/path/to/screenshot.png` which would render to `/path/to/screenshot.png`).
 
 ### Note 9
 
-This allows using subdirectories under `assets` (e.g. `assets/path/to/screenshot.png` which would render to `/path/to/screenshot.png`).
+E.g. if you place the image under ``static``
 
 ### Note 10
 
-E.g. if you place the image under ``static``
-
-### Note 11
-
 But doesn't have to be, and can be optionally wrapped in \<figure>, \<span>, or \<div>.
 
-### Note 12
+### Note 11
 
 When using Markdown, if you add links to the full image _and_ wrap the image in a (Markdown) link, the wrapping link will be ignored. Fixing that requires using a `link-render-hook` such as provided by [DFDs Hugo link handling module](https://github.com/danielfdickinson/link-handling-mod-hugo-dfd)
 
