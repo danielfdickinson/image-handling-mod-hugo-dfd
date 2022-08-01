@@ -18,7 +18,6 @@ The displayed images from frontmatter should be cut off at 630px height.
 
 See [README.md—Featured imges](../README.md#featured-images)
 
-
 ``` yaml
 images:
     - [dont-break-the-back-button.svg, "A black backwards pointing arrow with a red 'stop' circle over the top"]
@@ -27,8 +26,7 @@ images:
 
 ```
 
-
-The static image 
+The static image
 
 {{< show-featured-images "metadata" >}}
 
