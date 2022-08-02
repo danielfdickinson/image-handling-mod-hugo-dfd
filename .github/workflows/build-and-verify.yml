@@ -101,12 +101,19 @@ jobs:
         env:
           DOWNLOAD_SITE_FILENAME: hugo-site.tar
         run: tar -xf "${DOWNLOAD_SITE_FILENAME}"
-      - name: "Deploy Minified Site"
-        uses: wlixcc/SFTP-Deploy-Action@v1.0
-        with:
-          local_path: './public/*'
-          port: ${{ secrets.DEPLOY_SFTP_PORT }}
-          server: ${{ secrets.DEPLOY_SFTP_HOSTNAME }}
-          ssh_private_key: ${{ secrets.DEPLOY_SFTP_PRIVATE_KEY }}
-          remote_path: ${{ secrets.DEPLOY_SFTP_REMOTE_PATH }}
-          username: ${{ secrets.DEPLOY_SFTP_USERNAME }}
+      - name: "Install Rclone"
+        run: |
+          sudo apt-get update
+          sudo apt-get install rclone
+      - name: "Deploy minified site (rclone sync)"
+        shell: bash
+        env:
+          RCLONE_ONE_FILE_SYSTEM: "true"
+          RCLONE_ERROR_ON_NO_TRANSFER: "true"
+          RCLONE_SFTP_SKIP_LINKS: "true"
+          RCLONE_SFTP_PORT: ${{ secrets.DEPLOY_SFTP_PORT }}
+          RCLONE_SFTP_HOST: ${{ secrets.DEPLOY_SFTP_HOSTNAME }}
+          RCLONE_SFTP_KEY_PEM: "${{ secrets.DEPLOY_SFTP_PRIVATE_KEY }}"
+          REMOTE_PATH: "${{ secrets.DEPLOY_SFTP_REMOTE_PATH }}"
+          RCLONE_SFTP_USER: ${{ secrets.DEPLOY_SFTP_USERNAME }}
+        run: "rclone sync public/ :sftp:${REMOTE_PATH}"
