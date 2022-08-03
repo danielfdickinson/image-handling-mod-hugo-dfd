@@ -7,7 +7,7 @@ tags:
     - featured
     - images
 images:
-    - [dont-break-the-back-button.svg, "A black backwards pointing arrow with a red 'stop' circle over the top"]
+    - [dont-break-the-back-button.svg, "A black backwards pointing arrow with a red \"stop\" circle over the top"]
     - [/substatic/featured-favicon-ascface-512x512.png, "squarish ASCII art smiley"]
     - ["https://media.istockphoto.com/photos/young-woman-watches-sunrise-outside-camping-tent-picture-id1248575497?s=612x612", "young woman watches sunrise outside camping tent"]
 ---
