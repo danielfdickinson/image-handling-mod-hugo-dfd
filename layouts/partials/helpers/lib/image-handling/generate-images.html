@@ -105,7 +105,12 @@
                     {{- end -}}
                 {{- end -}}
             {{- end -}}
-            {{- if $inTextOverlay -}}
+            {{- $supportsTextOverlay := false -}}
+            {{- $hugoVersion := split (replaceRE ".*v?([0-9]+)\\.([0-9]+)\\.([0-9]+).*" "$1 $2 $3" site.Hugo.Version) " " -}}{{- /* We have to use the deprecated .Hugo.Version to support 0.80.0 */ -}}
+            {{- if and (eq (int (index $hugoVersion 0)) 0) (ge (int (index $hugoVersion 1)) 90) -}}
+                {{- $supportsTextOverlay = true -}}
+            {{- end -}}
+            {{- if and $inTextOverlay $supportsTextOverlay -}}
                 {{- if not (reflect.IsSlice $inTextOverlay) -}}
                     {{- $inTextOverlay = (slice $inTextOverlay) -}}
                 {{- end -}}
@@ -115,6 +120,8 @@
                         {{- $fullConvertedImage = $fullConvertedImage.Filter $overlayFilter -}}
                     {{- end -}}
                 {{- end -}}
+            {{- else if $inTextOverlay -}}
+                {{- warnf "TextOverlay not supported on Hugo < 0.90.0, have %s" site.Hugo.Version -}}
             {{- end -}}
             {{- $finalSrc = $fullConvertedImage.RelPermalink -}}
             {{- $fullHeight = $fullConvertedImage.Height -}}
