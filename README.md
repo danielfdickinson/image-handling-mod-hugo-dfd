@@ -144,6 +144,7 @@ Other markdown / text.
 * Outputs the HTML to display an image (an \<img> tag) which is responsive by default _[Note 10](#note-10)_.
 * Not all combinations of parameters make sense.
 * When using 'imageFeatured' and/or thumbnails, you might find _noVisibleCaption_ extremely helpful if you use `imageAltAsCaption` as your site default.
+* `imageOverlay` and `textOverlay` are different for the `figure` shortcode (see below)
 
 ```html
 {{ partial "helpers/wrapped-image" (
@@ -181,9 +182,22 @@ Other markdown / text.
     "noVisibleCaption" "If true then when there is a title and/or caption with an imageWrapper do not display the title and/or caption (attributes only)"
     "imageConvertMethod" "Set method for resize/crop of image, from [ Fit \| GrowFit \| Fill \| Resize ]"
     "imageOverlay" "Dict with src, x, and y for image, and x, y position to overlay 'src' on the main image"
-    "textOverlay" "Dict with text, opts (which is a dict, see [Hugo docs](https://gohugo.io/functions/images/#text)) which specifies text to overlay over an image and the options (color, size, etc)"
+    "textOverlay" "Slice of maps (dict) with text, opts (which is a dict, see [Hugo docs](https://gohugo.io/functions/images/#text)) which specifies text to overlay over an image and the options (color, size, etc)"
     )
 -}}
+```
+
+##### Image and Text overlays for shortcodes
+
+For shortcodes you need to add the definition of the map (for `imageOverlay`) or
+list of maps (for `textOverlay`) as a parameter in your frontmatter, and use the
+shortcode paramters `imageOverlayParam` and/or `textOverlayParam` to point to the
+page frontmatter param.
+
+For example (without the `/*` or `*/`):
+
+```
+{{</* figure alt="Light blue gradient with the work 'Test' in a large yellow font (if Hugo version >= 0.90.0)" src="/light-blue-gradient-social-card.png" textOverlayParam="figureOverlayText" */ class="responsive-figure" */>}}
 ```
 
 #### Featured images
