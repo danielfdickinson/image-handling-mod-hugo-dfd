@@ -17,7 +17,7 @@
     </div>
     <div class="featured-image-header">
         {{- end -}}
-        {{- partial "helpers/wrapped-image" (dict "page" $curPage "image" . "alt" (cond (isset . "alt") .alt "") "title" (cond (isset . "title") .title "") "noVisibleCaption" true "imageWrapper" "div" "class" (printf "%s-wrapper" $classPrefix) "imageClass" $classPrefix "linkClass" "featured-image-link") -}}
+        {{- partial "helpers/wrapped-image" (dict "page" $curPage "image" . "alt" (cond (isset . "alt") .alt "") "title" (cond (isset . "title") .title "") "noVisibleCaption" (ne $classPrefix "metadata-image") "imageWrapper" "div" "class" (printf "%s-wrapper" $classPrefix) "imageClass" $classPrefix "linkClass" "featured-image-link") -}}
         {{- if eq $classPrefix "featured-image" -}}
     </div>
 </div>
