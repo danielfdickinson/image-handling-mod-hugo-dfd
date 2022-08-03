@@ -284,3 +284,13 @@ figcaption {
         width: 100%;
     }
 }
+
+#frontmatter-images ~ .highlight {
+    min-width: revert;
+}
+
+#frontmatter-images ~ .highlight pre {
+    min-width: revert;
+    white-space: pre-wrap;
+}
+
