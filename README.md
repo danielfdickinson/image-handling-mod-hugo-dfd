@@ -306,6 +306,16 @@ Currently:
 * featuredImageTitle
 * featuredTitle
 
+#### For Markdown images
+
+| Param | Default | Description |
+|-------|---------|-------------|
+| imageMarkdownAddWrapper | _false_ | If true add a wrapper (e.g. figure or div) around Markdown images (either `imageMarkdownClass` or `imageAddClass`) |
+| imageMarkdownClass | _(none)_ | Class to add to Markdown images |
+| imageMarkdownLinkClass | _(none)_ | Class to add to links wrapped around Markdown images |
+| imageMarkdownOverlayImage | _(none)_ | Map with src, x, and y for image, and x, y position to overlay 'src' on the main image |
+| imageMarkdownOverlayText | _(none)_ | Slice of maps with text, opts (which is a map, see [Hugo docs](https://gohugo.io/functions/images/#text)) which specifies text to overlay over an image and the options (color, size, etc). |
+
 ## Examples
 
 ### Test image #1
