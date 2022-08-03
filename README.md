@@ -196,7 +196,7 @@ page frontmatter param.
 
 For example (without the `/*` or `*/`):
 
-```
+``` html
 {{</* figure alt="Light blue gradient with the work 'Test' in a large yellow font (if Hugo version >= 0.90.0)" src="/light-blue-gradient-social-card.png" textOverlayParam="figureOverlayText" */ class="responsive-figure" */>}}
 ```
 
