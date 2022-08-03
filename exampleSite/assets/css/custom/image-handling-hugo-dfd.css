@@ -155,13 +155,10 @@ figcaption {
 
 .metadata-images-wrapper {
     margin: inherit;
-    overflow: hidden;
     width: 100%;
 }
 
 .metadata-image-wrapper {
-    height: 630px;
-    overflow: hidden;
     margin-bottom: 1em;
     width: 100%;
 }
