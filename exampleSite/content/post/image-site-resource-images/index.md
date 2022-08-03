@@ -12,7 +12,6 @@ images:
      - [site-resource/backgarden-tulips+rocks.png, "a rock garden with tulips and rust coloured plants in bloom"]
 ---
 
-There should be three. They are all full width and are cut off at a height of
-630px.
+There should be three. They are all full width to a maximum of screen width.
 
 {{< show-featured-images "metadata" >}}

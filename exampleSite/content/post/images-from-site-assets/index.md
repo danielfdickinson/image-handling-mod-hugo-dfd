@@ -12,11 +12,13 @@ images:
     - ["https://media.istockphoto.com/photos/young-woman-watches-sunrise-outside-camping-tent-picture-id1248575497?s=612x612", "young woman watches sunrise outside camping tent"]
 ---
 
+## Frontmatter images
+
 Based on the following frontmatter, there should be two. The second one is loaded from a remote source (<https://istockphoto.com>). The static image is ignored because static images are only processed if no resource images are found.
 
-The displayed images from frontmatter should be cut off at 630px height.
+The displayed images from frontmatter should be full width to a maximum of screen width.
 
-See [README.md—Featured imges](../README.md#featured-images)
+See [README.md—Featured images](../README.md#featured-images)
 
 ``` yaml
 images:
