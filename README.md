@@ -36,10 +36,13 @@ A Hugo module for handling images and image-related functionality for themes (in
 
 ### Prerequisites
 
-1. You must have in directory containing a hugo site (e.g. such as created by `hugo new site <directory>`).
-2. You must have a recent version of Go installed (see section [Prerequisite in 'Use Hugo Modules' in the Hugo documentation](https://gohugo.io/hugo-modules/use-modules/#prerequisite)).
-3. The site must be initialized as a Hugo module (see ['Initialize a New Module' in the Hugo documentation](https://gohugo.io/hugo-modules/use-modules/#initialize-a-new-module), or the output of `hugo mod init`).
-4. Before the site will build correctly, [you will also need a theme installed](https://gohugo.io/getting-started/quick-start/#step-3-add-a-theme).
+1. [Hugo](https://gohugo.io) version 0.80.0 or higher installed
+   * For `webp` support you must have version 0.83.0 or higher _extended_ version of Hugo
+   * For text overlays you must have version 0.90.0 or higher of Hugo
+2. You must have in directory containing a hugo site (e.g. such as created by `hugo new site <directory>`).
+3. You must have a recent version of Go installed (see section [Prerequisite in 'Use Hugo Modules' in the Hugo documentation](https://gohugo.io/hugo-modules/use-modules/#prerequisite)).
+4. The site must be initialized as a Hugo module (see ['Initialize a New Module' in the Hugo documentation](https://gohugo.io/hugo-modules/use-modules/#initialize-a-new-module), or the output of `hugo mod init`).
+5. Before the site will build correctly, [you will also need a theme installed](https://gohugo.io/getting-started/quick-start/#step-3-add-a-theme).
 
 ### Importing the module
 
