@@ -9,8 +9,9 @@ tags:
 author: "Daniel F. Dickinson"
 imageLinkFull: true
 imageAltAsCaption: true
+imageMarkdownAddWrapper: true
 imageAddWrapper: span
-imageAddClass: markdown-image-wrapper
+imageMarkdownClass: markdown-image-wrapper
 weight: 20
 ---
 
