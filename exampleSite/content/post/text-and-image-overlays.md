@@ -26,4 +26,4 @@ figureOverlayText:
 
 ![Light blue gradient with large ASCII smiley face art overlay](/light-blue-gradient-social-card.png)
 
-{{<figure alt="Light blue gradient with the work 'Test' in a large yellow font (if Hugo version >= 0.90.0)" src="/light-blue-gradient-social-card.png" textOverlayParam="figureOverlayText" class="responsive-figure">}}
+{{< figure alt="Light blue gradient with the work 'Test' in a large yellow font (if Hugo version >= 0.90.0)" src="/light-blue-gradient-social-card.png" textOverlayParam="figureOverlayText" class="responsive-figure" >}}
