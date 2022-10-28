@@ -2,6 +2,10 @@
 
 A Hugo module for handling images and image-related functionality for themes (including enabling responsive images).
 
+## ARCHIVED
+
+This module is no longer maintained (archived for historical purposes), and will not receive updates, even security updates.
+
 ## Status
 
 [![build-and-verify](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/actions/workflows/build-and-verify.yml/badge.svg)](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/actions/workflows/build-and-verify.yml)
