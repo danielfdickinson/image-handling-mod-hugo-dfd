@@ -1,6 +1,26 @@
 {
     "version": "0.2",
     "ignorePaths": [],
-    "words": [],
+    "words": [
+        "Anson",
+        "behaviour",
+        "danielfdickinson",
+        "frontmatter",
+        "fullsize",
+        "fullwidth",
+        "linkclass",
+        "markdownlint",
+        "microformats",
+        "overridable",
+        "paramters",
+        "Screenreader",
+        "screenreaders",
+        "shortcode",
+        "shortcodes",
+        "Sitewide",
+        "srcset",
+        "unminified",
+        "webp"
+    ],
     "ignoreWords": []
 }
