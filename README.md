@@ -2,9 +2,10 @@
 
 A Hugo module for handling images and image-related functionality for themes (including enabling responsive images).
 
-## ARCHIVED
+## Community maintained
 
-This module is no longer maintained (archived for historical purposes), and will not receive updates, even security updates.
+This module is has been un-archived to allow community contributions. The original author (@danielfdickinson)
+will be (mostly) 'hand-off' due to time constraints.
 
 ## Status
 
