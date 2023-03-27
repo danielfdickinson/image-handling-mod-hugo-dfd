@@ -4,6 +4,7 @@
 {{- $ctx := . -}}
 {{- $inWidth := .width -}}
 {{- $inHeight := .height -}}
+{{- $inRotation := .rotation | default 0 -}}
 {{- $inImage := .image -}}{{- /* Image dict has .imageResource if available and has .link */ -}}
 {{- $inPage := .page -}}
 {{- $inImageSizes := .imageSizes -}}
@@ -13,7 +14,9 @@
 {{- $inRelativeUrl := .getRelative | default true -}}
 {{- $inImageOverlay := .imageOverlay -}}
 {{- $inTextOverlay := .textOverlay -}}
-
+{{- $inAnchor := .anchor | default .Site.imaging.anchor | default "smart" -}}
+{{- $inHint := .hint | default "photo"}}
+{{- $inQuality := .quality -}}
 {{- $fullImage := $inImage.imageResource -}}
 {{- $finalSrc := "" -}}
 {{- $srcSet := (slice) -}}
@@ -54,7 +57,6 @@
             {{- else -}}
                 {{- $imageOptions = printf "%dx" $fullWidth -}}
             {{- end -}}
-
             {{- with $convertTo -}}
                 {{- if $fullHeight -}}
                     {{- $imageOptions = printf "%dx%d %s" $fullWidth $fullHeight . -}}
@@ -62,6 +64,18 @@
                     {{- $imageOptions = printf "%dx %s" $fullWidth . -}}
                 {{- end -}}
                 {{- $imageConversion = printf " %s" . -}}
+            {{- end -}}
+
+            {{- if ne $inRotation 0 -}}
+                {{- $imageOptions = printf "r%d %s" $inRotation $imageOptions -}}
+            {{- end -}}
+
+            {{- if ne $inHint "photo" -}}
+                {{- $imageOptions = printf "%s %s" $inHint $imageOptions -}}
+            {{- end -}}
+
+            {{- with $inQuality -}}
+                {{- $imageOptions = printf "q%d %s" $inQuality $imageOptions -}}
             {{- end -}}
 
             {{- $pagePath := "" -}}
@@ -86,7 +100,18 @@
                 {{- if or (eq $fullHeight "") (eq (int $fullHeight) 0) -}}
                     {{- errorf (printf "Must specify a height with 'Fill' for image '%s' on page '%s'" $fullImage.RelPermalink $pagePath) -}}
                 {{- end -}}
+                {{- with $inAnchor }}
+                    {{- $imageOptions = printf "%s %s" $imageOptions . }}
+                {{- end }}
                 {{- $fullConvertedImage = $fullImage.Fill $imageOptions -}}
+            {{- else if eq $inConvertMethod "Crop" -}}
+                {{- if or (eq $fullHeight "") (eq (int $fullHeight) 0) -}}
+                    {{- errorf (printf "Must specify a height with 'Crop' for image '%s' on page '%s'" $fullImage.RelPermalink $pagePath) -}}
+                {{- end -}}
+                {{- with $inAnchor }}
+                    {{- $imageOptions = printf "%s %s" $imageOptions . }}
+                {{- end }}
+                {{- $fullConvertedImage = $fullImage.Crop $imageOptions -}}
             {{- else if eq $inConvertMethod "GrowFit" -}}
                 {{- if or (eq $fullHeight "") (eq (int $fullHeight) 0) -}}
                     {{- errorf (printf "Must specify a height with 'GrowFit' for image '%s' on page '%s'" $fullImage.RelPermalink $pagePath) -}}
