@@ -10,6 +10,6 @@ imageFeaturedAlt: "Yorkshire Terrier Poodle cross (dog) curled up on a duvet and
 imageLinkFull: true
 ---
 
-Here we are making sure featured-image CSS works for regular images as well as SVG.
+Here we are making sure featured-image CSS works for regular images.
 
 {{< show-featured-images >}}
