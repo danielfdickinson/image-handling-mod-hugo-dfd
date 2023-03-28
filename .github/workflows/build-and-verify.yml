@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        hugo: ["0.80.0", "0.88.1", "0.96.0", "latest"]
+        hugo: ["0.96.0", "latest"]
     steps:
       - name: "Build Site with Hugo and Audit"
         uses: danielfdickinson/build-audit-action-hugo-dfd@v0.2
@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        hugo: ["0.80.0", "0.88.1", "0.96.0", "latest"]
+        hugo: ["0.96.0", "latest"]
     steps:
       - uses: actions/checkout@v3
       - name: "Validate exampleSite HTML"
@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        hugo: ["0.80.0", "0.88.1", "0.96.0", "latest"]
+        hugo: ["0.96.0", "latest"]
     steps:
       - uses: actions/checkout@v3
       - name: "Check internal links"
@@ -72,16 +72,3 @@ jobs:
           entry-point: index.html
           upload-logs-as: check-links-failure
           upload-logs-retention: 3
-  build-minified-site:
-    needs:
-      - check-source-code-validity
-    runs-on: ubuntu-20.04
-    if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
-    steps:
-      - name: "Build Site with Hugo and Audit"
-        uses: danielfdickinson/build-audit-action-hugo-dfd@v0.2
-        with:
-          upload-site-as: minified-site
-          use-lfs: true
-          source-directory: exampleSite
-  
