@@ -85,7 +85,7 @@
     {{- $secUrl := $finalDestination | absURL -}}
     {{- with urls.Parse $secUrl -}}
         {{- if eq .Scheme "https" -}}
-           {{- $image = $image | merge (dict "secure_url" $secUrl) -}}
+            {{- $image = $image | merge (dict "secure_url" $secUrl) -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}

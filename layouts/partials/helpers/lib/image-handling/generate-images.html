@@ -168,7 +168,7 @@
     {{- end -}}
 {{- end -}}
 {{- if $finalSrc -}}
-   {{- if not $inImage.specialSrc -}}
+  {{- if not $inImage.specialSrc -}}
         {{- if not $inRelativeUrl -}}
             {{- $finalSrc = $finalSrc | absURL -}}
         {{- else -}}

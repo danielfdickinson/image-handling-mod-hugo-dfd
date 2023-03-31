@@ -9,9 +9,7 @@ will be (mostly) 'hand-off' due to time constraints.
 
 ## Status
 
-[![build-and-verify](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/actions/workflows/build-and-verify.yml/badge.svg)](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/actions/workflows/build-and-verify.yml)
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/33073b8d-f181-4697-be67-2893ad70d45f/deploy-status)](https://app.netlify.com/sites/image-handling-mod/deploys)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/danielfdickinson/image-handling-mod-hugo-dfd/main.svg)](https://results.pre-commit.ci/latest/github/danielfdickinson/image-handling-mod-hugo-dfd/main)
 
 ## GitHub repository
 

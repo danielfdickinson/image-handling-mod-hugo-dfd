@@ -1,18 +1,43 @@
 # https://editorconfig.org/ for details
+# cspell:ignore badcommand
+
 root = true
 
+# defaults
 [*]
-end_of_line = lf
-insert_final_newline = true
 charset = utf-8
-indent_style = tab
+end_of_line = lf
+indent_size = 2
+indent_style = space
+trim_trailing_whitespace = true
+
+[{*.json,*.jsonc}]
+end_of_line = crlf
+indent_style = tabs
+
+[**/layouts/**/*.json]
+end_of_line = unset
+
+# Make sure we don't trim hard line breaks
+# Using pre-commit we can clean out unwanted trailing whitespace
+[*.md]
 indent_size = 4
-tab_width = 4
+indent_style = space
+trim_trailing_whitespace = false
+
+[*.svg]
+insert_final_newline = false
+trim_trailing_whitespace = false
+
+# Ignore problematic file types
+[*.txt]
+ignore = true
+
+# For .sh files specific overrides may be necessary when using HEREDOCS or
+# the like
+# [{path/to/bad/*.sh,path/to/badcommand}]
+# ignore = true
 
 # Ignore "third party" directories
-[third_party/**]
-ignore = true
-[vendor/**]
-ignore = true
-[_vendor/**]
+[{third_party,vendor,_vendor,node_modules}/**]
 ignore = true

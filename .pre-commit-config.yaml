@@ -1,0 +1,132 @@
+---
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+# yamllint disable rule:line-length
+# Initially copied from https://github.com/davidsneighbour/kollitsch.dev/blob/main/.pre-commit-config.yaml
+# cspell:ignore reforme
+fail_fast: true
+minimum_pre_commit_version: 3.1.1
+
+# yamllint disable rule:key-ordering
+repos:
+- repo: "https://github.com/pre-commit/pre-commit-hooks"
+  rev: v4.4.0
+  hooks:
+  - id: check-added-large-files
+    # - Prevent giant files from being committed.
+  - id: check-case-conflict
+  # - checks for files that would conflict in
+  #   case-insensitive filesystems.
+  - id: check-merge-conflict
+  # - checks for files that contain merge conflict strings.
+  - id: check-symlinks
+  # - checks for symlinks which do not point to anything.
+  - id: check-toml
+  # - checks toml files for parseable syntax.
+  - id: check-vcs-permalinks
+  # - ensures that links to vcs websites are permalinks.
+  - id: destroyed-symlinks
+  # - detects symlinks which are changed to regular
+  # files with a content of a path which that symlink was pointing to.
+  - id: detect-private-key
+  # - detects the presence of private keys.
+  - id: file-contents-sorter
+    files: ^(words-.*\.txt$)
+    args: [--unique]
+  - id: fix-byte-order-marker
+  # - removes utf-8 byte order marker
+  - id: forbid-new-submodules
+  # - prevents addition of new git submodules.
+  - id: mixed-line-ending
+  # replaces or checks mixed line ending.
+  - id: no-commit-to-branch # - don't commit to branch
+    args:
+    - --branch
+    - main-full
+    - --branch
+    - "v[0-9].[0-9]" # yamllint disable-line
+  - id: pretty-format-json
+    # - Checks that all your JSON files are pretty. "Pretty"
+    # here means that keys are sorted and indented.
+    args: [--autofix, --indent, "  "]
+    exclude: ^(layouts/.*\.json|package(-lock)?.json$)
+  - id: trailing-whitespace
+    exclude: ^(_vendor)
+    args: [--markdown-linebreak-ext=md]
+
+- repo: "https://github.com/pre-commit/mirrors-csslint"
+  rev: v1.0.5
+  # See https://github.com/CSSLint/csslint
+  hooks:
+  - id: csslint
+
+- repo: "https://github.com/pre-commit/mirrors-eslint"
+  rev: v8.27.0
+  hooks:
+  - id: eslint
+    additional_dependencies:
+    - eslint@8.27.0
+    - eslint-plugin-template@0.7.0
+    args:
+    - -c
+    - .eslintrc.yaml
+    exclude: ^(assets/libs/.*\.js$)
+
+- repo: "https://github.com/awebdeveloper/pre-commit-stylelint"
+  rev: 0.0.2
+  hooks:
+  - id: stylelint
+    additional_dependencies:
+    - stylelint@14.14.1
+    - stylelint-config-standard-scss@6.1.0
+    - stylelint-scss@4.3.0
+    args:
+    - --allow-empty-input
+
+- repo: "https://github.com/igorshubovych/markdownlint-cli"
+  rev: v0.33.0
+  hooks:
+  - id: markdownlint
+    args: [--config, .markdownlint.json]
+    files: .+\.(md|markdown)$
+
+- repo: "https://github.com/adrienverge/yamllint"
+  rev: v1.29.0
+  hooks:
+  - id: yamllint
+    exclude: ^(_vendor)
+
+- repo: "https://github.com/zricethezav/gitleaks"
+  rev: v8.16.0
+  hooks:
+  - id: gitleaks
+
+- repo: "https://github.com/jorisroovers/gitlint"
+  rev: v0.18.0
+  hooks:
+  - id: gitlint
+
+- repo: "https://github.com/editorconfig-checker/editorconfig-checker.python"
+  rev: 2.7.1
+  hooks:
+  - id: editorconfig-checker
+    alias: ec
+    args:
+    - -no-color
+    exclude: ^(LICENSE$|README.md$) # yamllint disable-line
+
+- repo: "https://github.com/streetsidesoftware/cspell-cli"
+  rev: v6.31.0
+  hooks:
+  - id: cspell
+    args:
+    - --gitignore
+    - --gitignore-root
+    - --no-cache
+    - --no-must-find-files
+    - --show-context
+    - --show-suggestions
+    - --validate-directives
+    exclude: ^(cspell.json$) # yamllint disable-line
+# yamllint enable rule:key-ordering
+...

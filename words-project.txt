@@ -1,0 +1,5 @@
+errorf
+isset
+plainify
+warnf
+webp
