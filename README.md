@@ -369,17 +369,10 @@ But doesn't have to be, and can be optionally wrapped in \<figure>, \<span>, or 
 
 When using Markdown, if you add links to the full image _and_ wrap the image in a (Markdown) link, the wrapping link will be ignored. Fixing that requires using a `link-render-hook` such as provided by [DFDs Hugo link handling module](https://github.com/danielfdickinson/link-handling-mod-hugo-dfd)
 
-## Contributions welcome
+-------
 
-If [your issue can't be found when searching both open and closed issues](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/issues?q=is%3Aissue), please add it!
+## Colophon
 
-Please [check open issues on danielfdickinson/image-handling-mod-hugo-dfd](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/issues)
-for enhancements and bugs that you would like resolved, write the fix, and submit a pull request!
-
-As well, documentation improvements are always handy.
-
-Thank you, and I hope you find this repository useful.
-
-## Support and general questions
-
-Please use [GitHub Discussions](https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/discussions) for support and general questions.
+* [Copyright and licensing](LICENSE)
+* [Inspirations, information, and source material](ACKNOWLEDGEMENTS.md)
+* [Notes](README-NOTES.md)
