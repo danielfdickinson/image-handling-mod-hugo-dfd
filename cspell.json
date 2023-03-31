@@ -1,24 +1,24 @@
 {
-  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-  "allowCompoundWords": true,
-  "dictionaries": [
-    "project-words"
-  ],
-  "dictionaryDefinitions": [
-    {
-      "addWords": true,
-      "name": "project-words",
-      "path": "./words-project.txt"
-    }
-  ],
-  "ignorePaths": [
-    "./.github.disabled/**",
-    "./LICENSE",
-    "./i18n/**",
-    "./node_modules",
-    "./words-*.txt"
-  ],
-  "ignoreWords": [],
-  "language": "en,en-ca,en-gb",
-  "version": "0.2"
+	"$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+	"allowCompoundWords": true,
+	"dictionaries": [
+		"project-words"
+	],
+	"dictionaryDefinitions": [
+		{
+			"addWords": true,
+			"name": "project-words",
+			"path": "./words-project.txt"
+		}
+	],
+	"ignorePaths": [
+		"./.github.disabled/**",
+		"./LICENSE",
+		"./i18n/**",
+		"./node_modules",
+		"./words-*.txt"
+	],
+	"ignoreWords": [],
+	"language": "en,en-ca,en-gb",
+	"version": "0.2"
 }

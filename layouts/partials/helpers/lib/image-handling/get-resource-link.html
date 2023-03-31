@@ -3,10 +3,10 @@
 {{- $getRelative := .getRelative -}}
 {{- $imageLink := "" -}}
 {{- if $imageResource -}}
-    {{- if not $getRelative -}}
-        {{- $imageLink = $imageResource.Permalink -}}
-    {{- else -}}
-        {{- $imageLink = $imageResource.RelPermalink -}}
-    {{- end -}}
+	{{- if not $getRelative -}}
+		{{- $imageLink = $imageResource.Permalink -}}
+	{{- else -}}
+		{{- $imageLink = $imageResource.RelPermalink -}}
+	{{- end -}}
 {{- end -}}
 {{- return $imageLink -}}

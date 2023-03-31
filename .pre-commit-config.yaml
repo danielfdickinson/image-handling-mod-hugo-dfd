@@ -48,7 +48,7 @@ repos:
   - id: pretty-format-json
     # - Checks that all your JSON files are pretty. "Pretty"
     # here means that keys are sorted and indented.
-    args: [--autofix, --indent, "  "]
+    args: [--autofix, --indent, "	"]
     exclude: ^(layouts/.*\.json|package(-lock)?.json$)
   - id: trailing-whitespace
     exclude: ^(_vendor)
