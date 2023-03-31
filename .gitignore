@@ -7,3 +7,13 @@ check-links.log
 hugo-audit.log
 md-lint.log
 hugo-audit.log
+*.jpg
+*.png
+*.jpeg
+*.webp
+*.pdf
+*.tiff
+*.tiff
+*.giff
+*.mp4
+*.bmp
