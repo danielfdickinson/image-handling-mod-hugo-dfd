@@ -19,7 +19,7 @@ will be (mostly) 'hand-off' due to time constraints.
 
 ## Site with examples
 
-<https://image-handling-mod.wildtechgarden.ca>
+<https://image-handling-mod.demo.wildtechgarden.com>
 
 ## Features
 
@@ -323,75 +323,7 @@ Currently:
 
 ## Examples
 
-### Test image #1
-
-#### Source #1
-
-<https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/blob/main/exampleSite/content/post/testimage1/index.md>
-
-#### CSS #1
-
-Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
-
-#### Result #1
-
-![Image shows three different styling variations on a screenshot of a website](README-assets/testimage1-result-screenshot.png)
-
-### Test image #2
-
-#### Source #2
-
-<https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/blob/main/exampleSite/content/post/testimage2/index.md>
-
-#### CSS #2
-
-Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
-
-#### Result #2
-
-![Image shows four different styling variations on a screenshot of a website](README-assets/testimage2-result-screenshot.png)
-
-### Test image #3
-
-#### Source #3
-
-<https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/blob/main/exampleSite/content/post/testimage3/index.md>
-
-#### CSS #3
-
-Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
-
-#### Result #3
-
-![Image shows four different styling variations on a screenshot of a website](README-assets/testimage3-result-screenshot.png)
-
-### Test thumbnails #1
-
-#### Source #4
-
-<https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/blob/main/exampleSite/content/post/test-thumbnails-1/index.md>
-
-#### CSS #4
-
-Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
-
-#### Result #4
-
-![Image shows three image thumbnails in a row (with large amounts space between them)](README-assets/testthumbnails1-result-screenshot.png)
-
-### Test thumbnails #2
-
-#### Source #5
-
-<https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/blob/main/exampleSite/content/post/test-thumbnails-2/index.md>
-
-#### CSS #5
-
-Which uses [the above CSS](#add-css-to-style-the-images) and ``imageConvertTo = "webp"`` in ``config.toml``
-
-#### Result #5
-
-![Image shows three image thumbnails in a row (with some space between them)](README-assets/testthumbnails2-result-screenshot.png)
+TBD (once test/demo system rebuilt to separate the images/exampleSite from the module (to avoid unnecessary bandwidth use))
 
 ## Endnotes
 
