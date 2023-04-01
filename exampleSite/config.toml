@@ -30,7 +30,7 @@ mainSections = ["post"]
 redirectsDomains = [
 	"http://image-handling-mod-ci.netlify.app/* https://image-handling-mod-ci.demo.wildtechgarden.com/:splat 301!",
 	"https://image-handling-mod-ci.netlify.app/* https://image-handling-mod-ci.demo.wildtechgarden.com/:splat 301!",
-	"http://image-handling-mod.demo-ci.wildtechgarden.com/* https://image-handling-mod-ci.demo.wildtechgarden.com/:splat 301!"
+	"http://image-handling-mod-ci.demo.wildtechgarden.com/* https://image-handling-mod-ci.demo.wildtechgarden.com/:splat 301!"
 ]
 # Footnotes and TableOfContents don't work properly with a base href set in <head>, but we don't use either for this site.
 useBaseURL = true
