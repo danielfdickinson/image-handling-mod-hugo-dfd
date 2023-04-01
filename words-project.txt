@@ -1,5 +1,6 @@
 errorf
 isset
+nredirects
 plainify
 warnf
 webp
