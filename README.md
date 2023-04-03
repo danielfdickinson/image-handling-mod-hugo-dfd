@@ -5,7 +5,7 @@ A Hugo module for handling images and image-related functionality for themes (in
 ## Community maintained
 
 This module is has been un-archived to allow community contributions. The original author (@danielfdickinson)
-will be (mostly) 'hand-off' due to time constraints.
+will be (mostly) 'hands-off' due to time constraints.
 
 ## Status
 
