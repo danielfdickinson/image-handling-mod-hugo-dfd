@@ -12,8 +12,9 @@
 		}
 	],
 	"ignorePaths": [
-		"./.github.disabled/**",
 		"./LICENSE",
+		"./go.*",
+		".gitattributes",
 		"./i18n/**",
 		"./node_modules",
 		"./words-*.txt"
