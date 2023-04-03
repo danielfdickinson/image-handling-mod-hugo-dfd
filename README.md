@@ -194,7 +194,7 @@ Other markdown / text.
 
 For shortcodes you need to add the definition of the map (for `imageOverlay`) or
 list of maps (for `textOverlay`) as a parameter in your frontmatter, and use the
-shortcode paramters `imageOverlayParam` and/or `textOverlayParam` to point to the
+shortcode parameters `imageOverlayParam` and/or `textOverlayParam` to point to the
 page frontmatter param.
 
 For example (without the `/*` or `*/`):

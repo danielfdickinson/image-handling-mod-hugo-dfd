@@ -12,11 +12,13 @@
 		}
 	],
 	"ignorePaths": [
+		"./.editorconfig",
+		"./.gitattributes",
 		"./LICENSE",
 		"./go.*",
-		".gitattributes",
 		"./i18n/**",
 		"./node_modules",
+		"./scripts/netlify_build.sh",
 		"./words-*.txt"
 	],
 	"ignoreWords": [],

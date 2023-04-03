@@ -22,7 +22,7 @@ repos:
   - id: check-symlinks
   # - checks for symlinks which do not point to anything.
   - id: check-toml
-  # - checks toml files for parseable syntax.
+  # - checks toml files for parsable syntax.
   - id: check-vcs-permalinks
   # - ensures that links to vcs websites are permalinks.
   - id: destroyed-symlinks
