@@ -102,26 +102,21 @@
 		{{- with $imageLowQuality -}}
 			{{- $backgroundStyle = printf "%s%s%s" "background: url(data:image/webp;base64," . "); background-size: cover; background-repeat: no-repeat;" -}}
 			{{- $imgMD5 = md5 . -}}
-			<style>
-				.imgB-{{ $imgMD5 }} { {{ $backgroundStyle | safeCSS }} }
-			</style>
-		{{- end -}}
-
+			{{- printf "<!-- .bimageMD5-%s { %s } -->" $imgMD5 ($backgroundStyle | safeCSS) | safeHTML }}
+		{{ end -}}
 	{{/* Creating a class with picture colors gradient background */}}
 	{{- else if $inColors -}}
 		{{- with $imageColors -}}
 			{{- $imageColorBackground := delimit ( . ) ", " -}}
 			{{- $backgroundStyle := printf "%s%s%s" "background: linear-gradient" $imageColorBackground "); background-size: cover; background-repeat: no-repeat;" -}}
 			{{- $imgMD5 = md5 $imageColorBackground -}}
-			<style>
-				.imgB-{{ $imgMD5 }} { {{ $backgroundStyle | safeCSS }} }
-			</style>
-		{{- end -}}
+			{{- printf "<!-- .bimageMD5-%s { %s } -->" $imgMD5 ($backgroundStyle | safeCSS) | safeHTML }}
+		{{ end -}}
 	{{- end -}}
 
 	{{/* Adding that class to image's class */}}
 	{{- with $imgMD5 -}}
-		{{- $class = $class | printf "%s%s%s%s" "imgB-" $imgMD5 " " -}}
+		{{- $class = $class | printf "%s%s%s%s" "bimageMD5-" $imgMD5 " " -}}
 	{{- end -}}
 
 	{{- $sizesAttr := $inSizesAttr | default .Params.imageSizesAttr | default .Site.Params.imageSizesAttr | default "80vw" -}}

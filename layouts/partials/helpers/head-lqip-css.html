@@ -1,0 +1,19 @@
+{{- $ctx := . -}}
+{{- $imagesLQIP := (findRE `<!-- .bimageMD5-.+? -->` .Content) | uniq -}}
+{{- $styleStrings := (slice) -}}
+{{- with $imagesLQIP -}}
+	{{- range . -}}
+		{{- $newStyleString := strings.TrimPrefix "<!-- " . -}}
+		{{- $newStyleString = strings.TrimSuffix " -->" $newStyleString -}}
+		{{- if $newStyleString -}}
+			{{- $styleStrings = $styleStrings | append $newStyleString -}}
+		{{- end -}}
+	{{- end -}}
+{{- end -}}
+{{- with $styleStrings -}}
+	{{- $styleCSS := resources.FromString (printf "css/lqip-%s.css" ($ctx.Page.TranslationKey | md5)) (delimit $styleStrings "\n" | htmlUnescape) -}}
+	{{- if hugo.IsProduction -}}
+		{{- $styleCSS = $styleCSS | minify | fingerprint -}}
+	{{- end }}
+	<link rel="stylesheet" href="{{ $styleCSS.Permalink }}">
+{{- end -}}

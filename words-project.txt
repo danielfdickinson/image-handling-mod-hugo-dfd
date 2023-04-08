@@ -3,6 +3,7 @@ RESOURCEDIR
 Screenreader
 Sitewide
 autofix
+bimage
 brycewray
 csslint
 danielfdickinson
@@ -26,6 +27,7 @@ shortcode
 shortcodes
 srcset
 stylelint
+stylesheet
 tbody
 warnf
 webp
