@@ -170,6 +170,8 @@
 			{{- end -}}
 		{{- else -}}{{- /* Is an image but not of a processable format */ -}}
 			{{- $finalSrc = $fullImage.RelPermalink -}}
+			{{- $imageLowQuality = false -}}
+			{{- $imageColors = false -}}
 		{{- end -}}
 	{{- else if not $inImage.specialSrc -}}{{- /* Is not a known image format for Hugo */ -}}
 		{{- $finalSrc = $inImage.link -}}
