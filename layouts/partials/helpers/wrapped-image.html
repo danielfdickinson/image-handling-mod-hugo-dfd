@@ -40,8 +40,8 @@
 {{- $inHint := .hint | default "photo"}}
 {{- $altRendered := false -}}
 {{- $captionRendered := false -}}
-{{- $inBase := .base | default true -}}
-{{- $inColors := .colors | default false -}}
+{{- $inNoBase := .noBase -}}
+{{- $inColors := .colors -}}
 
 {{- with $inPage -}}
 	{{- $addLink := false -}}
@@ -114,7 +114,7 @@
 		{{- end -}}
 	{{- end -}}
 
-	{{- $pictureOptions := (dict "width" $inWidth "height" $inHeight "rotation" $inRotation "anchor" $inAnchor "thumbnailWidth" $inThumbnailWidth "thumbnailHeight" $inThumbnailHeight "alt" $alt "title" $inTitle "image" $inImage "page" $inPage "caption" $caption "class" (cond (eq $imageWrapper "") $class $inImageClass) "linkClass" $inLinkClass "imageSizes" $inImageSizes "thumbnailSizes" $inThumbnailSizes "singleSize" $inSingleSize "convertTo" $inConvertTo "thumbnails" $inDoThumbnails "fullSize" $inDoFullSize "sizesAttr" $inSizesAttr "thumbnailSizeAttr" $inThumbnailSizesAttr "loading" $inLoading "addLink" $addLink "link" $link "target" $inTarget "rel" $inRel "minThumbnailViewport" $inMinThumbnailViewport "imageConvertMethod" $inImageConvertMethod "imageOverlay" $inImageOverlay "textOverlay" $inTextOverlay "quality" $inQuality "hint" $inHint "base" $inBase "colors" $inColors) -}}
+	{{- $pictureOptions := (dict "width" $inWidth "height" $inHeight "rotation" $inRotation "anchor" $inAnchor "thumbnailWidth" $inThumbnailWidth "thumbnailHeight" $inThumbnailHeight "alt" $alt "title" $inTitle "image" $inImage "page" $inPage "caption" $caption "class" (cond (eq $imageWrapper "") $class $inImageClass) "linkClass" $inLinkClass "imageSizes" $inImageSizes "thumbnailSizes" $inThumbnailSizes "singleSize" $inSingleSize "convertTo" $inConvertTo "thumbnails" $inDoThumbnails "fullSize" $inDoFullSize "sizesAttr" $inSizesAttr "thumbnailSizeAttr" $inThumbnailSizesAttr "loading" $inLoading "addLink" $addLink "link" $link "target" $inTarget "rel" $inRel "minThumbnailViewport" $inMinThumbnailViewport "imageConvertMethod" $inImageConvertMethod "imageOverlay" $inImageOverlay "textOverlay" $inTextOverlay "quality" $inQuality "hint" $inHint "noBase" $inNoBase "colors" $inColors) -}}
 	{{- partial "helpers/lib-output/image-handling/thumbnail-or-full-picture" $pictureOptions -}}
 
 	{{- if $imageWrapper -}}
