@@ -1,3 +1,5 @@
+LQIP
+RESOURCEDIR
 Screenreader
 Sitewide
 autofix
