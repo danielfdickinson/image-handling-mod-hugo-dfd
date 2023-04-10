@@ -160,15 +160,9 @@
 	{{- end -}}
 	{{- if and $fullSize (ne $fullImgMap.finalSrc "") -}}
 		{{- $imgOptions := (dict "imgMap" $fullImgMap "page" . "alt" $alt "title" $inTitle "loading" $inLoading "useSrcSet" (cond (and (not $usePicture) (ge (len $fullImgMap.srcSet) 1)) true false) "class" $class "sizesAttr" $sizesAttr) -}}
-		{{- if or $inColors (not $inNoBase) -}}
-			{{- $imgOptions = merge $imgOptions (dict "dataSrc" $inImage.imageResource)}}
-		{{- end -}}
 		{{- partial "helpers/lib-output/image-handling/img-element" $imgOptions -}}
 	{{- else -}}
 		{{- $imgOptions := (dict "imgMap" $thumbnailImgMap "page" . "alt" $alt "title" $inTitle "loading" $inLoading "useSrcSet" (cond (and (not $usePicture) (ge (len $thumbnailImgMap.srcSet) 1)) true false) "class" $class "sizesAttr" $thumbnailSizesAttr) -}}
-		{{- if or $inColors (not $inNoBase) -}}
-			{{- $imgOptions = merge $imgOptions (dict "dataSrc" $inImage)}}
-		{{- end -}}
 		{{- partial "helpers/lib-output/image-handling/img-element" $imgOptions -}}
 	{{- end -}}
 	{{- if $usePicture -}}
