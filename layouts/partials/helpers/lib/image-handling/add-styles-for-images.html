@@ -1,0 +1,26 @@
+{{- /*
+    Head partial finds all page's images.
+    Then the partial generates actual style with resized webp base64 background or color gradient.
+
+*/ -}}
+
+{{- $styleStrings := (slice) -}}
+{{- with .Scratch.Get "BGImages" -}}
+    {{- range . -}}
+        {{- $styleStrings = $styleStrings | append . -}}
+    {{- end -}}
+{{- end -}}
+
+{{ $stylesString := delimit $styleStrings "\n" | htmlUnescape }}
+{{ warnf "True Finalstyle %q for Page %q" $stylesString . }}
+
+{{- if (gt ($stylesString | len) 1) -}}
+    {{- $styleId := md5 . -}}
+    {{- $stylePath := printf "css/img-bg-style-%s.css" ($styleId) -}}
+    {{- $style := $stylesString | resources.FromString $stylePath -}}
+    {{- if hugo.IsProduction -}}
+        {{- $style = $style | minify | fingerprint -}}
+    {{- end }}
+    <link rel="stylesheet" href="{{- $style.Permalink -}}" type="text/css" media="screen">
+
+{{- end -}}
