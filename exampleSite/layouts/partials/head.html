@@ -36,7 +36,7 @@
 	{{ (printf "<!-- link rel=\"alternate\" data=\"will-not-be-canonical\" href=\"%s\" -->" .Permalink) | safeHTML -}}
 		{{- end -}}
 	{{- end -}}
-	{{- partial "helpers/head-lqip-css.html" .Page -}}
+	{{- partial "helpers/lib/image-handling/add-styles-for-images.html" .Page -}}
 	{{- $combinedCSS := (slice) -}}
 	{{- if ne (.Param "testStylesInclude") false }}
 		{{- $mainCSS := resources.Get "/css/test-minimal-dfd.css" -}}
