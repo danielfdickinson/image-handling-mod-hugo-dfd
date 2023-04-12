@@ -4,25 +4,22 @@
 
 */ -}}
 
-{{- $styleStrings := (slice) -}}
+{- $stylesString := (slice) -}}
 {{- with .Scratch.Get "BGImages" -}}
-	{{- range . -}}
-		{{- $styleStrings = $styleStrings | append . -}}
-	{{- end -}}
+    {{ $stylesString = delimit . "\n" | htmlUnescape }}
 {{- end -}}
 
-{{- $stylesString := delimit $styleStrings "\n" | htmlUnescape -}}
+
 {{- if not hugo.IsProduction -}}
-	{{ warnf "Final style %q for %q" $stylesString .TranslationKey -}}
+    {{ warnf "Final style %q for %q" $stylesString .TranslationKey -}}
 {{- end -}}
-
 {{- if (gt ($stylesString | len) 1) -}}
-	{{- $styleId := md5 . -}}
-	{{- $stylePath := printf "css/img-bg-style-%s.css" ($styleId) -}}
-	{{- $style := $stylesString | resources.FromString $stylePath -}}
-	{{- if hugo.IsProduction -}}
-		{{- $style = $style | minify | fingerprint -}}
-	{{- end }}
-	<link rel="stylesheet" href="{{- $style.Permalink -}}" type="text/css" media="screen">
+    {{- $styleId := md5 . -}}
+    {{- $stylePath := printf "css/img-bg-style-%s.css" ($styleId) -}}
+    {{- $style := $stylesString | resources.FromString $stylePath -}}
+    {{- if hugo.IsProduction -}}
+        {{- $style = $style | minify | fingerprint -}}
+    {{- end }}
+    <link rel="stylesheet" href="{{- $style.Permalink -}}" type="text/css" media="screen">
 
 {{- end -}}
