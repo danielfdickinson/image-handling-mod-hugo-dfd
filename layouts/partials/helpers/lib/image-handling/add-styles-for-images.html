@@ -4,7 +4,7 @@
 
 */ -}}
 
-{- $stylesString := (slice) -}}
+{{- $stylesString := (slice) -}}
 {{- with .Scratch.Get "BGImages" -}}
 	{{ $stylesString = delimit . "\n" | htmlUnescape }}
 {{- end -}}
