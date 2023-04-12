@@ -107,7 +107,7 @@
 			{{- with $imageLowQuality -}}
 				{{- $backgroundStyle = printf "%s%s%s%s%s" ".imgLQIP-" $imgMD5 " {background: url(data:image/webp;base64," . "); background-size: cover; background-repeat: no-repeat;}" -}}
 				{{- page.Scratch.Add "BGImages" (slice $backgroundStyle) -}}
-            {{- end -}}
+			{{- end -}}
 		{{- else -}}
 			{{- $class = $class | printf "%s%s%s%s" "imgGIP-" $imgMD5 " " -}}
 			{{- with $imageColors -}}
