@@ -96,30 +96,27 @@
 		{{- $class = $addClass -}}
 	{{- end -}}
 
-	{{- if or $inColors (not $inNoBase) -}}
-		{{- $imgMD5 := "" -}}
-		{{- $backgroundStyle := "" -}}
-		{{- $stylePath := "" -}}
-		{{/* Adding that class to image's class */}}
-		{{- $imgMD5 = md5 $inImage.imageResource -}}
-		{{- if not $inNoBase -}}
-			{{- $class = $class | printf "%s%s%s%s" "imgLQIP-" $imgMD5 " " -}}
-			{{- with $imageLowQuality -}}
-				{{- $backgroundStyle = printf "%s%s%s%s%s" ".imgLQIP-" $imgMD5 " {background: url(data:image/webp;base64," . "); background-size: cover; background-repeat: no-repeat;}" -}}
-				{{- $scratch := printf "%s%s" "imgLQIP-" $imgMD5 -}}
-				{{- page.Scratch.SetInMap "BGImages" $scratch $backgroundStyle -}}
-
-			{{- end -}}
-		{{- else -}}
-			{{- $class = $class | printf "%s%s%s%s" "imgGIP-" $imgMD5 " " -}}
-			{{- with $imageColors -}}
-				{{- $imageColorBackground := delimit ( . ) ", " -}}
-				{{- $backgroundStyle = printf "%s%s%s%s%s" ".imgGIP-" $imgMD5 "{ background: linear-gradient" $imageColorBackground "); background-size: cover; background-repeat: no-repeat; }" -}}
-				{{- $scratch := printf "%s%s" "imgGIP-" $imgMD5 -}}
-				{{- page.Scratch.SetInMap "BGImages" $scratch $backgroundStyle -}}
-			{{- end -}}
-		{{- end -}}
-	{{- end -}}
+    {{- if or $inColors (not $inNoBase) -}}
+        {{- $imgMD5 := "" -}}
+        {{- $backgroundStyle := "" -}}
+        {{- $stylePath := "" -}}
+        {{/* Adding that class to image's class */}}
+        {{- $imgMD5 = md5 $inImage.imageResource -}}
+        {{- if not $inNoBase -}}
+            {{- $class = $class | printf "%s%s%s%s" "imgLQIP-" $imgMD5 " " -}}
+            {{- with $imageLowQuality -}}
+                {{- $backgroundStyle = printf "%s%s%s%s%s" ".imgLQIP-" $imgMD5 " {background: url(data:image/webp;base64," . "); background-size: cover; background-repeat: no-repeat;}" -}}
+                {{- page.Scratch.Add "BGImages" (slice $backgroundStyle) -}}
+            {{- end -}}
+        {{- else -}}
+            {{- $class = $class | printf "%s%s%s%s" "imgGIP-" $imgMD5 " " -}}
+            {{- with $imageColors -}}
+                {{- $imageColorBackground := delimit ( . ) ", " -}}
+                {{- $backgroundStyle = printf "%s%s%s%s%s" ".imgGIP-" $imgMD5 "{ background: linear-gradient" $imageColorBackground "); background-size: cover; background-repeat: no-repeat; }" -}}
+                {{- page.Scratch.Add "BGImages" (slice $backgroundStyle) -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
 
 	{{- $sizesAttr := $inSizesAttr | default .Params.imageSizesAttr | default .Site.Params.imageSizesAttr | default "80vw" -}}
 	{{- $thumbnailSizesAttr := $inSizesAttr | default .Params.imageThumbnailSizesAttr | default .Site.Params.imageThumbnailSizesAttr | default "20vw" -}}
