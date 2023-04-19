@@ -37,8 +37,8 @@
 {{- if $inNoBase -}}
 	{{- $inColors = false -}}
 {{- end -}}
-{{- $imageLowQuality := "" -}}
-{{- $imageColors := (slice) -}}
+{{- $imageLowQuality := false -}}
+{{- $imageColors := false -}}
 {{- $fullImgMap := (dict "finalSrc" "") -}}
 {{- $thumbnailImgMap := (dict "finalSrc" "") -}}
 
@@ -96,24 +96,35 @@
 		{{- $class = $addClass -}}
 	{{- end -}}
 
-	{{- if or $inColors (not $inNoBase) -}}
+	{{- if or (and $inColors $imageColors) (and (not $inNoBase) $imageLowQuality) -}}
 		{{- $imgMD5 := "" -}}
 		{{- $backgroundStyle := "" -}}
 		{{- $stylePath := "" -}}
 		{{/* Adding that class to image's class */}}
 		{{- $imgMD5 = md5 $inImage.imageResource -}}
 		{{- if not $inNoBase -}}
-			{{- $class = $class | printf "%s%s%s%s" "imgLQIP-" $imgMD5 " " -}}
+			{{- $lqipClass :=  printf "%s%s" "imgLQIP-" $imgMD5 -}}
+			{{- if $class -}}
+				{{- $class = printf "%s %s" $lqipClass $class }}
+			{{- else -}}
+				{{- $class = $lqipClass -}}
+			{{- end -}}
 			{{- with $imageLowQuality -}}
-				{{- $backgroundStyle = printf "%s%s%s%s%s" ".imgLQIP-" $imgMD5 " {background: url(data:image/webp;base64," . "); background-size: cover; background-repeat: no-repeat;}" -}}
-				{{- page.Scratch.Add "BGImages" (slice $backgroundStyle) -}}
+				{{- $backgroundStyle = printf "%s%s%s" "{background: url(data:image/webp;base64," . "); background-size: cover; background-repeat: no-repeat;}" -}}
+				{{- $inPage.Store.SetInMap "LQIPs" (printf ".imgLQIP-%s" $imgMD5) (dict "oldStyle" false "style"  $backgroundStyle) -}}
 			{{- end -}}
 		{{- else -}}
-			{{- $class = $class | printf "%s%s%s%s" "imgGIP-" $imgMD5 " " -}}
+			{{- $lqipClass := printf "%s%s" "imgGIP-" $imgMD5 " " -}}
+			{{ if $class -}}
+				{{- $class = printf "%s %s" $lqipClass $class -}}
+			{{- else -}}
+				{{- $class = $lqipClass -}}
+			{{- end -}}
+
 			{{- with $imageColors -}}
 				{{- $imageColorBackground := delimit ( . ) ", " -}}
-				{{- $backgroundStyle = printf "%s%s%s%s%s" ".imgGIP-" $imgMD5 "{ background: linear-gradient" $imageColorBackground "); background-size: cover; background-repeat: no-repeat; }" -}}
-			{{- page.Scratch.Add "BGImages" (slice $backgroundStyle) -}}
+				{{- $backgroundStyle = printf "%s%s%s" "{ background: linear-gradient" $imageColorBackground "); background-size: cover; background-repeat: no-repeat; }" -}}
+			{{- $inPage.Store.SetInMap "LQIPs" (printf ".imgGIP-" $imgMD5) (dict "oldStyle" false "style" $backgroundStyle) -}}
 			{{- end -}}
 		{{- end -}}
 	{{- end -}}

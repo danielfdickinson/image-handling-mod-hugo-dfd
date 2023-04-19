@@ -4,9 +4,22 @@
 
 */ -}}
 
-{{- $stylesString := (slice) -}}
-{{- with .Scratch.Get "BGImages" -}}
-	{{ $stylesString = delimit . "\n" | htmlUnescape }}
+{{- $pctx := .Page -}}
+
+{{- $stylesSlice := (slice) -}}
+{{- with .Store.Get "LQIPs" -}}
+	{{- range $styleName, $styleInfo := . -}}
+		{{- if or (and ($pctx.Scratch.Get "LQIPFinished") (not $styleInfo.oldStyle)) ($pctx.Scratch.Get "LQIPStarted") -}}
+			{{- $stylesSlice = $stylesSlice | append (printf "%s %s" $styleName $styleInfo.style) -}}
+		{{- else -}}
+			{{- $pctx.Store.DeleteInMap "LQIP" $styleName -}}
+		{{- end -}}
+	{{- end -}}
+{{- end -}}
+
+{{- $stylesString := "" -}}
+{{- if $stylesSlice -}}
+	{{- $stylesString = delimit $stylesSlice "\n" -}}
 {{- end -}}
 
 {{- if not hugo.IsProduction -}}

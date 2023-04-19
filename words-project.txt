@@ -21,6 +21,7 @@ linkclass
 markdownlint
 nredirects
 pageref
+pctx
 plainify
 screenreaders
 shortcode
