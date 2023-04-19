@@ -5,6 +5,7 @@ Sitewide
 autofix
 bimage
 brycewray
+checklinks
 csslint
 danielfdickinson
 davidsneighbour
