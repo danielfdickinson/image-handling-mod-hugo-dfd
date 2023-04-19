@@ -32,4 +32,5 @@ stylelint
 stylesheet
 tbody
 warnf
+wcag
 webp

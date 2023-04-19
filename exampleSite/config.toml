@@ -32,8 +32,9 @@ redirectsDomains = [
 	"https://image-handling-mod-ci.netlify.app/* https://image-handling-mod-ci.demo.wildtechgarden.com/:splat 301!",
 	"http://image-handling-mod-ci.demo.wildtechgarden.com/* https://image-handling-mod-ci.demo.wildtechgarden.com/:splat 301!"
 ]
-# Footnotes and TableOfContents don't work properly with a base href set in <head>, but we don't use either for this site.
-useBaseURL = true
+# Footnotes and TableOfContents don't work properly with a base href set in <head>, neither do page-relative links
+
+useBaseURL = false
 
 [[cascade]]
 pageCanonical = false
@@ -114,7 +115,7 @@ target = "assets/README-dfd-image-handling.md"
 
 [[module.mounts]]
 source = "../LICENSE"
-target = "static/LICENSE"
+target = "static/post/readme/LICENSE"
 
 [[module.mounts]]
 source = "../ACKNOWLEDGEMENTS.md"

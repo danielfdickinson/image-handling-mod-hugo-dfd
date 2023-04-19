@@ -19,6 +19,7 @@
 		"./i18n/**",
 		"./node_modules",
 		"./scripts/netlify_build.sh",
+		"./tests/scripts",
 		"./words-*.txt"
 	],
 	"ignoreWords": [],

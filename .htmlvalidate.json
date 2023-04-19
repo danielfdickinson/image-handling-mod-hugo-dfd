@@ -23,6 +23,7 @@
 		"require-sri": "off",
 		"svg-focusable": "off",
 		"valid-id": "off",
-		"void-style": "off"
+		"void-style": "off",
+		"wcag/h63": "off"
 	}
 }
