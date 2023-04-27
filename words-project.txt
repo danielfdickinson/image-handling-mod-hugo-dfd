@@ -31,6 +31,7 @@ srcset
 stylelint
 stylesheet
 tbody
+thecshore
 warnf
 wcag
 webp
