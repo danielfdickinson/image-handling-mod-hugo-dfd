@@ -104,10 +104,6 @@ source = "../static"
 target = "static"
 
 [[module.mounts]]
-source = "layouts"
-target = "layouts"
-
-[[module.mounts]]
 source = "../layouts"
 target = "layouts"
 
