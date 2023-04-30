@@ -33,10 +33,12 @@
 {{- $inHint := .hint -}}
 {{- $inQuality := .quality -}}
 {{- $inNoBase := .noBase | default .Params.imageNoAddBaseClass | default site.Params.imageNoAddBaseClass | default false -}}
-{{- $inColors := .colors | default .Params.imageAddColorClass | default site.Params.imageAddColorClass| default false -}}
-{{- if $inNoBase -}}
+{{- $inColors := .colors | default .Params.imageAddColorClass | default site.Params.imageAddColorClass | default false -}}
+{{- if not $inNoBase -}}
+	{{ warnf "Base so no colours "}}
 	{{- $inColors = false -}}
 {{- end -}}
+
 {{- $imageLowQuality := false -}}
 {{- $imageColors := false -}}
 {{- $fullImgMap := (dict "finalSrc" "") -}}
@@ -58,9 +60,9 @@
 			{{- with $fullImgMap.imageLowQuality -}}
 				{{- $imageLowQuality = . -}}
 			{{- end -}}
-			{{- with $fullImgMap.Colors -}}
+			{{- with $fullImgMap.imageColors -}}
 				{{- $imageColors = . -}}
-			{{- end -}}
+				{{- end -}}
 		{{- else -}}
 			{{- $thumbnailWidth = $inThumbnailWidth | default $inWidth | default .Params.imageThumbnailWidth | default .Site.Params.imageThumbnailWidth | default "512" -}}
 			{{- $thumbnailHeight = $inThumbnailHeight | default $inHeight | default .Params.imageThumbnailHeight | default .Site.Params.imageThumbnailHeight | default "auto" -}}
@@ -114,17 +116,21 @@
 				{{- $inPage.Store.SetInMap "LQIPs" (printf ".imgLQIP-%s" $imgMD5) (dict "oldStyle" false "style"  $backgroundStyle) -}}
 			{{- end -}}
 		{{- else -}}
-			{{- $lqipClass := printf "%s%s" "imgGIP-" $imgMD5 " " -}}
+			{{- $imageColorBackground := "" -}}
+			{{- with $imageColors -}}
+				{{- $imageColorBackground = delimit ( . ) ", " -}}
+			{{- end -}}
+			{{- $imgMD5 = md5 $imageColorBackground -}}
+			{{- $lqipClass := printf "%s%s" "imgGIP-" $imgMD5 -}}
 			{{ if $class -}}
 				{{- $class = printf "%s %s" $lqipClass $class -}}
 			{{- else -}}
 				{{- $class = $lqipClass -}}
 			{{- end -}}
 
-			{{- with $imageColors -}}
-				{{- $imageColorBackground := delimit ( . ) ", " -}}
+			{{- if $imageColors -}}
 				{{- $backgroundStyle = printf "%s%s%s" "{ background: linear-gradient" $imageColorBackground "); background-size: cover; background-repeat: no-repeat; }" -}}
-			{{- $inPage.Store.SetInMap "LQIPs" (printf ".imgGIP-" $imgMD5) (dict "oldStyle" false "style" $backgroundStyle) -}}
+				{{- $inPage.Store.SetInMap "LQIPs" (printf ".imgGIP-%s" $imgMD5) (dict "oldStyle" false "style" $backgroundStyle) -}}
 			{{- end -}}
 		{{- end -}}
 	{{- end -}}
@@ -164,7 +170,7 @@
 			{{- $sourceOptions := (dict "imgMap" $fullImgMap "page" . "sizesAttr" $sizesAttr) -}}
 			{{- partial "helpers/lib-output/image-handling/source-element" $sourceOptions -}}
 		{{- end -}}
-		{{- $class := "" -}}
+		{{- $class = "" -}}
 	{{- end -}}
 	{{- if and $fullSize (ne $fullImgMap.finalSrc "") -}}
 		{{- $imgOptions := (dict "imgMap" $fullImgMap "page" . "alt" $alt "title" $inTitle "loading" $inLoading "useSrcSet" (cond (and (not $usePicture) (ge (len $fullImgMap.srcSet) 1)) true false) "class" $class "sizesAttr" $sizesAttr) -}}
@@ -178,4 +184,3 @@
 	{{- end -}}
 	{{- if $linkHref -}}</a>{{- end -}}
 {{- end -}}
-
