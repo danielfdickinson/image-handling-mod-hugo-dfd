@@ -1,8 +1,8 @@
-github.com/danielfdickinson/image-handling-mod-demo v0.0.0-20230428020759-1d8a2716a98b h1:LPb4tAqVGb9+SaFgMxJYZo8zZ23+Yh0d49s9mIrP4xo=
-github.com/danielfdickinson/image-handling-mod-demo v0.0.0-20230428020759-1d8a2716a98b/go.mod h1:NuqUThmGkjSBJyOxmzHpml1fgw555J7jr9ot4dltaT8=
-github.com/danielfdickinson/image-handling-mod-hugo-dfd v0.0.0-20230427192047-17bb7e200840/go.mod h1:PKb7pGYDJO23NhRgFAf25DxUqELpEHHidbLBCwte09Y=
-github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.3.3-0.20220801020716-c28b4bdbab3e/go.mod h1:ajYr1qZHU5FJloKLT9rF8jSzKhuv5uSzQ/kA5M1vsY8=
+github.com/danielfdickinson/image-handling-mod-demo v0.0.0-20230509133327-e451b1695fa1 h1:5o/znepGEduxv0v7b6zw3nBBPaWnEF2C1mHBuKRN7Aw=
+github.com/danielfdickinson/image-handling-mod-demo v0.0.0-20230509133327-e451b1695fa1/go.mod h1:qx251KbyTQVhEg03K8en+fNbFNK4Vq8dmqiqndm98Hg=
+github.com/danielfdickinson/image-handling-mod-hugo-dfd v0.0.0-20230502185344-ad0d7937d90f/go.mod h1:PKb7pGYDJO23NhRgFAf25DxUqELpEHHidbLBCwte09Y=
 github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.3.3-0.20221028012233-aa14c648c5a2 h1:e1kf4nRllGvzSDz6OvHbfCgoANBGUH95NsOAtNrCAMw=
 github.com/danielfdickinson/link-handling-mod-hugo-dfd v0.3.3-0.20221028012233-aa14c648c5a2/go.mod h1:ajYr1qZHU5FJloKLT9rF8jSzKhuv5uSzQ/kA5M1vsY8=
-github.com/danielfdickinson/minimal-test-theme-hugo-dfd v0.4.4-0.20221028020841-ed00480e7085 h1:AJc8eN55ayWkvSR1Nw39fUIXeeEsAuuwLykEPZuSC2c=
-github.com/danielfdickinson/minimal-test-theme-hugo-dfd v0.4.4-0.20221028020841-ed00480e7085/go.mod h1:6NZ/CEGWWMq2Xj1QMVmjUlWjNVfAinHndltjTdzIG7o=
+github.com/danielfdickinson/minimal-test-theme-hugo-dfd v0.4.4-0.20230508152613-76634213f5cd/go.mod h1:37XkrDengUFYzMKRN7XU6V3G2AtecY3z+Z0nzQ0Pv20=
+github.com/danielfdickinson/minimal-test-theme-hugo-dfd v0.4.4-0.20230510035937-5d1cad314bb2 h1:9cLKZ7vzADUPA7PDlUsSHEJape9mRGJScxEJLieA1kw=
+github.com/danielfdickinson/minimal-test-theme-hugo-dfd v0.4.4-0.20230510035937-5d1cad314bb2/go.mod h1:37XkrDengUFYzMKRN7XU6V3G2AtecY3z+Z0nzQ0Pv20=
