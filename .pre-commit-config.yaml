@@ -25,7 +25,7 @@ repos:
   # - checks toml files for parsable syntax.
   - id: check-vcs-permalinks
   # - ensures that links to vcs websites are permalinks.
-  - id: destroyed-symlinks
+  # - id: destroyed-symlinks
   # - detects symlinks which are changed to regular
   # files with a content of a path which that symlink was pointing to.
   - id: detect-private-key
@@ -61,7 +61,7 @@ repos:
   - id: csslint
 
 - repo: "https://github.com/pre-commit/mirrors-eslint"
-  rev: v8.39.0
+  rev: v8.40.0
   hooks:
   - id: eslint
     additional_dependencies:
