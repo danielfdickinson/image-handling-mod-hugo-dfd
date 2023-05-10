@@ -1,0 +1,18 @@
+{{- $inPage := .Page -}}
+{{- $imageOverlay := (dict) -}}
+{{- $textOverlay := (slice) -}}
+{{- with (.Get "imageOverlayParam") -}}
+	{{- if isset $inPage.Params . -}}
+		{{- $imageOverlay = (index $inPage.Params .) -}}
+	{{- else if isset $inPage.Page.Site.Params . -}}
+		{{- $imageOverlay = (index $inPage.Page.Site.Params .) -}}
+	{{- end }}
+{{- end -}}
+{{- with (.Get "textOverlayParam") -}}
+	{{- if isset $inPage.Params (. | lower) -}}
+		{{- $textOverlay = (index $inPage.Params .) -}}
+	{{- else if isset $inPage.Site.Params (. | lower) -}}
+		{{- $textOverlay = (index $inPage.Page.Site.Params .) -}}
+	{{- end }}
+{{- end -}}
+{{- partial "helpers/wrapped-image" (dict "width" (.Get "width") "height" (.Get "height") "alt" (.Get "alt") "title" (.Get "title") "image" (partial "helpers/lib/image-handling/find-image-src" (dict "src" (.Get "src") "page" $inPage "getRelative" (.Get "getRelative" | default true) "ignoreBundleAssets" (.Get "ignoreBundleAssets" | default false) "ignoreSiteAssets" (.Get "ignoreSiteAssets" | default false) "ignoreStaticImages" (.Get "ignoreStaticImages" | default true))) "page" $inPage "link" (.Get "link") "target" (.Get "target") "rel" (.Get "rel") "imageWrapper" false "caption" (.Get "caption") "attr" (.Get "attr") "attrLink" (.Get "attrLink") "class" (.Get "class") "singleSize" (.Get "singleSize") "thumbnails" (.Get "thumbnails") "imageClass" (.Get "imageClass") "noVisibleCaption" (.Get "noVisibleCaption") "imageConvertMethod" (.Get "imageConvertMethod") "sizesAttr" (.Get "sizesAttr") "imageOverlay" $imageOverlay "textOverlay" $textOverlay "rotation" (.Get "rotation") "hint" (.Get "hint") "quality" (.Get "quality") "anchor" (.Get "anchor")) -}}
