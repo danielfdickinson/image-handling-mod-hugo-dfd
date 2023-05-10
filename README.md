@@ -17,7 +17,7 @@ will be (mostly) 'hands-off' due to time constraints.
 
 ## Site with examples
 
-<https://image-handling-mod.demo.wildtechgarden.com>
+<https://image-handling-mod.demo.wildtechgarden.ca>
 
 ## Features
 
