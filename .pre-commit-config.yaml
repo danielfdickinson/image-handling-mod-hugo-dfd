@@ -61,7 +61,7 @@ repos:
   - id: csslint
 
 - repo: "https://github.com/pre-commit/mirrors-eslint"
-  rev: v8.40.0
+  rev: v8.41.0
   hooks:
   - id: eslint
     additional_dependencies:
@@ -91,7 +91,7 @@ repos:
     files: .+\.(md|markdown)$
 
 - repo: "https://github.com/adrienverge/yamllint"
-  rev: v1.31.0
+  rev: v1.32.0
   hooks:
   - id: yamllint
     exclude: ^(_vendor)
