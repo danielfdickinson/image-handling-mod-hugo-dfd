@@ -61,7 +61,7 @@ repos:
   - id: csslint
 
 - repo: "https://github.com/pre-commit/mirrors-eslint"
-  rev: v8.41.0
+  rev: v8.44.0
   hooks:
   - id: eslint
     additional_dependencies:
@@ -84,7 +84,7 @@ repos:
     - --allow-empty-input
 
 - repo: "https://github.com/igorshubovych/markdownlint-cli"
-  rev: v0.34.0
+  rev: v0.35.0
   hooks:
   - id: markdownlint
     args: [--config, .markdownlint.json]
@@ -97,7 +97,7 @@ repos:
     exclude: ^(_vendor)
 
 - repo: "https://github.com/zricethezav/gitleaks"
-  rev: v8.16.3
+  rev: v8.17.0
   hooks:
   - id: gitleaks
 
@@ -107,7 +107,7 @@ repos:
   - id: gitlint
 
 - repo: "https://github.com/editorconfig-checker/editorconfig-checker.python"
-  rev: 2.7.1
+  rev: 2.7.2
   hooks:
   - id: editorconfig-checker
     alias: ec
