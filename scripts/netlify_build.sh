@@ -5,8 +5,7 @@ set -o pipefail
 
 # Ensure Go modules with LFS checksum correctly
 # Workaround for https://github.com/golang/go/issues/41708
-# We don't have LFS on this repo
-# git lfs install
+git lfs install
 
 bash ./tests/scripts/hugo-audit.sh
 
