@@ -1,0 +1,129 @@
+{{- /* Set default values. */}}
+{{- $markdownImageLinkClass := .Page.Params.imageMarkdownLinkClass | default .Page.Site.Params.imageMarkdownLinkClass -}}
+{{- $markdownImageClass := .Page.Params.imageMarkdownClass | default .Page.Site.Params.imageMarkdownClass -}}
+{{- $markdownImageWrapper := .Page.Params.imageMarkdownAddWrapper | default .Page.Site.Params.imageMarkdownAddWrapper -}}
+{{- $markdownImageWrapperType := .Page.Params.imageMarkdownWrapperType | default .Page.Site.Params.imageMarkdownWrapperType -}}
+{{- $markdownImageOverlayImage := .Page.Params.imageMarkdownOverlayImage | default .Page.Site.Params.imageMarkdownOverlayImage -}}
+{{- $markdownImageOverlayText := .Page.Params.imageMarkdownOverlayText | default .Page.Site.Params.imageMarkdownOverlayText -}}
+{{- $height := 0 }}
+{{- $width := 0 }}
+{{- $anchor := "smart" }}
+{{- $format := .Page.Site.Params.imageConvertTo | default "webp" }}
+{{- $loading := .Page.Params.imageMarkdownLoading | default .Page.Site.Params.imageMarkdownLoading | default "lazy" }}
+{{- $method := .Page.Params.imageMarkdownMethod | default .Page.Site.Params.imageMarkdownMethod | default "Resize" }}
+{{- $hint := .Page.Params.imageMarkdownHint| default .Page.Site.Params.imageMarkdownHint | default "photo" }}
+{{- $quality := .Page.Params.imageMarkdownQuality | default .Page.Site.Params.imageMarkdownQuality | default 90 }}
+{{- $rotation := 0 }}
+{{- $imageClass := "" }}
+{{- $dictionary := "" }}
+
+{{- /* Define allowable values. */}}
+{{- $validAnchors := slice "bottom" "bottomleft" "bottomright" "center" "left" "right" "smart" "top" "topleft" "topright" }}
+{{- $validFormats := slice "bmp" "gif" "jpg" "jpeg" "png" "tif" "tiff" "webp" }}
+{{- $validMethods := slice "Crop" "Fill" "Fit" "Resize" }}
+{{- $validHints := slice "drawing" "icon" "photo" "picture" "text" }}
+{{- $validLoading := slice "eager" "lazy" }}
+{{- $validWrapperType := slice "div" "picture" "figure" }}
+
+
+{{- /* Parse Query options */}}
+{{- $u := urls.Parse .destMap.Destination }}
+{{- with $u.Query }}
+	{{- with .Get "h" }}
+		{{- $height = int . }}
+	{{- end }}
+	{{- with .Get "w" }}
+		{{- $width = int . }}
+	{{- end }}
+	{{- with .Get "a" | lower }}
+		{{- if in $validAnchors . }}
+			{{- $anchor = . }}
+		{{- else }}
+			{{- errorf "Unable to render image. %q is not a valid anchor. See %s" . $u }}
+		{{- end }}
+	{{- end }}
+	{{- with .Get "f" | lower }}
+		{{- if in $validFormats . }}
+			{{- $format = . }}
+		{{- else }}
+			{{- errorf "Unable to render image. %q is not a valid format. See %s" . $u }}
+		{{- end }}
+	{{- end }}
+	{{- with .Get "l" | lower }}
+		{{- if in $validLoading . }}
+			{{- $loading = . }}
+		{{- else }}
+			{{- errorf "Unable to render image. %q is not a valid loading. See %s" . $u }}
+		{{- end }}
+	{{- end }}
+	{{- with .Get "m" | humanize }}
+		{{- if in $validMethods . }}
+			{{- $method = . }}
+		{{- else }}
+			{{- errorf "Unable to render image. %q is not a valid method. See %s" . $u }}
+		{{- end }}
+	{{- end }}
+	{{- with .Get "r" }}
+		{{- $rotation = int . }}
+	{{- end }}
+	{{- with .Get "wr" | lower -}}
+		{{- if in $validWrapperType . }}
+			{{- $markdownImageWrapperType = . -}}
+			{{- $markdownImageWrapper = true -}}
+		{{- else }}
+			{{- errorf "Unable to render image. %q is not a valid wrapper. See %s" . $u }}
+		{{- end }}
+	{{- end -}}
+	{{- if .Has "c" }}
+		{{- $markdownImageClass = delimit (index . "c") " " | lower }}
+	{{- end }}
+	{{- if .Has "i" }}
+		{{- $imageClass = delimit (index . "i") " " | lower }}
+	{{- end }}
+	{{- with .Get "q" }}
+		{{- $quality = int . -}}
+	{{- end }}
+	{{- with .Get "hi" | lower }}
+		{{- if in $validHints . }}
+			{{- $hint = . }}
+		{{- else }}
+			{{- errorf "Unable to render image. %q is not a valid hint. See %s" . $u }}
+		{{- end }}
+	{{- end }}
+{{- end }}
+
+
+{{- $image := partial "helpers/lib/image-handling/find-image-src" (dict "destMap" .destMap "page" .Page "getRelative" true "ignoreBundleAssets" false) -}}
+{{- $dictionary = (dict "alt" .Text "altRendered" true "title" .Title "image" $image "page" .Page "rotation" $rotation "noImageWrapper" (not $markdownImageWrapper) "linkClass" $markdownImageLinkClass "class" $markdownImageClass "imageOverlay" $markdownImageOverlayImage "textOverlay" $markdownImageOverlayText "convertTo" $format "loading" $loading "imageConvertMethod" $method "quality" $quality) -}}
+{{- /* Adding width and height */ -}}
+{{- if and $width $height }}
+	{{- $dictionary = merge $dictionary (dict "width" $width "height" $height) -}}
+{{- else if and $width (not $height) }}
+	{{- $dictionary = merge $dictionary (dict "width" $width) -}}
+{{- else if and $height (not $width) }}
+	{{- $dictionary = merge $dictionary (dict "height" $height ) -}}
+{{- else }}
+	{{- $dictionary = merge $dictionary (dict "width" $image.Width "height" $image.Height) }}
+{{- end }}
+{{- /* Adding anchor */ -}}
+{{- if $anchor }}
+	{{- if or (eq $method "Crop") (eq $method "Fill")}}
+		{{- $dictionary = merge $dictionary (dict "anchor" $anchor) -}}
+	{{- end -}}
+{{- end }}
+{{- /* Adding image wrapper */ -}}
+{{- if ne $markdownImageWrapperType "" }}
+	{{- $dictionary = merge $dictionary (dict "imageWrapper" $markdownImageWrapperType) -}}
+{{- end }}
+{{- /* Adding image class */ -}}
+{{- if ne $imageClass "" }}
+	{{- $dictionary = merge $dictionary (dict "imageClass" $imageClass) -}}
+{{- end }}
+{{- /* Adding convert preset */ -}}
+{{- if $hint }}
+	{{- $dictionary = merge $dictionary (dict "hint" $hint) -}}
+{{- end }}
+{{- /* Calling image wrapper */ -}}
+{{- partial "helpers/wrapped-image" $dictionary -}}
+
+{{- /* Remove trailing newlines */ -}}

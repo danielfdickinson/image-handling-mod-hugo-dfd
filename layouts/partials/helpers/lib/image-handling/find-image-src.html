@@ -1,4 +1,5 @@
 {{- $destination := .src -}}
+{{- $destMap := .destMap -}}
 {{- $curPage := .page -}}
 {{- $getRelative := .getRelative -}}
 {{- $ignoreBundleAssets := .ignoreBundleAssets -}}
@@ -16,16 +17,18 @@
 {{- if strings.HasPrefix $destination "data:image" -}}
 	{{- $base64 = true -}}
 {{- else -}}
-	{{- with urls.Parse $destination -}}
-		{{- if or .Host .Scheme -}}
-			{{- $external = true -}}
+	{{- if not $destMap -}}
+		{{- with urls.Parse $destination -}}
+			{{- if or .Host .Scheme -}}
+				{{- $external = true -}}
+			{{- end -}}
+			{{- $path = .Path -}}
+		{{- else -}}
+			{{- errorf printf "Unable to parse image src '%s'" $destination -}}
 		{{- end -}}
-		{{- $path = .Path -}}
-	{{- else -}}
-		{{- errorf printf "Unable to parse image src '%s'" $destination -}}
 	{{- end -}}
 {{- end -}}
-{{- if and $path (not $external) (not $base64) -}}
+{{- if and $path (not $external) (not $base64) (not $destMap) -}}
 	{{- /* For compatibility with Git repos, strip relative paths; the repos need them */ -}}
 	{{- /* but resources expect a different 'root' */ -}}
 	{{- if hasPrefix $path ".." -}}
@@ -64,12 +67,22 @@
 			{{- errorf (printf "Image %s is missing and not external for page %s" $path $curPage.Title) -}}
 		{{- end -}}
 	{{- end -}}
-{{- else if $external -}}{{- /* Use external URLs verbatim (not as a resource so no Hugo Pipes; we don't use 0.92.x only functionality, yet) */ -}}
-	{{- $finalDestination = $destination -}}
 {{- else if $base64 -}}
 	{{- $finalSrc = $destination -}}
+{{- else if $destMap -}}
+	$imageResource = $destMap.Resource
+	$link = $destMap.Destination
+	$url = $destMap.Destination
+	$specialSrc = $destMap.Destination
+{{- else if $external -}}{{- /* Use external URLs verbatim (not as a resource so no Hugo Pipes; we don't use 0.92.x only functionality, yet) */ -}}
+	{{- $finalDestination = $destination -}}
 {{- end -}}
-{{- $image := (dict "imageResource" $imageResource "link" $finalDestination "url" $finalDestination "specialSrc" $finalSrc) -}}
+{{- $image := (dict
+	"imageResource" $imageResource
+	"link" $finalDestination
+	"url" $finalDestination
+	"specialSrc" $finalSrc
+) -}}
 {{- with $image.imageResource -}}
 	{{- if partial "helpers/lib/image-handling/is-processable" . -}}
 		{{- $image = $image | merge (dict "width" .Width "height" .Height) -}}

@@ -2,11 +2,7 @@ public
 resources
 node_modules
 .hugo_build.lock
-html-validate.log
-check-links.log
-hugo-audit.log
-md-lint.log
-hugo-audit.log
+*.log
 *.jpg
 *.png
 *.jpeg

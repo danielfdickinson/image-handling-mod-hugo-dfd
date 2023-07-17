@@ -197,3 +197,7 @@ target = "i18n"
 [[module.imports.mounts]]
 source = "archetypes"
 target = "archetypes"
+
+[[module.mounts]]
+source = "assets/css/custom"
+target = "assets/css/custom"
