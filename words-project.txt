@@ -21,6 +21,7 @@ linebreak
 linkclass
 markdownlint
 nredirects
+nvmrc
 pageref
 pctx
 plainify
