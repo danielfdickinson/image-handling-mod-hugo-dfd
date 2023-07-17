@@ -120,6 +120,9 @@ repos:
   rev: v6.31.0
   hooks:
   - id: cspell
+    additional_dependencies:
+    - "@cspell/dict-fr-fr"
+    - "@cspell/dict-fr-reforme"
     args:
     - --gitignore
     - --gitignore-root
@@ -129,5 +132,4 @@ repos:
     - --show-suggestions
     - --validate-directives
     exclude: ^(cspell.json$) # yamllint disable-line
-# yamllint enable rule:key-ordering
 ...
