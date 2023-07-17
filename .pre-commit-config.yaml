@@ -13,6 +13,7 @@ repos:
   rev: v4.4.0
   hooks:
   - id: check-added-large-files
+    exclude: ^(package-lock\.json$)
     # - Prevent giant files from being committed.
   - id: check-case-conflict
   # - checks for files that would conflict in
@@ -113,7 +114,7 @@ repos:
     alias: ec
     args:
     - -no-color
-    exclude: ^(LICENSE$|README.md$) # yamllint disable-line
+    exclude: ^(LICENSE$|README.md|package.*\.json$) # yamllint disable-line
 
 - repo: "https://github.com/streetsidesoftware/cspell-cli"
   rev: v6.31.0
