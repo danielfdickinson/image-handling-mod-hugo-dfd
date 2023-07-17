@@ -19,7 +19,8 @@ publish = "public/"
 command = "bash ./scripts/netlify_build.sh"
 
 [build.environment]
-GIT_LFS_ENABLED="false"
+GIT_LFS_ENABLED="true"
+GIT_LFS_FETCH_INCLUDE="*.png, *.ico, *.pdf, *.jpg, *.jpeg, *.zip, *.xz, *.bz2, *.gz, *.tgz, *.deb, *.webp, *.odp, *.svg, *.gif, *.tif, *.tiff"
 HUGO_VERSION="0.115.3"
 GO_VERSION="1.20.6"
 NODE_VERSION="lts/*"
