@@ -1,28 +1,103 @@
 {
 	"$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-	"allowCompoundWords": false,
+	"allowCompoundWords": true,
 	"dictionaries": [
-		"project-words"
+		"project-words",
+		"project-words-fr"
 	],
 	"dictionaryDefinitions": [
 		{
 			"addWords": true,
 			"name": "project-words",
 			"path": "./words-project.txt"
+		},
+		{
+			"addWords": true,
+			"name": "project-words-fr",
+			"path": "./words-fr-project.txt"
 		}
 	],
 	"ignorePaths": [
-		"./.editorconfig",
-		"./.gitattributes",
+		"./go.{mod,sum}",
+		"./exampleSite/go.{mod,sum}",
+		"node_modules",
+		"./cspell.json",
 		"./LICENSE",
-		"./go.*",
-		"./i18n/**",
-		"./node_modules",
-		"./scripts/netlify_build.sh",
+		"./package*.json",
 		"./tests/scripts",
-		"./words-*.txt"
+		"./words-*.txt",
+		"_vendor"
 	],
+	"ignoreRegExpList": [],
 	"ignoreWords": [],
-	"language": "en,en-ca,en-gb",
+	"import": [
+		"@cspell/dict-fr-fr/cspell-ext.json",
+		"@cspell/dict-fr-reforme/cspell-ext.json"
+	],
+	"language": "en,en-gb,en-us",
+	"overrides": [
+		{
+			"filename": [
+				"./exampleSite/**/fr/*.md",
+				"./exampleSite/**/fr/**/*.md",
+				"./README.fr.md"
+			],
+			"ignoreRegExpList": [
+				"frontMatter"
+			],
+			"language": "fr,fr-90"
+		},
+		{
+			"filename": [
+				"./exampleSite/**/fr/*.md",
+				"./exampleSite/**/fr/**/*.md",
+				"./README.fr.md"
+			],
+			"includeRegExpList": [
+				"frontMatter"
+			],
+			"language": "en,en-gb,fr,fr-90"
+		},
+		{
+			"dictionaries": [
+				"css",
+				"html"
+			],
+			"filename": [
+				".htmlvalidate*.json"
+			]
+		},
+		{
+			"dictionaries": [
+				"companies",
+				"project-words-fr"
+			],
+			"filename": [
+				"./config.toml",
+				"./hugo.toml",
+				"./theme.toml",
+				"./i18n/fr.toml",
+				"./exampleSite/hugo.toml",
+				"./.github/**/*.yml",
+				"./.pre-commit-config.yaml"
+			],
+			"language": "en,en-gb,fr,fr-90"
+		},
+		{
+			"dictionaries": [
+				"python",
+				"project-words"
+			],
+			"filename": [
+				"./requirements.txt"
+			]
+		}
+	],
+	"patterns": [
+		{
+			"name": "frontMatter",
+			"pattern": "/^(-{3}|[+]{3})$(\\s|\\S)*?^\\1$/gm"
+		}
+	],
 	"version": "0.2"
 }

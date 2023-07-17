@@ -1,5 +1,32 @@
 {
+  "name": "image-handling-mod-hugo-dfd",
+  "version": "0.6.0",
+  "description": "DFD Hugo module for processing images",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "pre-commit run --all-files"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielfdickinson/image-handling-mod-hugo-dfd.git"
+  },
+  "author": "Daniel F. Dickinson",
+  "license": "CC-BY-SA-4.0",
+  "bugs": {
+    "url": "https://github.com/danielfdickinson/image-handling-mod-hugo-dfd/issues"
+  },
+  "homepage": "https://image-handling-mod.ci.thecshore.com/",
   "devDependencies": {
-    "@netlify/plugin-lighthouse": "^5.0.0"
+    "@cspell/dict-fr-fr": "^2.2.1",
+    "@cspell/dict-fr-reforme": "^2.2.1",
+    "@netlify/plugin-lighthouse": "^5.0.0",
+    "html-validate": "^7.18.1",
+    "netlify-plugin-html-validate": "^1.1.1",
+    "netlify-plugin-hugo-cache-resources": "^0.2.1",
+    "tap-spot": "^1.1.2",
+    "v8-compile-cache": "^2.3.0"
   }
 }
