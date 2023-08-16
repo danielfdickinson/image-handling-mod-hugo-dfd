@@ -9,7 +9,8 @@ will be (mostly) 'hands-off' due to time constraints.
 
 ## Status
 
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/danielfdickinson/image-handling-mod-hugo-dfd/main.svg)](https://results.pre-commit.ci/latest/github/danielfdickinson/image-handling-mod-hugo-dfd/main)
+[![pre-commit.ci
+status](https://results.pre-commit.ci/badge/github/danielfdickinson/image-handling-mod-hugo-dfd/main.svg)](https://results.pre-commit.ci/latest/github/danielfdickinson/image-handling-mod-hugo-dfd/main)
 
 ## GitHub repository
 
@@ -17,7 +18,7 @@ will be (mostly) 'hands-off' due to time constraints.
 
 ## Site with examples
 
-<https://image-handling-mod.demo.wildtechgarden.ca>
+<https://www.image-handling-mod.wtg-demos.ca>
 
 ## Features
 
