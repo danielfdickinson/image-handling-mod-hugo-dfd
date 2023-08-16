@@ -20,12 +20,11 @@
   },
   "homepage": "https://image-handling-mod.ci.thecshore.com/",
   "devDependencies": {
-    "@cspell/dict-fr-fr": "^2.2.1",
-    "@cspell/dict-fr-reforme": "^2.2.1",
-    "@netlify/plugin-lighthouse": "^5.0.0",
+    "@cspell/dict-fr-fr": "^2.2.2",
+    "@cspell/dict-fr-reforme": "^2.2.2",
+    "cspell": "^7.0.0",
+    "cspell-cli": "^7.0.0",
     "html-validate": "^7.18.1",
-    "netlify-plugin-html-validate": "^1.1.1",
-    "netlify-plugin-hugo-cache-resources": "^0.2.1",
     "tap-spot": "^1.1.2",
     "v8-compile-cache": "^2.3.0"
   }

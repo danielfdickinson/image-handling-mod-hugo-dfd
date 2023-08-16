@@ -1,4 +1,4 @@
-baseURL = "https://image-handling-mod.ci.thecshore.com/"
+baseURL = "https://www.image-handling-mod.wtg-demos.ca/"
 copyright = "© 2021-2023 Daniel F. Dickinson"
 defaultContentLanguage = "en"
 homepage = "https://github.com/danielfdickinson/image-handling-mod-hugo-dfd"
@@ -12,28 +12,30 @@ timeout = 90000
 tag = "tags"
 
 [outputFormats]
-[outputFormats.nredirects]
-baseName = "_redirects"
+[outputFormats.htaccess]
+baseName = ""
 isPlainText = true
-mediaType = "text/nredirects"
+mediaType = "text/htaccess"
 
 [mediaTypes]
-[mediaTypes."text/nredirects"]
-suffixes = [""]
+[mediaTypes."text/htaccess"]
+suffixes = ["htaccess"]
 
 [outputs]
-home = ["HTML", "RSS", "nredirects"]
+home = ["HTML", "RSS", "htaccess"]
 
 [params]
 addLQIPStyles = true
 imageConvertTo = "webp"
 mainSections = ["post"]
 redirectsDomains = [
-	"http://image-handling-mod-ci.netlify.app/* https://image-handling-mod.ci.thecshore.com/:splat 301!",
-	"https://image-handling-mod-ci.netlify.app/* https://image-handling-mod.ci.thecshore.com/:splat 301!",
-	"http://image-handling-mod-ci.demo.wildtechgarden.com/* https://image-handling-mod.ci.thecshore.com/:splat 301!",
-	"https://image-handling-mod-ci.demo.wildtechgarden.com/* https://image-handling-mod.ci.thecshore.com/:splat 301!",
-	"http://image-handling-mod.ci.thecshore.com/* https://image-handling-mod.ci.thecshore.com/:splat 301!"
+	"image-handling-mod.wildtechgarden.ca",
+	"image-handling-mod.demo.wildtechgarden.ca",
+	"image-handling-mod.demo.wildtechgarden.com",
+	"image-handling-mod.demo.wildtechgarden.ca",
+	"image-handling-mod.wtg-demos.com",
+	"www.image-handling-mod.wtg-demos.com",
+	"image-handling-mod.wtg-demos.ca",
 ]
 # Footnotes and TableOfContents don't work properly with a base href set in <head>, neither do page-relative links
 
@@ -170,7 +172,7 @@ source = "README-assets"
 target = "assets/README-assets"
 
 [[module.imports]]
-path = "github.com/danielfdickinson/minimal-test-theme-hugo-dfd"
+path = "github.com/wildtechgarden/minimal-test-theme-hugo-wtg"
 ignoreConfig = true
 ignoreImports = true
 
