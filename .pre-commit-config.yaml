@@ -62,7 +62,7 @@ repos:
   - id: csslint
 
 - repo: "https://github.com/pre-commit/mirrors-eslint"
-  rev: v8.45.0
+  rev: v8.47.0
   hooks:
   - id: eslint
     additional_dependencies:
@@ -117,7 +117,7 @@ repos:
     exclude: ^(LICENSE$|README.md|package.*\.json$) # yamllint disable-line
 
 - repo: "https://github.com/streetsidesoftware/cspell-cli"
-  rev: v6.31.0
+  rev: v7.0.0
   hooks:
   - id: cspell
     additional_dependencies:
