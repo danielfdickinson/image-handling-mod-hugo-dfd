@@ -85,7 +85,7 @@ repos:
     - --allow-empty-input
 
 - repo: "https://github.com/igorshubovych/markdownlint-cli"
-  rev: v0.35.0
+  rev: v0.36.0
   hooks:
   - id: markdownlint
     args: [--config, .markdownlint.json]
@@ -117,7 +117,7 @@ repos:
     exclude: ^(LICENSE$|README.md|package.*\.json$) # yamllint disable-line
 
 - repo: "https://github.com/streetsidesoftware/cspell-cli"
-  rev: v7.0.1
+  rev: v7.3.0
   hooks:
   - id: cspell
     additional_dependencies:
