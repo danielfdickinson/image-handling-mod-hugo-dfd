@@ -1,12 +1,12 @@
 {{- $ctx := . -}}
-{{- $inWidth := .width -}}
-{{- $inHeight := .height -}}
+{{- $inImage := .image -}}
+{{- $inWidth := .width | default $inImage.width -}}
+{{- $inHeight := .height | default $inImage.height -}}
 {{- $inThumbnailWidth := .thumbnailWidth -}}
 {{- $inThumbnailHeight := .thumbnailHeight -}}
 {{- $inAlt := .alt -}}
 {{- $inAltRendered := .altRendered -}}
 {{- $inTitle := .title -}}
-{{- $inImage := .image -}}
 {{- $inPage := .page -}}
 {{- $inClass := .class -}}
 {{- $inLink := .link -}}
