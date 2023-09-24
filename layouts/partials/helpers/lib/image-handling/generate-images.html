@@ -137,13 +137,13 @@
 			{{- end -}}
 			{{- $supportsTextOverlay := false -}}
 			{{- $hugoVersion := split (replaceRE ".*v?([0-9]+)\\.([0-9]+)\\.([0-9]+).*" "$1 $2 $3" site.Hugo.Version) " " -}}{{- /* We have to use the deprecated .Hugo.Version to support 0.80.0 */ -}}
-			{{- if and (eq (int (index $hugoVersion 0)) 0) (ge (int (index $hugoVersion 1)) 104) -}}
+			{{- if ge $hugoVersion "0.104.0" -}}
 				{{- $imageColors = $fullConvertedImage.Colors -}}
 				{{- if (gt ($imageColors | len) 1) -}}
 					{{- $imageColors = $imageColors | append "#808080" -}}
 				{{- end -}}
 			{{- end -}}
-			{{- if and (eq (int (index $hugoVersion 0)) 0) (ge (int (index $hugoVersion 1)) 90) -}}
+			{{- if ge $hugoVersion "0.90.0" -}}
 				{{- $supportsTextOverlay = true -}}
 			{{- end -}}
 			{{- if and $inTextOverlay $supportsTextOverlay -}}

@@ -2,11 +2,11 @@
 {{- $inImage := .image -}}
 {{- $inWidth := .width | default $inImage.width -}}
 {{- $inHeight := .height | default $inImage.height -}}
+{{- $inAlt := .alt | default $inImage.alt -}}
+{{- $inTitle := .title | default $inImage.title -}}
 {{- $inThumbnailWidth := .thumbnailWidth -}}
 {{- $inThumbnailHeight := .thumbnailHeight -}}
-{{- $inAlt := .alt -}}
 {{- $inAltRendered := .altRendered -}}
-{{- $inTitle := .title -}}
 {{- $inPage := .page -}}
 {{- $inClass := .class -}}
 {{- $inLink := .link -}}

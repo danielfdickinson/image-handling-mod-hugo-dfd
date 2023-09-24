@@ -23,11 +23,13 @@
 	{{- if reflect.IsSlice . -}}
 		{{- $featuredImages = (slice) -}}
 		{{- range . -}}
-			{{ $image = partial "helpers/lib/image-handling/generate-featured-map" (dict "page" $curPage "imageResource" . "getRelative" $relativeUrl) -}}
-			{{- $featuredImages = $featuredImages | append $image -}}
+			{{- $image = partial "helpers/lib/image-handling/generate-featured-map" (dict "page" $curPage "imageResource" . "getRelative" $relativeUrl) -}}
+			{{- with $image -}}
+				{{- $featuredImages = $featuredImages | append . -}}
+			{{- end -}}
 		{{- end -}}
 	{{- else -}}
-		{{ $image = partial "helpers/lib/image-handling/generate-featured-map" (dict "page" $curPage "imageResource" . "getRelative" $relativeUrl) -}}
+		{{- $image = partial "helpers/lib/image-handling/generate-featured-map" (dict "page" $curPage "imageResource" . "getRelative" $relativeUrl) -}}
 		{{- $featuredImages = $image -}}
 	{{- end -}}
 {{- else -}}
@@ -35,8 +37,10 @@
 		{{- if reflect.IsSlice . -}}
 			{{- $featuredImages = (slice) -}}
 			{{- range . -}}
-				{{ $image = partial "helpers/lib/image-handling/generate-featured-map" (dict "page" $curPage "imageResource" . "getRelative" $relativeUrl) -}}
-				{{- $featuredImages = $featuredImages | append $image -}}
+				{{- $image = partial "helpers/lib/image-handling/generate-featured-map" (dict "page" $curPage "imageResource" .imageResource "getRelative" $relativeUrl "alt" .alt "title" .title) -}}
+				{{- with $image -}}
+					{{- $featuredImages = $featuredImages | append . -}}
+				{{- end -}}
 			{{- end -}}
 		{{- else -}}
 			{{- $featuredImages = . -}}
