@@ -9,16 +9,18 @@
 	{{- else -}}
 		{{- $image = (dict "imageResource" . "link" .Permalink "url" .Permalink) -}}
 	{{- end -}}
-	{{- with . -}}
+	{{- with ($curPage.Params.imageFeaturedWidth | default $curPage.Params.imageCoverWidth | default $curPage.Params.featuredImageWidth | default $curPage.Params.featuredWidth) -}}
+		{{- $image = $image | merge (dict "width" .) -}}
+	{{- else -}}
 		{{- if partial "helpers/lib/image-handling/is-processable" . -}}
-			{{- $image = $image | merge (dict "width" .Width "height" .Height) -}}
-		{{- else -}}
-			{{- with ($curPage.Params.imageFeaturedWidth | default $curPage.Params.imageCoverWidth | default $curPage.Params.featuredImageWidth | default $curPage.Params.featuredWidth) -}}
-				{{ $image = $image | merge (dict "width" .) -}}
-			{{- end -}}
-			{{- with ($curPage.Params.imageFeaturedHeight | default $curPage.Params.imageCoverHeight | default $curPage.Params.featuredImageHeight | default $curPage.Params.featuredHeight) -}}
-				{{ $image = $image | merge (dict "height" .) -}}
-			{{- end -}}
+			{{- $image = $image | merge (dict "width" .Width) -}}
+		{{- end -}}
+	{{- end -}}
+	{{- with ($curPage.Params.imageFeaturedHeight | default $curPage.Params.imageCoverHeight | default $curPage.Params.featuredImageHeight | default $curPage.Params.featuredHeight) -}}
+		{{ $image = $image | merge (dict "height" .) -}}
+	{{- else -}}
+		{{- if and (partial "helpers/lib/image-handling/is-processable" .) (eq ($curPage.Params.imageFeaturedWidth | default $curPage.Params.imageCoverWidth | default $curPage.Params.featuredImageWidth | default $curPage.Params.featuredWidth | default "") "") -}}
+			{{- $image = $image | merge (dict "height" .Height) -}}
 		{{- end -}}
 	{{- end -}}
 	{{- with ($curPage.Params.imageFeaturedAlt | default $curPage.Params.imageCoverAlt | default $curPage.Params.imageThumbnailAlt | default $curPage.Params.featuredImageAlt | default $curPage.Params.featuredAlt) -}}
