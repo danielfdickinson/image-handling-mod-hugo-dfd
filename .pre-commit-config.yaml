@@ -10,7 +10,7 @@ minimum_pre_commit_version: 3.1.1
 # yamllint disable rule:key-ordering
 repos:
 - repo: "https://github.com/pre-commit/pre-commit-hooks"
-  rev: v4.4.0
+  rev: v4.5.0
   hooks:
   - id: check-added-large-files
     exclude: ^(package-lock\.json$)
@@ -62,7 +62,7 @@ repos:
   - id: csslint
 
 - repo: "https://github.com/pre-commit/mirrors-eslint"
-  rev: v8.49.0
+  rev: v8.56.0
   hooks:
   - id: eslint
     additional_dependencies:
@@ -85,20 +85,20 @@ repos:
     - --allow-empty-input
 
 - repo: "https://github.com/igorshubovych/markdownlint-cli"
-  rev: v0.36.0
+  rev: v0.38.0
   hooks:
   - id: markdownlint
     args: [--config, .markdownlint.json]
     files: .+\.(md|markdown)$
 
 - repo: "https://github.com/adrienverge/yamllint"
-  rev: v1.32.0
+  rev: v1.33.0
   hooks:
   - id: yamllint
     exclude: ^(_vendor)
 
 - repo: "https://github.com/zricethezav/gitleaks"
-  rev: v8.18.0
+  rev: v8.18.1
   hooks:
   - id: gitleaks
 
@@ -108,7 +108,7 @@ repos:
   - id: gitlint
 
 - repo: "https://github.com/editorconfig-checker/editorconfig-checker.python"
-  rev: 2.7.2
+  rev: 2.7.3
   hooks:
   - id: editorconfig-checker
     alias: ec
@@ -117,7 +117,7 @@ repos:
     exclude: ^(LICENSE$|README.md|package.*\.json$) # yamllint disable-line
 
 - repo: "https://github.com/streetsidesoftware/cspell-cli"
-  rev: v7.3.0
+  rev: v8.2.0
   hooks:
   - id: cspell
     additional_dependencies:
